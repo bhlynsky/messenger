@@ -1,0 +1,14 @@
+$fonts: Helvetica, sans-serif;
+$color: #ffff00;
+$height: 200px;
+$width: 400px;
+
+.div-test {
+  font: $fonts;
+  background: $color;
+
+  height: $height;
+  width: $width;
+  margin: auto;
+  text-align: center;
+}
