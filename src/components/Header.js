@@ -3,6 +3,7 @@ import { AppBar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import '../styles.scss';
+
 const useStyles = makeStyles({
   header: {
     fontSize: '20px',
@@ -26,6 +27,7 @@ const useStyles = makeStyles({
 
 export default function Header() {
   const classes = useStyles();
+
   return (
     <AppBar className={classes.header}>
       <Link className={classes.link} to="/main">
