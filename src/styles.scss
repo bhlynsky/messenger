@@ -5,8 +5,8 @@ $width: 400px;
 
 .header {
   font-size: 20px;
-  display: flex !important;
-  flex-direction: row !important;
+  display: flex;
+  flex-direction: row;
   height: $height;
   position: relative;
   a {
