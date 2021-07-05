@@ -8,6 +8,7 @@ $width: 400px;
   display: flex !important;
   flex-direction: row !important;
   height: $height;
+  position: relative;
   a {
     background: $color;
     padding: 5px;

@@ -1,32 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-import "./styles.scss"
-import Header from './Components/header';
-import { Route, BrowserRouter as Router, Switch ,HashRouter} from 'react-router-dom';
-import AdminPage from './Pages/adminPage';
-import MainPage from './Pages/mainPage';
-import UserPage from './Pages/userPage';
+import './styles.scss';
+import Header from './components/Header';
+import { Route, Switch, HashRouter } from 'react-router-dom';
+import AdminPage from './pages/AdminPage';
+import MainPage from './pages/MainPage';
+import UserPage from './pages/UserPage';
 
 function App() {
   return (
-    <div>
-      <HashRouter >
-      <Header></Header>
+    <HashRouter>
+      <Header />
 
       <Switch>
         <Route path="/main">
-          <MainPage/>
+          <MainPage />
         </Route>
         <Route path="/user">
-          <UserPage/>
+          <UserPage />
         </Route>
         <Route path="/admin">
-          <AdminPage/>
+          <AdminPage />
         </Route>
-
       </Switch>
-      </HashRouter>
-    </div>
+    </HashRouter>
   );
 }
 
