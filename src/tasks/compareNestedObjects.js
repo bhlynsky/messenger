@@ -15,7 +15,7 @@ export default function compareNestedObjects(obj1, obj2) {
 
     if (Array.isArray(value1)) {
       isEqual = compareArrays(value1, value2);
-    } else if (typeof value1 !== 'object' || typeof value2 !== 'object') {
+    } else if (typeof value1 !== 'object' && typeof value2 !== 'object') {
       if (value1 !== value2) {
         isEqual = false;
         break;
@@ -29,8 +29,7 @@ export default function compareNestedObjects(obj1, obj2) {
 
 const compareArrays = (a, b) => {
   if (a.length === b.length) {
-    if (JSON.stringify(a) !== JSON.stringify(b)) return false;
-    return true;
+    return JSON.stringify(a) === JSON.stringify(b);
   } else {
     return false;
   }
