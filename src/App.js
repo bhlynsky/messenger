@@ -4,6 +4,7 @@ import { Route, Switch, HashRouter } from 'react-router-dom';
 import AdminPage from './pages/AdminPage';
 import MainPage from './pages/MainPage';
 import UserPage from './pages/UserPage';
+import TaskPage from './pages/TaskPage';
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
         </Route>
         <Route path="/admin">
           <AdminPage />
+        </Route>
+        <Route path="/tasks">
+          <TaskPage />
         </Route>
       </Switch>
     </HashRouter>
