@@ -11,17 +11,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
-$fonts: Helvetica, sans-serif;
-$color: #ffff00;
-$height: 200px;
-$width: 400px;
-
-.div-test {
-  font: $fonts;
-  background: $color;
-  position: absolute;
-  height: $height;
-  width: $width;
-  margin: auto;
-}

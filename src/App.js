@@ -1,12 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-import "./input.scss"
+import './styles.scss';
+import Header from './components/Header';
+import { Route, Switch, HashRouter } from 'react-router-dom';
+import AdminPage from './pages/AdminPage';
+import MainPage from './pages/MainPage';
+import UserPage from './pages/UserPage';
+
 function App() {
   return (
-    <div className="div-test">
-      sass styles
+    <HashRouter>
+      <Header />
 
-    </div>
+      <Switch>
+        <Route path="/main">
+          <MainPage />
+        </Route>
+        <Route path="/user">
+          <UserPage />
+        </Route>
+        <Route path="/admin">
+          <AdminPage />
+        </Route>
+      </Switch>
+    </HashRouter>
   );
 }
 
