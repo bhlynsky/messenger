@@ -26,7 +26,6 @@ export default function compareNestedObjects(obj1, obj2) {
 
   return isEqual;
 }
-const compareValues = (value1, value2) => {};
 
 const compareArrays = (a, b) => {
   if (a.length === b.length) {
