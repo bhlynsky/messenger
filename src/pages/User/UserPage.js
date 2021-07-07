@@ -10,7 +10,7 @@ export default function UserPage() {
   const [userData, setUserData] = useState(initialState);
 
   const [open, setOpen] = useState(false);
-
+ // you not necessary assign constants here you can just use below userConstants.EDIT and so on
   const labels = userConstants;
 
   const classes = useStyles();
@@ -28,8 +28,6 @@ export default function UserPage() {
     setOpen(false);
   };
 
-  //TODO All labels such  'Username' move to constants too
-  //pages -> User -> services -> user-constants.js
   return (
     <div>
       <Typography variant="h2" align="center" className={classes.margin}>
@@ -41,6 +39,7 @@ export default function UserPage() {
           <CardMedia className={classes.media} title="Avatar" />
           <CardContent>
             <Grid container spacing={1} direction="column">
+              {/* FIXME Why empty string here? */}
               {' '}
               <Typography variant="body1">
                 <b>{labels.USERNAME}</b> : {userData.name}

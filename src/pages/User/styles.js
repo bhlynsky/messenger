@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-// FIXME move to separate file with styles
+
 export const useStyles = makeStyles((theme) => ({
   margin: {
     margin: '20px',
@@ -24,4 +24,5 @@ export const useStyles = makeStyles((theme) => ({
     height: 140,
   },
 }));
+
 export default useStyles;
