@@ -1,79 +1,68 @@
-import React, {useState} from 'react';
-import {connect} from 'react-redux';
-import {Typography, Divider, Grid, Button, Modal} from '@material-ui/core';
-import {Card, CardActionArea, CardMedia, CardContent, CardActions} from '@material-ui/core';
-import {initialState} from './services/user-services';
-import {useStyles} from './styles';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { Typography, Divider, Grid, Button, Modal } from '@material-ui/core';
+import { Card, CardActionArea, CardMedia, CardContent, CardActions } from '@material-ui/core';
+import { initialState } from './services/user-services';
+import { useStyles } from './styles';
 import ChangeDataModal from './ChangeDataModal';
-import {ACTIONS_LABELS, userConstants} from './services/user-constants';
-import {userStore} from './services/user-reducer';
-
+import { ACTIONS_LABELS, userConstants } from './services/user-constants';
 
 const UserPage = (props) => {
-    const [userData, setUserData] = useState(initialState);
-    const [open, setOpen] = useState(false);
-    const classes = useStyles();
-    console.log(props.name)
+  const [open, setOpen] = useState(false);
+  const classes = useStyles();
+  let { name, email, imgSrc } = props;
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
+  console.log(props);
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
-    const handleSubmit = (data) => {
-        setUserData(data);
-        setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-        userStore.dispatch({
-            type: 'CHANGE_DATA',
-            data
-        });
-    };
+  return (
+    <div>
+      <Typography variant="h2" align="center" className={classes.margin}>
+        {userConstants.PAGE}
+      </Typography>
+      <Divider className={classes.margin} />
+      <Card className={classes.root}>
+        <CardActionArea>
+          <CardMedia className={classes.media} title="Avatar" src={`../static/${imgSrc}`} />
+          <CardContent>
+            <Grid container spacing={1} direction="column">
+              <Typography variant="body1">
+                <b>{userConstants.USERNAME}</b> : {name}
+              </Typography>
+              <Typography variant="body1">
+                <b>{userConstants.EMAIL}</b> : {email}
+              </Typography>
+            </Grid>
+          </CardContent>
+        </CardActionArea>
 
-    return (
-        <div>
-            <Typography variant="h2" align="center" className={classes.margin}>
-                {userConstants.PAGE}
-            </Typography>
-            <Divider className={classes.margin}/>
-            <Card className={classes.root}>
-                <CardActionArea>
-                    <CardMedia className={classes.media} title="Avatar"/>
-                    <CardContent>
-                        <Grid container spacing={1} direction="column">
-                            <Typography variant="body1">
-                                <b>{userConstants.USERNAME}</b> : {userData.name}
-                            </Typography>
-                            <Typography variant="body1">
-                                <b>{userConstants.EMAIL}</b> : {userData.email}
-                            </Typography>
-                        </Grid>
-                    </CardContent>
-                </CardActionArea>
+        <CardActions>
+          <Button variant="contained" color="primary" onClick={handleOpen}>
+            {ACTIONS_LABELS.EDIT}
+          </Button>
 
-                <CardActions>
-                    <Button variant="contained" color="primary" onClick={handleOpen}>
-                        {ACTIONS_LABELS.EDIT}
-                    </Button>
-
-                    <Modal open={open} onClose={handleClose}>
-                        <ChangeDataModal
-                            handleSubmit={handleSubmit}
-                            handleClose={handleClose}
-                            data={userData}
-                        />
-                    </Modal>
-                </CardActions>
-            </Card>
-        </div>
-    );
-}
+          <Modal open={open} onClose={handleClose}>
+            <div>
+              <ChangeDataModal handleClose={handleClose} data={(name, email, imgSrc)} />
+            </div>
+          </Modal>
+        </CardActions>
+      </Card>
+    </div>
+  );
+};
 
 const mapDispatchToProps = (state) => ({
-    name: state.name
+  name: state.name,
+  email: state.email,
+  imgSrc: state.imgSrc,
 });
 
 export default connect(mapDispatchToProps)(UserPage);
