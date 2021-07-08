@@ -1,15 +1,16 @@
 import { createStore } from 'redux';
+import userActions from './user-actions';
 import { initialState } from './user-services';
-
-const userActions = {};
-userActions.actionsType = {
-  CHANGE_DATA: 'CHANGE DATA',
-};
 
 function userReducer(state = initialState, action) {
   switch (action.type) {
     case userActions.actionsType.CHANGE_DATA:
-      return action.data;
+
+    //{...user} === Object.assign({}, user)
+      return {
+        ...state,
+        ...action.user
+      };
     default:
       return state;
   }
