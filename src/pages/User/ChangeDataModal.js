@@ -54,7 +54,7 @@ const ChangeDataModal = (props) => {
         <Input id="change-image" type="file" onChange={handleChange} name="imgSrc" />
       </FormControl>
 
-      <Button variant="contained" color="primary" onClick={onSave}>
+      <Button variant="contained" color="secondary" onClick={onSave}>
         {ACTIONS_LABELS.SAVE}
       </Button>
 
