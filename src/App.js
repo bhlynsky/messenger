@@ -3,7 +3,7 @@ import Header from './components/Header';
 import { Route, Switch, HashRouter } from 'react-router-dom';
 import AdminPage from './pages/AdminPage';
 import MainPage from './pages/MainPage';
-import UserPage from './pages/UserPage/UserPage';
+import UserPage from './pages/User/UserPage';
 import TaskPage from './pages/TaskPage';
 
 function App() {

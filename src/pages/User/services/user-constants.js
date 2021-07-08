@@ -1,19 +1,21 @@
-export const userConstants = {
-    PAGE: 'User Page',
-    USERNAME: 'Username',
-    EMAIL: 'Email',
-    CHANGE_NAME: 'Change User Name',
-    CHANGE_IMAGE: 'Change Image',
-    CHANGE_EMAIL: 'Change Email',
-    // FIXME what means BTH ? white fool subscription
-    // if that button, better shod in separate cons variable like ACTIONS_LABELS of smth like that
-    Btn: {
-        EDIT: 'Edit',
-        CLOSE: 'Close',
-        OPEN: 'Open',
-        SAVE: 'Save',
-    },
+const ACTIONS_LABELS = {
+  EDIT: 'Edit',
+  CLOSE: 'Close',
+  OPEN: 'Open',
+  SAVE: 'Save',
 };
+
+const userConstants = {
+  PAGE: 'User Page',
+  USERNAME: 'Username',
+  EMAIL: 'Email',
+  CHANGE_NAME: 'Change User Name',
+  CHANGE_IMAGE: 'Change Image',
+  CHANGE_EMAIL: 'Change Email',
+  ACTIONS_LABELS,
+};
+
+export { userConstants, ACTIONS_LABELS };
 
 /*
 * for several constants use next approach
