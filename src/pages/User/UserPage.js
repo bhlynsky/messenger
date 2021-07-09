@@ -8,61 +8,68 @@ import ChangeDataModal from './ChangeDataModal';
 import { ACTIONS_LABELS, userConstants } from './services/user-constants';
 
 const UserPage = (props) => {
-  const [open, setOpen] = useState(false);
-  const classes = useStyles();
-  let { name, email, imgSrc } = props;
+    const [open, setOpen] = useState(false);
+    const classes = useStyles();
+    let { name, email, imgSrc } = props;
 
-  console.log(props);
+    console.log(props);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+    const handleOpen = () => {
+        setOpen(true);
+    };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+    const handleClose = () => {
+        setOpen(false);
+    };
 
-  return (
-    <div>
-      <Typography variant="h2" align="center" className={classes.margin}>
-        {userConstants.PAGE}
-      </Typography>
-      <Divider className={classes.margin} />
-      <Card className={classes.root}>
-        <CardActionArea>
-          <CardMedia className={classes.media} title="Avatar" src={`../static/${imgSrc}`} />
-          <CardContent>
-            <Grid container spacing={1} direction="column">
-              <Typography variant="body1">
-                <b>{userConstants.USERNAME}</b> : {name}
-              </Typography>
-              <Typography variant="body1">
-                <b>{userConstants.EMAIL}</b> : {email}
-              </Typography>
-            </Grid>
-          </CardContent>
-        </CardActionArea>
+    return (
+        <div>
+            <Typography variant="h2" align="center" className={classes.margin}>
+                {userConstants.PAGE}
+            </Typography>
+            <Divider className={classes.margin} />
+            <Card className={classes.root}>
+                <CardActionArea>
+                    <CardMedia
+                        className={classes.media}
+                        title="Avatar"
+                        src={`../static/${imgSrc}`}
+                    />
+                    <CardContent>
+                        <Grid container spacing={1} direction="column">
+                            <Typography variant="body1">
+                                <b>{userConstants.USERNAME}</b> : {name}
+                            </Typography>
+                            <Typography variant="body1">
+                                <b>{userConstants.EMAIL}</b> : {email}
+                            </Typography>
+                        </Grid>
+                    </CardContent>
+                </CardActionArea>
 
-        <CardActions>
-          <Button variant="contained" color="primary" onClick={handleOpen}>
-            {ACTIONS_LABELS.EDIT}
-          </Button>
+                <CardActions>
+                    <Button variant="contained" color="primary" onClick={handleOpen}>
+                        {ACTIONS_LABELS.EDIT}
+                    </Button>
 
-          <Modal open={open} onClose={handleClose}>
-            <div>
-              <ChangeDataModal handleClose={handleClose} data={(name, email, imgSrc)} />
-            </div>
-          </Modal>
-        </CardActions>
-      </Card>
-    </div>
-  );
+                    <Modal open={open} onClose={handleClose}>
+                        <div>
+                            <ChangeDataModal
+                                handleClose={handleClose}
+                                data={(name, email, imgSrc)}
+                            />
+                        </div>
+                    </Modal>
+                </CardActions>
+            </Card>
+        </div>
+    );
 };
 
 const mapDispatchToProps = (state) => ({
-  name: state.name,
-  email: state.email,
-  imgSrc: state.imgSrc,
+    name: state.name,
+    email: state.email,
+    imgSrc: state.imgSrc,
 });
 
 export default connect(mapDispatchToProps)(UserPage);

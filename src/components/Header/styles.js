@@ -1,20 +1,19 @@
 import { makeStyles } from '@material-ui/styles';
-
+import theme from '../../theme';
 export const useStyles = makeStyles({
-  header: {
-    fontSize: '20px',
-    display: 'flex',
-    flexDirection: 'row',
-    height: '40px',
-    position: 'relative',
-  },
-  link: {
-    background: 'white',
-    padding: '5px',
-    marginLeft: '50px',
-    textDecoration: 'none',
-    color: 'darkred',
-    verticalAlign: 'middle',
-    borderRadius: '2px',
-  },
+    header: {
+        fontSize: '20px',
+        display: 'flex',
+        flexDirection: 'row',
+        height: '40px',
+        position: 'relative',
+    },
+    link: {
+        background: theme.palette.primary,
+        padding: '5px',
+        marginLeft: '50px',
+        textDecoration: 'none',
+        color: 'white',
+        verticalAlign: 'text-top',
+    },
 });

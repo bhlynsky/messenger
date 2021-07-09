@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
-import {connect} from 'react-redux';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import userActions from './services/user-actions';
-import {useStyles} from './styles';
-import {FormControl, InputLabel, Input, Typography, Button} from '@material-ui/core';
-import {ACTIONS_LABELS, userConstants} from './services/user-constants';
-import {userStore} from './services/user-reducer';
+import { useStyles } from './styles';
+import { FormControl, InputLabel, Input, Typography, Button, Fab } from '@material-ui/core';
+import Add from '@material-ui/icons/Add';
+import { ACTIONS_LABELS, userConstants } from './services/user-constants';
+import { userStore } from './services/user-reducer';
 
 const ChangeDataModal = (props) => {
-    const {handleClose, user, changeData} = props;
+    const { handleClose, user, changeData } = props;
     const [newUserData, setNewUserData] = useState(user);
     const classes = useStyles();
 
@@ -18,7 +19,7 @@ const ChangeDataModal = (props) => {
     };
 
     const handleChange = (e) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
 
         setNewUserData((prevState) => ({
             ...prevState,
@@ -49,15 +50,31 @@ const ChangeDataModal = (props) => {
                 />
             </FormControl>
             <FormControl>
-                <Typography variant="caption">{userConstants.CHANGE_IMAGE}</Typography>
-                <Input id="change-image" type="file" onChange={handleChange} name="imgSrc"/>
+                <label htmlFor="upload-photo">
+                    <input
+                        style={{ display: 'none' }}
+                        id="upload-photo"
+                        name="upload-photo"
+                        type="file"
+                    />
+
+                    <Fab
+                        color="secondary"
+                        size="small"
+                        component="span"
+                        aria-label="add"
+                        variant="extended"
+                    >
+                        <Add /> {userConstants.CHANGE_IMAGE}
+                    </Fab>
+                </label>
             </FormControl>
 
-            <Button variant="contained" color="secondary" onClick={onSave}>
+            <Button variant="contained" color="primary" onClick={onSave}>
                 {ACTIONS_LABELS.SAVE}
             </Button>
 
-            <Button variant="contained" color="default" onClick={handleClose}>
+            <Button variant="contained" color="secondary" onClick={handleClose}>
                 {ACTIONS_LABELS.CLOSE}
             </Button>
         </form>
@@ -69,7 +86,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    changeData: (user) => dispatch(userActions.changeData(user))
-})
+    changeData: (user) => dispatch(userActions.changeData(user)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChangeDataModal);
