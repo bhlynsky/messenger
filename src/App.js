@@ -4,7 +4,7 @@ import AdminPage from './pages/AdminPage';
 import MainPage from './pages/MainPage';
 import UserPage from './pages/User/UserPage';
 import TaskPage from './pages/TaskPage';
-import Stylesheets from './pages/Stylesheets';
+import Stylesheets from './pages/Stylesheets/Stylesheets';
 
 function App() {
     return (

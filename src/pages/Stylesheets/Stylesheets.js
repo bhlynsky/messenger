@@ -1,18 +1,20 @@
 import React from 'react';
 import { Button, Grid, TextField, Typography, Divider, IconButton, Fab } from '@material-ui/core';
 import Add from '@material-ui/icons/Add';
-import { makeStyles } from '@material-ui/core';
+import useStyles from './styles';
+import {
+    stylesheetConstants,
+    sections,
+    buttonsType,
+    inputsType,
+} from './services/stylesheet-constants';
 
-const useStyles = makeStyles({
-    mtop: {
-        marginTop: '25px',
-    },
-});
 const Stylesheets = () => {
     const classes = useStyles();
+
     return (
         <div>
-            <Typography variant="h1">Examples of elements</Typography>
+            <Typography variant="h1">{stylesheetConstants.PAGE_HEADER}</Typography>
             <Divider variant="middle" />
             <Grid container spacing={2} alignContents="center" className={classes.mtop}>
                 <Grid
@@ -22,16 +24,16 @@ const Stylesheets = () => {
                     justify="space-around"
                     alignItems="center"
                 >
-                    <Typography variant="h2">Buttons</Typography>
+                    <Typography variant="h2">{sections.BUTTONS}</Typography>
 
                     <Grid container justify="space-evenly" alignItems="center">
                         <Button variant="contained" color="primary">
-                            Primary
+                            {buttonsType.PRIMARY}
                         </Button>
                         <Button variant="contained" color="secondary">
-                            Secondary
+                            {buttonsType.SECONDARY}
                         </Button>
-                        <Button variant="outlined">Disabled</Button>
+                        <Button variant="outlined">{buttonsType.DISABLED}</Button>
                     </Grid>
                 </Grid>
 
@@ -42,12 +44,12 @@ const Stylesheets = () => {
                     justify="space-around"
                     alignItems="center"
                 >
-                    <Typography variant="h2">Inputs</Typography>
+                    <Typography variant="h2">{sections.INPUTS}</Typography>
                     <Divider variant="middle" />
                     <Grid container justify="space-evenly" alignItems="center">
-                        <TextField label="Default" color="primary" />
-                        <TextField error label="Error" helperText="error" />
-                        <TextField label="Disabled" variant="filled" />
+                        <TextField label={inputsType.DEFAULT} color="primary" />
+                        <TextField error label={inputsType.ERROR} helperText="error" />
+                        <TextField label={inputsType.DISABLED} variant="filled" />
 
                         <label htmlFor="upload-photo">
                             <input
@@ -64,7 +66,7 @@ const Stylesheets = () => {
                                 aria-label="add"
                                 variant="extended"
                             >
-                                <Add /> Upload photo
+                                <Add /> {inputsType.UPLOAD}
                             </Fab>
                         </label>
                     </Grid>
@@ -77,7 +79,7 @@ const Stylesheets = () => {
                     alignItems="center"
                     className={classes.mtop}
                 >
-                    <Typography variant="h2">Font:Roboto</Typography>
+                    <Typography variant="h2">{sections.FONT}</Typography>
                     <Divider variant="middle" />
                     <Grid container justify="space-evenly" alignItems="center">
                         <Typography variant="h1"> Main heading h1</Typography>
