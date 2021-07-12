@@ -1,10 +1,7 @@
 import { makeStyles } from '@material-ui/core';
+import theme from '../../theme.js';
 
 const useStyles = makeStyles({
-    mtop: {
-        margin: '30px',
-    },
-
     block: {
         border: '1px black solid',
         borderRadius: '10px',
@@ -14,7 +11,6 @@ const useStyles = makeStyles({
         margin: 'auto',
         marginTop: '15px',
     },
-    header: {},
 });
 
 export default useStyles;

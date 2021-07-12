@@ -19,6 +19,19 @@ const theme = createMuiTheme({
         h2: {
             fontSize: '25px',
         },
+        subtitle2: {
+            fontSize: '10px',
+        },
+    },
+    overrides: {
+        MuiFab: {
+            sizeSmall: {
+                marginBottom: '-10px',
+            },
+        },
+        MuiFormHelperText: {
+            root: { marginBottom: '-20px' },
+        },
     },
 });
 export default theme;

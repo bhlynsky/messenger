@@ -29,11 +29,7 @@ const UserPage = (props) => {
             <Divider className={classes.margin} />
             <Card className={classes.root}>
                 <CardActionArea>
-                    <CardMedia
-                        className={classes.media}
-                        title="Avatar"
-                        src={`../static/${imgSrc}`}
-                    />
+                    <CardMedia className={classes.media} title="Avatar" image={`/${imgSrc}`} />
                     <CardContent>
                         <Grid container spacing={1} direction="column">
                             <Typography variant="body1">
