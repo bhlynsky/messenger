@@ -16,13 +16,14 @@ const inputsType = {
     DEFAULT: 'Default',
     ERROR: 'Error',
     DISABLED: 'Disabled',
-    UPLOAD: 'Upload',
+    UPLOAD: 'Upload File',
 };
 const textType = {
     MAIN_HEADER: 'Main heading',
     SUB_HEADER: 'Sub heading',
     BODY: 'Body',
     SUBTITLE: 'Subtitle',
+    DISABLED: 'Disabled',
 };
 
 export { stylesheetConstants, sections, buttonsType, inputsType, textType };
