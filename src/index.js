@@ -8,14 +8,14 @@ import { Provider } from 'react-redux';
 import { userStore } from './pages/User/services/user-reducer';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <Provider store={userStore}>
-        <App />
-      </Provider>
-    </ThemeProvider>
-  </React.StrictMode>,
-  document.getElementById('root'),
+    <React.StrictMode>
+        <ThemeProvider theme={theme}>
+            <Provider store={userStore}>
+                <App />
+            </Provider>
+        </ThemeProvider>
+    </React.StrictMode>,
+    document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function

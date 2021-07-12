@@ -1,4 +1,3 @@
-import './styles.scss';
 import Header from './components/Header/Header';
 import { Route, Switch, HashRouter } from 'react-router-dom';
 import AdminPage from './pages/AdminPage';

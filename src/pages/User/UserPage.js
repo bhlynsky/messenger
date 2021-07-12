@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Typography, Divider, Grid, Button, Modal } from '@material-ui/core';
 import { Card, CardActionArea, CardMedia, CardContent, CardActions } from '@material-ui/core';
-import { initialState } from './services/user-services';
 import { useStyles } from './styles';
 import ChangeDataModal from './ChangeDataModal';
 import { ACTIONS_LABELS, userConstants } from './services/user-constants';
