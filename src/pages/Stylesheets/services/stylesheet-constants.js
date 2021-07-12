@@ -1,5 +1,5 @@
 const stylesheetConstants = {
-    PAGE_HEADER: 'Example of elements',
+    PAGE: 'Example of elements',
 };
 const sections = {
     BUTTONS: ' Buttons',
@@ -18,5 +18,11 @@ const inputsType = {
     DISABLED: 'Disabled',
     UPLOAD: 'Upload',
 };
+const textType = {
+    MAIN_HEADER: 'Main heading',
+    SUB_HEADER: 'Sub heading',
+    BODY: 'Body',
+    SUBTITLE: 'Subtitle',
+};
 
-export { stylesheetConstants, sections, buttonsType, inputsType };
+export { stylesheetConstants, sections, buttonsType, inputsType, textType };

@@ -7,6 +7,7 @@ import {
     sections,
     buttonsType,
     inputsType,
+    textType,
 } from './services/stylesheet-constants';
 
 const Stylesheets = () => {
@@ -14,9 +15,9 @@ const Stylesheets = () => {
 
     return (
         <div>
-            <Typography variant="h1">{stylesheetConstants.PAGE_HEADER}</Typography>
+            <Typography variant="h1">{stylesheetConstants.PAGE}</Typography>
             <Divider variant="middle" />
-            <Grid container spacing={2} alignContents="center" className={classes.mtop}>
+            <Grid container spacing={2} className={classes.mtop}>
                 <Grid
                     container
                     xs={6}
@@ -82,10 +83,10 @@ const Stylesheets = () => {
                     <Typography variant="h2">{sections.FONT}</Typography>
                     <Divider variant="middle" />
                     <Grid container justify="space-evenly" alignItems="center">
-                        <Typography variant="h1"> Main heading h1</Typography>
-                        <Typography variant="h2"> Main heading h2</Typography>
-                        <Typography variant="body1"> Body</Typography>
-                        <Typography variant="subtitle1"> Subtitle</Typography>
+                        <Typography variant="h1">{textType.MAIN_HEADER}</Typography>
+                        <Typography variant="h2"> {textType.SUB_HEADER}</Typography>
+                        <Typography variant="body1">{textType.BODY}</Typography>
+                        <Typography variant="subtitle1"> {textType.SUBTITLE}</Typography>
                     </Grid>
                 </Grid>
             </Grid>
