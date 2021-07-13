@@ -56,7 +56,7 @@ const Stylesheets = () => {
                             component="button"
                             aria-label="add"
                             variant="extended"
-                            style={{ borderRadius: '5px' }}
+                            style={{ borderRadius: '5px', marginBottom: '-10px' }}
                         >
                             <Add /> {inputsType.UPLOAD}
                         </Fab>

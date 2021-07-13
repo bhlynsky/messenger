@@ -24,11 +24,6 @@ const theme = createMuiTheme({
         },
     },
     overrides: {
-        MuiFab: {
-            sizeSmall: {
-                marginBottom: '-10px',
-            },
-        },
         MuiFormHelperText: {
             root: { marginBottom: '-20px' },
         },
