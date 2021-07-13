@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core';
-import theme from '../../theme.js';
 
 const useStyles = makeStyles({
     block: {

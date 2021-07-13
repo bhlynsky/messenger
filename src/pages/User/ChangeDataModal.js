@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import userActions from './services/user-actions';
 import { useStyles } from './styles';
-import { FormControl, InputLabel, Input, Typography, Button, Fab } from '@material-ui/core';
+import { FormControl, InputLabel, Input, Button, Fab, Grid } from '@material-ui/core';
 import Add from '@material-ui/icons/Add';
 import { ACTIONS_LABELS, userConstants } from './services/user-constants';
-import { userStore } from './services/user-reducer';
 
 const ChangeDataModal = (props) => {
     const { handleClose, user, changeData } = props;
@@ -14,7 +13,6 @@ const ChangeDataModal = (props) => {
 
     const onSave = () => {
         changeData(newUserData);
-
         handleClose();
     };
 
@@ -49,34 +47,46 @@ const ChangeDataModal = (props) => {
                     name="email"
                 />
             </FormControl>
-            <FormControl>
-                <label htmlFor="upload-photo">
-                    <input
-                        style={{ display: 'none' }}
-                        id="upload-photo"
-                        name="upload-photo"
-                        type="file"
-                    />
 
-                    <Fab
-                        color="secondary"
-                        size="small"
-                        component="span"
-                        aria-label="add"
-                        variant="extended"
-                    >
-                        <Add /> {userConstants.CHANGE_IMAGE}
-                    </Fab>
-                </label>
-            </FormControl>
+            <label htmlFor="upload-photo">
+                <input
+                    style={{ display: 'none' }}
+                    id="upload-photo"
+                    name="upload-photo"
+                    type="file"
+                />
 
-            <Button variant="contained" color="primary" onClick={onSave}>
-                {ACTIONS_LABELS.SAVE}
-            </Button>
+                <Fab
+                    color="secondary"
+                    size="small"
+                    component="span"
+                    aria-label="add"
+                    variant="extended"
+                    style={{ borderRadius: '5px', margin: '10px' }}
+                >
+                    <Add /> {userConstants.CHANGE_IMAGE}
+                </Fab>
+            </label>
 
-            <Button variant="contained" color="secondary" onClick={handleClose}>
-                {ACTIONS_LABELS.CLOSE}
-            </Button>
+            <Grid container justify="space-around">
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={onSave}
+                    className={classes.button}
+                >
+                    {ACTIONS_LABELS.SAVE}
+                </Button>
+
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleClose}
+                    className={classes.button}
+                >
+                    {ACTIONS_LABELS.CLOSE}
+                </Button>
+            </Grid>
         </form>
     );
 };

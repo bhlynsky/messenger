@@ -19,8 +19,8 @@ const theme = createMuiTheme({
         h2: {
             fontSize: '25px',
         },
-        subtitle2: {
-            fontSize: '10px',
+        subtitle1: {
+            fontWeight: 'bold',
         },
     },
     overrides: {

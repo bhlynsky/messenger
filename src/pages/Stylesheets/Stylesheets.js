@@ -29,7 +29,9 @@ const Stylesheets = () => {
                     <Button variant="contained" color="secondary">
                         {buttonsType.SECONDARY}
                     </Button>
-                    <Button variant="outlined">{buttonsType.DISABLED}</Button>
+                    <Button variant="contained" disabled={true}>
+                        {buttonsType.DISABLED}
+                    </Button>
                 </Grid>
             </Grid>
 
@@ -69,7 +71,7 @@ const Stylesheets = () => {
                     <Typography variant="h1">{textType.MAIN_HEADER}</Typography>
                     <Typography variant="h2"> {textType.SUB_HEADER}</Typography>
                     <Typography variant="body1">{textType.BODY}</Typography>
-                    <Typography variant="subtitle2"> {textType.SUBTITLE}</Typography>
+                    <Typography variant="subtitle1"> {textType.SUBTITLE}</Typography>
                     <Typography variant="body1" color="textSecondary">
                         {textType.DISABLED}
                     </Typography>
