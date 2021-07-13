@@ -21,11 +21,15 @@ export const useStyles = makeStyles((theme) => ({
         maxWidth: 345,
     },
     media: {
-        height: 140,
+        maxHeight: 140,
         paddingTop: '56.25%', // 16:9,
     },
     button: {
-        width: '45%',
+        width: '47.5%',
+    },
+    buttonClose: {
+        width: '47.5%',
+        marginLeft: '5%',
     },
 }));
 

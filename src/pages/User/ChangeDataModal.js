@@ -62,13 +62,13 @@ const ChangeDataModal = (props) => {
                     component="span"
                     aria-label="add"
                     variant="extended"
-                    style={{ borderRadius: '5px', margin: '10px' }}
+                    style={{ borderRadius: '5px', margin: '10px 0px' }}
                 >
                     <Add /> {userConstants.CHANGE_IMAGE}
                 </Fab>
             </label>
 
-            <Grid container justify="space-around">
+            <Grid container justify="flex-start">
                 <Button
                     variant="contained"
                     color="primary"
@@ -82,7 +82,7 @@ const ChangeDataModal = (props) => {
                     variant="contained"
                     color="secondary"
                     onClick={handleClose}
-                    className={classes.button}
+                    className={classes.buttonClose}
                 >
                     {ACTIONS_LABELS.CLOSE}
                 </Button>
