@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import getData from './services/nasa-actions';
 
 const NasaPicsPage = (props) => {
-    let { onLoadData, data } = props;
+    let { onLoadData, data, isLoading } = props;
     console.table(data);
 
     const onNext = () => {
@@ -35,7 +35,8 @@ const NasaPicsPage = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    data: state,
+    data: state.data,
+    isLoading: state.isLoading
 });
 
 const mapDispatchToProps = (dispatch) => ({
