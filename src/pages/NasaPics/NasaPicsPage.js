@@ -13,18 +13,19 @@ const NasaPicsPage = (props) => {
 
     return (
         <div>
-            <Typography variant="h2">5 Random picture from NASA</Typography>
             {data && data.length !== 0 ? (
                 Object.keys(data).map((item) => (
-                    <div>
-                        <Typography variant="body1">{data[item].title}</Typography>
+                    <div style={{ marginBottom: '20px' }}>
+                        <Typography variant="subtitle1">{data[item].title}</Typography>
                         <img src={`${data[item].url}`}></img>
-                        <Typography variant="body1">{data[item].date}</Typography>
+                        <Typography variant="body2">{data[item].date}</Typography>
                         <Typography variant="body1">{data[item].explanation}</Typography>
                     </div>
                 ))
             ) : (
-                <CircularProgress />
+                <Typography variant="h2">
+                    Press button to see 5 astronomic facts of the day{' '}
+                </Typography>
             )}
             <Button variant="contained" color="primary" onClick={onNext}>
                 Load
