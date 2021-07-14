@@ -1,23 +1,31 @@
 import { applyMiddleware, createStore } from 'redux';
-import action_type from './nasa-constants';
+import actionType from './nasa-constants';
 import thunk from 'redux-thunk';
-
+import { initialState } from './nasa-services';
 //TODO add initial state
-function nasaReducer(state, action) {
+function nasaReducer(state = initialState, action) {
     switch (action.type) {
         //load data
-        // case action_type.LOAD:
-        //     return {
-        //         ...state,
-        //         isLoading: true
-        //     };
+        case actionType.LOAD:
+            return {
+                ...state,
+                isLoading: true,
+            };
         //load success
-        case action_type.LOAD:
+        case actionType.SUCCESS:
             return {
                 ...state,
                 data: action.data,
-                isLoading: false
+                isLoading: false,
             };
+        //load error
+        case actionType.ERORR: {
+            return {
+                ...state,
+                erorr: action.error,
+                isLoading: false,
+            };
+        }
         default:
             return state;
     }
