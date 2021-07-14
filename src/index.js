@@ -6,11 +6,12 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './theme';
 import { Provider } from 'react-redux';
 import { userStore } from './pages/User/services/user-reducer';
+import { nasaStore } from './pages/NasaPics/services/nasa-reducer';
 
 ReactDOM.render(
     <React.StrictMode>
         <ThemeProvider theme={theme}>
-            <Provider store={userStore}>
+            <Provider store={nasaStore}>
                 <App />
             </Provider>
         </ThemeProvider>
