@@ -7,7 +7,7 @@ const getData = () => (dispatch) => {
     fetch(fetchUrl)
         .then((res) => res.json())
         .then((res) => {
-            if (res.code) throw new Error('something wrong');
+            if (res.code && (res.code > 300 || res < 200)) throw new Error('something wrong');
             else {
                 dispatch(setData(res));
             }
