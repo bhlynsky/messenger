@@ -6,13 +6,21 @@ import { getData } from './services/nasa-services';
 import { useStyles } from './styles';
 
 const NasaPicsPage = (props) => {
-    const { fetchEndpointAdop, data, isLoading } = props;
-
+    const { fetchEndpointAdop, data, isLoading, error } = props;
+    console.log(error);
     const onNext = () => {
         fetchEndpointAdop();
     };
 
     const classes = useStyles();
+    if (error)
+        return (
+            <div>
+                <Typography variant="h2" color="error">
+                    {error.message}
+                </Typography>
+            </div>
+        );
     return (
         <div>
             {isLoading ? (
@@ -45,6 +53,7 @@ const NasaPicsPage = (props) => {
 const mapStateToProps = (state) => ({
     data: state.data,
     isLoading: state.isLoading,
+    error: state.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({

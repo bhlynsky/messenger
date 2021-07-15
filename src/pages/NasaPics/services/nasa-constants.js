@@ -1,6 +1,6 @@
 const actionType = {
     LOAD: 'Load',
     SUCCESS: 'Success',
-    ERORR: 'Error',
+    ERROR: 'Error',
 };
 export default actionType;

@@ -12,7 +12,7 @@ const setData = (data) => ({
 
 //load data failed
 const loadError = (error) => ({
-    type: actionType.ERORR,
+    type: actionType.ERROR,
     error,
 });
 

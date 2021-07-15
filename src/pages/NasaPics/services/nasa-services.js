@@ -3,14 +3,14 @@ import { loadData, loadError, setData } from './nasa-actions';
 const fetchUrl = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&count=5';
 
 const getData = () => (dispatch) => {
-    loadData();
+    dispatch(loadData());
     fetch(fetchUrl)
         .then((res) => res.json())
         .then((res) => {
             dispatch(setData(res));
         })
         .catch((err) => {
-            dispatch(loadError(err.message));
+            dispatch(loadError(err));
         });
 };
 
@@ -22,7 +22,7 @@ const initialState = {
         date: '',
         explanation: '',
     },
-    erorr: null,
+    error: null,
 };
 
 export { getData, initialState };
