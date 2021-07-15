@@ -21,7 +21,6 @@ function nasaReducer(state = initialState, action) {
         //load error
         case actionType.ERROR: {
             return {
-                ...state,
                 error: action.error,
                 isLoading: false,
             };

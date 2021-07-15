@@ -7,7 +7,10 @@ const getData = () => (dispatch) => {
     fetch(fetchUrl)
         .then((res) => res.json())
         .then((res) => {
-            dispatch(setData(res));
+            if (res.code) throw new Error('something wrong');
+            else {
+                dispatch(setData(res));
+            }
         })
         .catch((err) => {
             dispatch(loadError(err));
