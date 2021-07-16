@@ -7,45 +7,52 @@ import { useStyles } from './styles';
 
 const NasaPicsPage = (props) => {
     const { fetchEndpointAdop, data, isLoading, error } = props;
-    console.log(error);
+
     const onNext = () => {
         fetchEndpointAdop();
     };
 
     const classes = useStyles();
-    if (error)
-        return (
-            <div>
-                <Typography variant="h2" color="error">
-                    {error.message}
-                </Typography>
-            </div>
-        );
+
     return (
         <div>
-            {isLoading ? (
-                <CircularProgress className={classes.spinner} />
+            {error ? (
+                <div>
+                    <Typography variant="h2" color="error">
+                        {error.message}
+                    </Typography>
+                </div>
             ) : (
                 <div>
-                    {data && data.title !== '' ? (
-                        Object.keys(data).map((item) => (
-                            <div style={{ marginBottom: '20px' }} key={item}>
-                                <Typography variant="subtitle1">{data[item].title}</Typography>
-                                <img src={`${data[item].url}`}></img>
-                                <Typography variant="body2">{data[item].date}</Typography>
-                                <Typography variant="body1">{data[item].explanation}</Typography>
-                            </div>
-                        ))
+                    {isLoading ? (
+                        <CircularProgress className={classes.spinner} />
                     ) : (
-                        <Typography variant="h2">
-                            Press button to see 5 astronomic facts of the day{' '}
-                        </Typography>
+                        <div>
+                            {data && data.title !== '' ? (
+                                Object.keys(data).map((item) => (
+                                    <div style={{ marginBottom: '20px' }} key={item}>
+                                        <Typography variant="subtitle1">
+                                            {data[item].title}
+                                        </Typography>
+                                        <img src={`${data[item].url}`}></img>
+                                        <Typography variant="body2">{data[item].date}</Typography>
+                                        <Typography variant="body1">
+                                            {data[item].explanation}
+                                        </Typography>
+                                    </div>
+                                ))
+                            ) : (
+                                <Typography variant="h2">
+                                    Press button to see 5 astronomic facts of the day{' '}
+                                </Typography>
+                            )}
+                        </div>
                     )}
+                    <Button variant="contained" color="primary" onClick={onNext}>
+                        Load
+                    </Button>
                 </div>
             )}
-            <Button variant="contained" color="primary" onClick={onNext}>
-                Load
-            </Button>
         </div>
     );
 };
