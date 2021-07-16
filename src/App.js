@@ -5,6 +5,7 @@ import MainPage from './pages/MainPage';
 import UserPage from './pages/User/UserPage';
 import TaskPage from './pages/TaskPage';
 import Stylesheets from './pages/Stylesheets/Stylesheets';
+import NasaPicsPage from './pages/NasaPics/NasaPicsPage';
 
 function App() {
     return (
@@ -27,6 +28,9 @@ function App() {
 
                 <Route path="/stylesheet">
                     <Stylesheets />
+                </Route>
+                <Route path="/nasa">
+                    <NasaPicsPage />
                 </Route>
             </Switch>
         </HashRouter>
