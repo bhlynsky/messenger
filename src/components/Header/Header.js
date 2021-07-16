@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 export default function Header() {
     const classes = useStyles();
     const location = useLocation().pathname;
-    console.log(location);
+
     return (
         <AppBar className={classes.header}>
             <Typography variant="subtitle1">

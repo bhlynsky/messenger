@@ -5,6 +5,7 @@ import Loading from '../components/Loading';
 export const withLoading = (WrappedComponent) => {
     function HOC(props) {
         const { isLoading } = props;
+
         return (
             <Loading isLoading={isLoading}>
                 <WrappedComponent {...props} />
