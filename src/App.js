@@ -5,7 +5,7 @@ import MainPage from './pages/MainPage';
 import UserPage from './pages/User/UserPage';
 import TaskPage from './pages/TaskPage';
 import Stylesheets from './pages/Stylesheets/Stylesheets';
-import NasaPicsPageWithLoading from './pages/NasaPics/NasaPicsPage';
+import NasaPicsPage from './pages/NasaPics/NasaPicsPage';
 
 function App() {
     return (
@@ -30,7 +30,7 @@ function App() {
                     <Stylesheets />
                 </Route>
                 <Route path="/nasa">
-                    <NasaPicsPageWithLoading />
+                    <NasaPicsPage />
                 </Route>
             </Switch>
         </HashRouter>

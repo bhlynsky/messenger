@@ -1,10 +1,10 @@
-import { Typography, Button } from '@material-ui/core';
+import { Typography, Button, Divider } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { loadData } from './services/nasa-actions';
 import { getData } from './services/nasa-services';
 import { useStyles } from './styles';
-import withLoading from '../../HOC/withLoading';
+import withLoading from '../../services/root-service';
 
 const NasaPicsPage = (props) => {
     const { fetchEndpointAdop, data, error, isLoading } = props;
@@ -23,28 +23,23 @@ const NasaPicsPage = (props) => {
                 </div>
             ) : (
                 <div>
-                    <div>
-                        {data && data.title !== '' ? (
-                            Object.keys(data).map((item) => (
-                                <div style={{ marginBottom: '20px' }} key={item}>
-                                    <Typography variant="subtitle1">{data[item].title}</Typography>
-                                    <img src={`${data[item].url}`}></img>
-                                    <Typography variant="body2">{data[item].date}</Typography>
-                                    <Typography variant="body1">
-                                        {data[item].explanation}
-                                    </Typography>
-                                </div>
-                            ))
-                        ) : (
-                            <Typography variant="h2">
-                                Press button to see 5 astronomic facts of the day{' '}
-                            </Typography>
-                        )}
-                    </div>
-
                     <Button variant="contained" color="primary" onClick={onNext}>
                         Load
                     </Button>
+                    {data && data.title !== '' ? (
+                        Object.keys(data).map((item) => (
+                            <div style={{ marginBottom: '20px' }} key={item}>
+                                <Typography variant="subtitle1">{data[item].title}</Typography>
+                                <img src={`${data[item].url}`}></img>
+                                <Typography variant="body2">{data[item].date}</Typography>
+                                <Typography variant="body1">{data[item].explanation}</Typography>
+                            </div>
+                        ))
+                    ) : (
+                        <Typography variant="h2">
+                            Press button to see 5 astronomic facts of the day{' '}
+                        </Typography>
+                    )}
                 </div>
             )}
         </div>
@@ -62,6 +57,4 @@ const mapDispatchToProps = (dispatch) => ({
     onLoad: () => dispatch(loadData()),
 });
 
-const NasaPicsPageWithLoading = withLoading(NasaPicsPage);
-
-export default connect(mapStateToProps, mapDispatchToProps)(NasaPicsPageWithLoading);
+export default connect(mapStateToProps, mapDispatchToProps)(withLoading(NasaPicsPage));
