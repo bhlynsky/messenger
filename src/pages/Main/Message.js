@@ -7,7 +7,7 @@ export const Message = (props) => {
     const classes = useStyles();
 
     return (
-        <div>
+        <div key={userName}>
             <div className={classes.message}>
                 <Grid container direction="row" alignItems="flex-start">
                     <Avatar>A</Avatar>

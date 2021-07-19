@@ -4,7 +4,13 @@ import actionType from './main-constants';
 
 function mainReducer(state = initialState, action) {
     switch (action.type) {
+        case actionType.LOAD:
+            return {
+                ...state,
+                ...action.data,
+            };
         case actionType.SEND_MESSAGE:
+            let { message } = action;
             return {
                 ...state.messages,
                 message, // add message to array / object where other messages stored

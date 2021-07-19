@@ -1,6 +1,5 @@
 import React from 'react';
-import { Divider, Drawer, IconButton, Typography } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import { Divider, Drawer, Typography } from '@material-ui/core';
 import { useStyles } from './styles';
 import { connect } from 'react-redux';
 import { Message } from './Message';
@@ -25,14 +24,15 @@ const Sidebar = (props) => {
                 </Typography>
             </div>
             <Divider />
-            {groups
-                ? Object.keys(groups).map((item) => (
-                      <div className={classes.lastMessages}>
-                          <Typography variant="subtitle1">{item.groupName}</Typography>
-                          <Message messageData={item} />
-                      </div>
-                  ))
-                : null}
+            {groups &&
+                Object.keys(groups).map((item) => (
+                    <div className={classes.lastMessages} key={groups[item].groupName}>
+                        <Typography variant="subtitle1">{groups[item].groupName}</Typography>
+                        <Message
+                            messageData={groups[item].messages[groups[item].messages.length - 1]}
+                        />
+                    </div>
+                ))}
         </Drawer>
     );
 };

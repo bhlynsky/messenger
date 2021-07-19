@@ -1,25 +1,21 @@
-import {
-    Typography,
-    Grid,
-    Button,
-    Divider,
-    TextField,
-    InputAdornment,
-    IconButton,
-    List,
-    ListItem,
-} from '@material-ui/core';
-import React, { useState } from 'react';
+import { Typography, Grid, Divider, TextField, InputAdornment } from '@material-ui/core';
+import React, { useEffect } from 'react';
 import Sidebar from './Sidebar';
 import { useStyles } from './styles';
 import SendIcon from '@material-ui/icons/Send';
 import AttachmentIcon from '@material-ui/icons/Attachment';
 import { Message } from './Message';
 import { connect } from 'react-redux';
+import { mockData } from './services/mockApi';
+import { loadData } from './services/main-actions';
 
 function MainPage(props) {
     const classes = useStyles();
-    const { groupName, messages } = props;
+    const { groupName, messages, loadData } = props;
+
+    useEffect(() => {
+        loadData(mockData);
+    });
 
     return (
         <div>
@@ -39,17 +35,9 @@ function MainPage(props) {
                 </Grid>
                 <Divider />
 
-                <Grid
-                    container
-                    direction="column-reverse"
-                    justifyContent="center"
-                    className={classes.messageContainer}
-                >
-                    {messages.map((msg) => (
-                        <div>
-                            <Message messageData={msg} />
-                        </div>
-                    ))}
+                <Grid container direction="column-reverse" className={classes.messageContainer}>
+                    {messages &&
+                        messages.map((msg) => <Message messageData={msg} key={msg.userName} />)}
                     <Divider />
                 </Grid>
 
@@ -79,4 +67,8 @@ const mapStateToProps = (state) => ({
     groupName: state.group.groupName,
 });
 
-export default connect(mapStateToProps, null)(MainPage);
+const mapDispatchToProps = (dispatch) => ({
+    loadData: (data) => dispatch(loadData(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
