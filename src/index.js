@@ -7,11 +7,12 @@ import theme from './theme';
 import { Provider } from 'react-redux';
 import { userStore } from './pages/User/services/user-reducer';
 import { nasaStore } from './pages/NasaPics/services/nasa-reducer';
+import { mainStore } from './pages/Main/services/main-reducer';
 
 ReactDOM.render(
     <React.StrictMode>
         <ThemeProvider theme={theme}>
-            <Provider store={nasaStore}>
+            <Provider store={mainStore}>
                 <App />
             </Provider>
         </ThemeProvider>

@@ -7,7 +7,7 @@ import { useStyles } from './styles';
 import withLoading from '../../services/root-service';
 
 const NasaPicsPage = (props) => {
-    const { fetchEndpointAdop, data, error, isLoading } = props;
+    const { fetchEndpointAdop, data, error } = props;
 
     const onNext = () => {
         fetchEndpointAdop();
