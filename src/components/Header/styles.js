@@ -10,11 +10,16 @@ export const useStyles = makeStyles({
         position: 'relative',
     },
     link: {
-        background: theme.palette.primary,
         padding: '5px',
         marginLeft: '50px',
         textDecoration: 'none',
         color: 'white',
         verticalAlign: 'text-top',
+    },
+    activeLink: {
+        padding: '5px',
+        marginLeft: '50px',
+        textDecoration: 'underline',
+        color: 'white',
     },
 });
