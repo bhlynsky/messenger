@@ -2,7 +2,7 @@ import React from 'react';
 import { Divider, Drawer, Typography } from '@material-ui/core';
 import { useStyles } from './styles';
 import { connect } from 'react-redux';
-import { Message } from './Message';
+import { GroupPreview } from './GroupPreview';
 
 const Sidebar = (props) => {
     const classes = useStyles();
@@ -25,11 +25,12 @@ const Sidebar = (props) => {
             </div>
             <Divider />
             {groups &&
-                Object.keys(groups).map((item) => (
-                    <div className={classes.lastMessages} key={groups[item].groupName}>
-                        <Typography variant="subtitle1">{groups[item].groupName}</Typography>
-                        <Message
-                            messageData={groups[item].messages[groups[item].messages.length - 1]}
+                groups.map((item) => (
+                    <div className={classes.lastMessages} key={item.groupName}>
+                        <Divider variant="middle" />
+                        <GroupPreview
+                            groupName={item.groupName}
+                            messageData={item.messages[item.messages.length - 1]}
                         />
                     </div>
                 ))}
@@ -37,6 +38,6 @@ const Sidebar = (props) => {
     );
 };
 const mapDispatchToProps = (state) => ({
-    groups: state.MAIN,
+    groups: state.MAIN.groups,
 });
 export default connect(mapDispatchToProps)(Sidebar);

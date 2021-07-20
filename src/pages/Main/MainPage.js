@@ -28,7 +28,7 @@ function MainPage(props) {
                     alignItems="flex-start"
                     className={classes.containerHeader}
                 >
-                    <Typography variant="h2">{groupName}</Typography>
+                    <Typography variant="h2">{groupName ? groupName : ''}</Typography>
                     <Typography variant="body1" align="right">
                         100 participants
                     </Typography>
@@ -63,8 +63,8 @@ function MainPage(props) {
 }
 
 const mapStateToProps = (state) => ({
-    messages: state.MAIN.group.messages,
-    groupName: state.MAIN.group.groupName,
+    messages: state.MAIN.groups[0]?.messages,
+    groupName: state.MAIN.groups[0]?.groupName,
 });
 
 const mapDispatchToProps = (dispatch) => ({

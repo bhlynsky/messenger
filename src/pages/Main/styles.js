@@ -40,13 +40,13 @@ export const useStyles = makeStyles((theme) => ({
     message: {
         margin: '20px 25px 20px 25px',
     },
-
+    messagePreview: {
+        margin: '0px 15px 0px 15px',
+    },
     lastMessages: {
         marginTop: '10px',
         border: '1px black solid',
         borderRadius: '5px',
+        verticalAlign: 'baseline',
     },
-
-    messageUserName: {},
-    messageContent: {},
 }));

@@ -1,5 +1,5 @@
-export const mockData = {
-    group: {
+export const mockData = [
+    {
         groupName: 'Initial Group',
         messages: [
             {
@@ -19,7 +19,7 @@ export const mockData = {
             },
         ],
     },
-    group2: {
+    {
         groupName: 'Second Group',
         messages: [
             {
@@ -39,7 +39,7 @@ export const mockData = {
             },
         ],
     },
-    group3: {
+    {
         groupName: 'Third group',
         messages: [
             {
@@ -59,7 +59,7 @@ export const mockData = {
             },
         ],
     },
-    group4: {
+    {
         groupName: 'New Group!',
         messages: [
             {
@@ -69,4 +69,5 @@ export const mockData = {
             },
         ],
     },
-};
+    ,
+];
