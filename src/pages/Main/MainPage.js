@@ -59,7 +59,9 @@ function MainPage(props) {
                 <Divider />
                 <List className={classes.messageContainer}>
                     {messages &&
-                        messages.map((msg) => <Message messageData={msg} key={msg.userName} />)}
+                        messages.map((msg) => (
+                            <Message messageData={msg} key={Math.random() * 100} />
+                        ))}
                     <Divider />
                 </List>
                 <div className={classes.messageInput}>
