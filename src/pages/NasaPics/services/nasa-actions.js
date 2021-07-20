@@ -6,13 +6,13 @@ const loadData = () => ({
 });
 // load data success
 const setData = (data) => ({
-    type: actionType.SUCCESS,
+    type: actionType.LOAD_SUCCESS,
     data,
 });
 
 //load data failed
 const loadError = (error) => ({
-    type: actionType.ERROR,
+    type: actionType.LOAD_ERROR,
     error,
 });
 

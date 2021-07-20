@@ -62,9 +62,9 @@ const UserPage = (props) => {
 };
 
 const mapDispatchToProps = (state) => ({
-    name: state.name,
-    email: state.email,
-    imgSrc: state.imgSrc,
+    name: state.USER.name,
+    email: state.USER.email,
+    imgSrc: state.USER.imgSrc,
 });
 
 export default connect(mapDispatchToProps)(UserPage);

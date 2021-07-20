@@ -92,7 +92,7 @@ const ChangeDataModal = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    user: state,
+    user: state.USER,
 });
 
 const mapDispatchToProps = (dispatch) => ({

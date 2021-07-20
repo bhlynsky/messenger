@@ -14,12 +14,15 @@ export const useStyles = makeStyles({
         marginLeft: '50px',
         textDecoration: 'none',
         color: 'white',
+        fontWeight: 'lighter',
         verticalAlign: 'text-top',
     },
     activeLink: {
         padding: '5px',
         marginLeft: '50px',
         textDecoration: 'underline',
+        verticalAlign: 'text-top',
+        fontWeight: 'bold',
         color: 'white',
     },
 });

@@ -5,13 +5,16 @@ import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './theme';
 import { Provider } from 'react-redux';
-import { userStore } from './pages/User/services/user-reducer';
-import { nasaStore } from './pages/NasaPics/services/nasa-reducer';
+import { applyMiddleware, createStore } from 'redux';
+import reducer from './reducers';
+import thunk from 'redux-thunk';
+
+const store = createStore(reducer, applyMiddleware(thunk));
 
 ReactDOM.render(
     <React.StrictMode>
         <ThemeProvider theme={theme}>
-            <Provider store={nasaStore}>
+            <Provider store={store}>
                 <App />
             </Provider>
         </ThemeProvider>

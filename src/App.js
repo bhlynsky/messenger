@@ -1,7 +1,7 @@
 import Header from './components/Header/Header';
-import { Route, Switch, HashRouter } from 'react-router-dom';
+import { Route, Switch, HashRouter, Redirect } from 'react-router-dom';
 import AdminPage from './pages/AdminPage';
-import MainPage from './pages/MainPage';
+import MainPage from './pages/Main/MainPage';
 import UserPage from './pages/User/UserPage';
 import TaskPage from './pages/TaskPage';
 import Stylesheets from './pages/Stylesheets/Stylesheets';
@@ -13,6 +13,9 @@ function App() {
             <Header />
 
             <Switch>
+                <Route exact path="/">
+                    <Redirect to="/main" />
+                </Route>
                 <Route path="/main">
                     <MainPage />
                 </Route>
