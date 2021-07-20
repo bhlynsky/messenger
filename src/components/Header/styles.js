@@ -14,6 +14,7 @@ export const useStyles = makeStyles({
         marginLeft: '50px',
         textDecoration: 'none',
         color: 'white',
+        fontWeight: 'lighter',
         verticalAlign: 'text-top',
     },
     activeLink: {
@@ -21,7 +22,7 @@ export const useStyles = makeStyles({
         marginLeft: '50px',
         textDecoration: 'underline',
         verticalAlign: 'text-top',
-        fontWeight: 'lighter',
+        fontWeight: 'bold',
         color: 'white',
     },
 });
