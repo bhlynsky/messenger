@@ -57,12 +57,10 @@ function MainPage(props) {
                     </Typography>
                 </Grid>
                 <Divider />
-                <List>
-                    <Grid container direction="column-reverse" className={classes.messageContainer}>
-                        {messages &&
-                            messages.map((msg) => <Message messageData={msg} key={msg.userName} />)}
-                        <Divider />
-                    </Grid>
+                <List className={classes.messageContainer}>
+                    {messages &&
+                        messages.map((msg) => <Message messageData={msg} key={msg.userName} />)}
+                    <Divider />
                 </List>
                 <div className={classes.messageInput}>
                     <TextField
