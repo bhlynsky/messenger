@@ -10,14 +10,14 @@ function nasaReducer(state = initialState, action) {
                 isLoading: true,
             };
         //load success
-        case actionType.SUCCESS:
+        case actionType.LOAD_SUCCESS:
             return {
                 ...state,
                 data: action.data,
                 isLoading: false,
             };
         //load error
-        case actionType.ERROR: {
+        case actionType.LOAD_ERROR: {
             return {
                 ...state,
                 error: action.error,

@@ -1,6 +1,6 @@
 const actionType = {
-    SUCCESS: 'Success',
-    ERROR: 'Error',
-    LOAD: 'Load',
+    LOAD_SUCCESS: '[NASA]Success',
+    LOAD_ERROR: '[NASA]Load Error',
+    LOAD: '[NASA]Load',
 };
 export default actionType;
