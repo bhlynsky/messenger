@@ -1,8 +1,8 @@
 import actionType from './main-constants';
 
-const sendMessage = (payload) => ({
+const sendMessage = (message) => ({
     type: actionType.SEND_MESSAGE,
-    payload,
+    message,
 });
 
 const loadData = (data) => ({

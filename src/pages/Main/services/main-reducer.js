@@ -10,14 +10,10 @@ function mainReducer(state = initialState, action) {
                 ...action.data,
             };
         case actionType.SEND_MESSAGE:
-            let message = action.payload.message;
-            let groupName = action.payload.groupName;
-
-            state[groupName].messages.push(message);
-
+            let { message } = action;
             return {
-                ...state,
-                // add message to array / object where other messages stored
+                ...state.messages,
+                message, // add message to array / object where other messages stored
             };
         default:
             return state;
