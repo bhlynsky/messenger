@@ -20,6 +20,8 @@ export const useStyles = makeStyles({
         padding: '5px',
         marginLeft: '50px',
         textDecoration: 'underline',
+        verticalAlign: 'text-top',
+        fontWeight: 'lighter',
         color: 'white',
     },
 });

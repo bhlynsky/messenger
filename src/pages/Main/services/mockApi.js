@@ -59,4 +59,14 @@ export const mockData = {
             },
         ],
     },
+    group4: {
+        groupName: 'New Group!',
+        messages: [
+            {
+                userName: 'bot',
+                message: 'this group was just created',
+                date: '2021-07-20',
+            },
+        ],
+    },
 };
