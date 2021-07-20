@@ -20,7 +20,7 @@ function MainPage(props) {
     return (
         <div>
             <Sidebar />
-            <div className={classes.container}>
+            {/*<div className={classes.container}>
                 <Grid
                     container
                     direction="row"
@@ -57,7 +57,7 @@ function MainPage(props) {
                         }}
                     />
                 </div>
-            </div>
+                    </div>*/}
         </div>
     );
 }

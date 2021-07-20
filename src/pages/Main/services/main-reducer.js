@@ -4,9 +4,9 @@ import actionType from './main-constants';
 function mainReducer(state = initialState, action) {
     switch (action.type) {
         case actionType.LOAD:
-            state.groups = action.data;
             return {
                 ...state,
+                groups: action.data,
             };
         case actionType.SEND_MESSAGE:
             return {
