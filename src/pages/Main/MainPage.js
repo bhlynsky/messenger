@@ -63,8 +63,8 @@ function MainPage(props) {
 }
 
 const mapStateToProps = (state) => ({
-    messages: state.group.messages,
-    groupName: state.group.groupName,
+    messages: state.MAIN.group.messages,
+    groupName: state.MAIN.group.groupName,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,4 +1,3 @@
-import { createStore } from 'redux';
 import { initialState } from './main-services';
 import actionType from './main-constants';
 
@@ -10,13 +9,13 @@ function mainReducer(state = initialState, action) {
                 ...action.data,
             };
         case actionType.SEND_MESSAGE:
-            let { message } = action;
             return {
-                ...state.messages,
-                message, // add message to array / object where other messages stored
+                ...state,
+                // add message to array / object where other messages stored
             };
+
         default:
             return state;
     }
 }
-export const mainStore = createStore(mainReducer);
+export default mainReducer;

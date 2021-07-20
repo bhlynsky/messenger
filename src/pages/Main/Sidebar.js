@@ -37,6 +37,6 @@ const Sidebar = (props) => {
     );
 };
 const mapDispatchToProps = (state) => ({
-    groups: state,
+    groups: state.MAIN,
 });
 export default connect(mapDispatchToProps)(Sidebar);

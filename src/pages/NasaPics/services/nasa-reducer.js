@@ -1,8 +1,6 @@
-import { applyMiddleware, createStore } from 'redux';
 import actionType from './nasa-constants';
-import thunk from 'redux-thunk';
 import { initialState } from './nasa-services';
-//TODO add initial state
+
 function nasaReducer(state = initialState, action) {
     switch (action.type) {
         //load data
@@ -30,4 +28,4 @@ function nasaReducer(state = initialState, action) {
             return state;
     }
 }
-export const nasaStore = createStore(nasaReducer, applyMiddleware(thunk));
+export default nasaReducer;

@@ -1,9 +1,8 @@
-import { Typography, Button, Divider } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import { Typography, Button } from '@material-ui/core';
+import React from 'react';
 import { connect } from 'react-redux';
 import { loadData } from './services/nasa-actions';
 import { getData } from './services/nasa-services';
-import { useStyles } from './styles';
 import withLoading from '../../services/root-service';
 
 const NasaPicsPage = (props) => {
@@ -47,9 +46,9 @@ const NasaPicsPage = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    data: state.data,
-    isLoading: state.isLoading,
-    error: state.error,
+    data: state.NASA.data,
+    isLoading: state.NASA.isLoading,
+    error: state.NASA.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
