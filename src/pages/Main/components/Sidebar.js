@@ -24,6 +24,7 @@ const Sidebar = (props) => {
                 </Typography>
             </div>
             <Divider />
+            //FIXME if groups === [] in this case of condition will be true. that situation will be in any case, because of in init state groups=[]
             {groups &&
                 groups.map((item) => (
                     <div className={classes.lastMessages} key={item.groupName}>
