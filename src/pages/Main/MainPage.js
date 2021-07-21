@@ -11,7 +11,7 @@ import { loadData } from './services/main-actions';
 
 function MainPage(props) {
     const classes = useStyles();
-    const { groupName, messages, loadData } = props;
+    const { groupName, loadData } = props;
 
     useEffect(() => {
         loadData(mockData);
@@ -66,16 +66,11 @@ function MainPage(props) {
 }
 
 const mapStateToProps = (state) => {
-    const currentGroupId = state.Main.currentGroupId;
-    const allGroups = state.Main.groups;
-
-    const currentGroup = allGroups.filter((x) => x.id === currentGroupId);
-
-    const messages = currentGroup[0]?.messages;
-    const groupName = currentGroup[0]?.groupName;
-
+    const currentGroup = state.Main.currentGroup;
+    const groupName = currentGroup.groupName;
+    //const messages ;
     return {
-        messages,
+        // messages,
         groupName,
     };
 };

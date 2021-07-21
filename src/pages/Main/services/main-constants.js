@@ -4,4 +4,10 @@ const actionType = {
     LOAD_GROUPS: '[MAIN]Load groups',
     CHANGE_CURRENT_GROUP: '[MAIN]Change active group',
 };
-export default actionType;
+
+const labels = {
+    SIDEBAR_HEADER: 'Current group',
+    SIDEBAR_NO_GROUPS: 'No Groups!',
+};
+
+export { actionType, labels };

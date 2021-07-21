@@ -1,4 +1,7 @@
 export const initialState = {
-    currentGroupId: 1,// why 1
+    currentGroup: {
+        id: 0,
+        groupName: '',
+    },
     groups: [],
 };
