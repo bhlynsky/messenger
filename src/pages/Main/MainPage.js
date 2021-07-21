@@ -73,7 +73,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     loadData: (data) => dispatch(loadData(data)),
-    changeGroup: (otherGroup) => dispatch(changeCurrentGroup(otherGroup)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
