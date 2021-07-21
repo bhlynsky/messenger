@@ -1,7 +1,7 @@
 const actionType = {
     SEND_MESSAGE: '[MAIN]Send message',
-    LOAD_ERROR: '[MAIN]Load Error', // FIXME if you translate that sounds like "загрузить ошибка" rename please something like Loading Error
-    LOAD: '[MAIN]Load', // TODO load what ?
-    CHANGE_GROUP: '[MAIN]Change Group', // TODO change what kind of group? ?
+    LOADING_ERROR: '[MAIN]Loading Error',
+    LOAD_GROUPS: '[MAIN]Load groups',
+    CHANGE_CURRENT_GROUP: '[MAIN]Change active group',
 };
 export default actionType;

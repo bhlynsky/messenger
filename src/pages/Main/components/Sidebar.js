@@ -6,7 +6,7 @@ import GroupPreview from './GroupPreview';
 
 const Sidebar = (props) => {
     const classes = useStyles();
-    const { groups } = props;
+    const { groups, currentGroupId } = props;
 
     return (
         <Drawer
@@ -20,26 +20,38 @@ const Sidebar = (props) => {
         >
             <div className={classes.containerHeader}>
                 <Typography variant="h2" align="center">
-                    Current user
+                    Current Group
                 </Typography>
             </div>
             <Divider />
-            //FIXME if groups === [] in this case of condition will be true. that situation will be in any case, because of in init state groups=[]
-            {groups &&
+
+            {groups && groups.length > 0 ? (
                 groups.map((item) => (
-                    <div className={classes.lastMessages} key={item.groupName}>
+                    <div
+                        className={
+                            currentGroupId === item.id
+                                ? classes.groupPreviewActive
+                                : classes.groupPreview
+                        }
+                        key={item.groupName}
+                    >
                         <Divider variant="middle" />
                         <GroupPreview
+                            groupId={item.id}
                             groupName={item.groupName}
                             messageData={item.messages[item.messages.length - 1]}
                         />
                     </div>
-                ))}
+                ))
+            ) : (
+                <Typography variant="subtitle1">No Groups!</Typography>
+            )}
         </Drawer>
     );
 };
 const mapStateToProps = (state) => ({
-    groups: state.MAIN.groups,
+    groups: state.Main.groups,
+    currentGroupId: state.Main.currentGroupId,
 });
 
 export default connect(mapStateToProps)(Sidebar);

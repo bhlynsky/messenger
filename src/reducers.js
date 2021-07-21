@@ -5,9 +5,9 @@ import { combineReducers } from 'redux';
 
 const reducer = combineReducers({
     //FIXME naming of reducers not schould be in upper case
-    NASA: nasaReducer,
-    MAIN: mainReducer,
-    USER: userReducer,
+    Nasa: nasaReducer,
+    Main: mainReducer,
+    User: userReducer,
 });
 
 export default reducer;

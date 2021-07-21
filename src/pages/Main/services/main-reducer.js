@@ -3,15 +3,15 @@ import actionType from './main-constants';
 
 function mainReducer(state = initialState, action) {
     switch (action.type) {
-        case actionType.LOAD:
+        case actionType.LOAD_GROUPS:
             return {
                 ...state,
                 groups: action.data,
             };
-        case actionType.CHANGE_GROUP:
+        case actionType.CHANGE_CURRENT_GROUP:
             return {
                 ...state,
-                currentGroup: action.otherGroup,
+                currentGroupId: action.otherGroupId,
             };
         case actionType.SEND_MESSAGE:
             return {

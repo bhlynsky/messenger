@@ -1,4 +1,4 @@
 export const initialState = {
-    currentGroup: '',
+    currentGroupId: 1,
     groups: [],
 };

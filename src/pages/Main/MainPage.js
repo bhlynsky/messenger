@@ -11,7 +11,7 @@ import { loadData } from './services/main-actions';
 
 function MainPage(props) {
     const classes = useStyles();
-    const { groupName, messages, loadData, currentGroup } = props;
+    const { groupName, messages, loadData } = props;
 
     useEffect(() => {
         loadData(mockData);
@@ -21,7 +21,7 @@ function MainPage(props) {
         <div>
             <Sidebar />
             <Typography variant="h2" style={{ marginLeft: '25.5%' }}>
-                {currentGroup}
+                {groupName}
             </Typography>
             {/*<div className={classes.container}>
                 <Grid
@@ -65,11 +65,20 @@ function MainPage(props) {
     );
 }
 
-const mapStateToProps = (state) => ({
-    messages: state.MAIN.groups[0]?.messages,
-    groupName: state.MAIN.groups[0]?.groupName,
-    currentGroup: state.MAIN.currentGroup,
-});
+const mapStateToProps = (state) => {
+    const currentGroupId = state.Main.currentGroupId;
+    const allGroups = state.Main.groups;
+
+    const currentGroup = allGroups.filter((x) => x.id === currentGroupId);
+
+    const messages = currentGroup[0]?.messages;
+    const groupName = currentGroup[0]?.groupName;
+
+    return {
+        messages,
+        groupName,
+    };
+};
 
 const mapDispatchToProps = (dispatch) => ({
     loadData: (data) => dispatch(loadData(data)),

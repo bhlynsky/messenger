@@ -46,9 +46,9 @@ const NasaPicsPage = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    data: state.NASA.data,
-    isLoading: state.NASA.isLoading,
-    error: state.NASA.error,
+    data: state.Nasa.data,
+    isLoading: state.Nasa.isLoading,
+    error: state.Nasa.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
