@@ -9,4 +9,9 @@ const loadData = (data) => ({
     type: actionType.LOAD,
     data,
 });
-export { loadData, sendMessage };
+
+const changeCurrentGroup = (otherGroup) => ({
+    type: actionType.CHANGE_GROUP,
+    otherGroup,
+});
+export { loadData, sendMessage, changeCurrentGroup };

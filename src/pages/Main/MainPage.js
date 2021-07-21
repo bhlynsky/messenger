@@ -1,17 +1,17 @@
 import { Typography, Grid, Divider, TextField, InputAdornment } from '@material-ui/core';
 import React, { useEffect } from 'react';
-import Sidebar from './Sidebar';
+import Sidebar from './components/Sidebar';
 import { useStyles } from './styles';
 import SendIcon from '@material-ui/icons/Send';
 import AttachmentIcon from '@material-ui/icons/Attachment';
-import { Message } from './Message';
+import { Message } from './components/Message';
 import { connect } from 'react-redux';
 import { mockData } from './services/mockApi';
 import { loadData } from './services/main-actions';
 
 function MainPage(props) {
     const classes = useStyles();
-    const { groupName, messages, loadData } = props;
+    const { groupName, messages, loadData, currentGroup } = props;
 
     useEffect(() => {
         loadData(mockData);
@@ -20,6 +20,9 @@ function MainPage(props) {
     return (
         <div>
             <Sidebar />
+            <Typography variant="h2" style={{ marginLeft: '25.5%' }}>
+                {currentGroup}
+            </Typography>
             {/*<div className={classes.container}>
                 <Grid
                     container
@@ -65,10 +68,12 @@ function MainPage(props) {
 const mapStateToProps = (state) => ({
     messages: state.MAIN.groups[0]?.messages,
     groupName: state.MAIN.groups[0]?.groupName,
+    currentGroup: state.MAIN.currentGroup,
 });
 
 const mapDispatchToProps = (dispatch) => ({
     loadData: (data) => dispatch(loadData(data)),
+    changeGroup: (otherGroup) => dispatch(changeCurrentGroup(otherGroup)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

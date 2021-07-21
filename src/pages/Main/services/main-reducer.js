@@ -8,12 +8,16 @@ function mainReducer(state = initialState, action) {
                 ...state,
                 groups: action.data,
             };
+        case actionType.CHANGE_GROUP:
+            return {
+                ...state,
+                currentGroup: action.otherGroup,
+            };
         case actionType.SEND_MESSAGE:
             return {
                 ...state,
                 // add message to array / object where other messages stored
             };
-
         default:
             return state;
     }

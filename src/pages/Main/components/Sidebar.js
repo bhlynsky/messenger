@@ -1,8 +1,8 @@
 import React from 'react';
 import { Divider, Drawer, Typography } from '@material-ui/core';
-import { useStyles } from './styles';
+import { useStyles } from '../styles';
 import { connect } from 'react-redux';
-import { GroupPreview } from './GroupPreview';
+import GroupPreview from './GroupPreview';
 
 const Sidebar = (props) => {
     const classes = useStyles();
@@ -37,7 +37,8 @@ const Sidebar = (props) => {
         </Drawer>
     );
 };
-const mapDispatchToProps = (state) => ({
+const mapStateToProps = (state) => ({
     groups: state.MAIN.groups,
 });
-export default connect(mapDispatchToProps)(Sidebar);
+
+export default connect(mapStateToProps)(Sidebar);

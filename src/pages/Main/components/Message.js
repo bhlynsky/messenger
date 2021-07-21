@@ -1,6 +1,6 @@
 import React from 'react';
 import { Avatar, Divider, Grid, Typography } from '@material-ui/core';
-import { useStyles } from './styles';
+import { useStyles } from '../styles';
 
 export const Message = (props) => {
     const { userName, message, date } = props.messageData;
