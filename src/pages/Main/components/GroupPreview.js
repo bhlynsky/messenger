@@ -10,7 +10,7 @@ const GroupPreview = (props) => {
     const classes = useStyles();
 
     const onChangeGroup = () => {
-        changeCurrentGroup(groupId);
+        changeCurrentGroup(groupId);// {id: '', name: ''}
     };
 
     return (
@@ -28,7 +28,6 @@ const GroupPreview = (props) => {
     );
 };
 const mapDispatchToProps = (dispatch) => ({
-    //FIXME Is it necessary here have different names of func?
     changeCurrentGroup: (otherGroup) => dispatch(changeCurrentGroup(otherGroup)),
 });
 
