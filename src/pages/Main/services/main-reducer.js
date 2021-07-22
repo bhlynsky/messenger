@@ -3,7 +3,7 @@ import { actionType } from './main-constants';
 
 function mainReducer(state = initialState, action) {
     switch (action.type) {
-        case actionType.LOAD_GROUPS:
+        case actionType.LOAD_GROUPS: {
             let defaultGroup = state.currentGroup;
             const groups = action.data;
 
@@ -16,6 +16,7 @@ function mainReducer(state = initialState, action) {
                 groups,
                 currentGroup: defaultGroup,
             };
+        }
 
         case actionType.CHANGE_CURRENT_GROUP:
             return {
@@ -23,7 +24,7 @@ function mainReducer(state = initialState, action) {
                 currentGroup: action.group,
             };
 
-        case actionType.SEND_MESSAGE:
+        case actionType.SEND_MESSAGE: {
             let message = action.message;
 
             state.currentGroup.messages.push(message);
@@ -31,7 +32,7 @@ function mainReducer(state = initialState, action) {
             return {
                 ...state,
             };
-
+        }
         default:
             return state;
     }
