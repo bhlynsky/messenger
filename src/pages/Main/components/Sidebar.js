@@ -6,7 +6,7 @@ import GroupPreview from './GroupPreview';
 import { labels } from '../services/main-constants';
 const Sidebar = (props) => {
     const classes = useStyles();
-    const { groups, currentGroupId } = props;
+    const { groups, currentGroup } = props;
 
     return (
         <Drawer
@@ -28,7 +28,7 @@ const Sidebar = (props) => {
                 groups.map((item) => (
                     <div
                         className={
-                            currentGroupId === item.id
+                            currentGroup.id === item.id
                                 ? classes.groupPreviewActive
                                 : classes.groupPreview
                         }
@@ -50,7 +50,7 @@ const Sidebar = (props) => {
 };
 const mapStateToProps = (state) => ({
     groups: state.Main.groups,
-    currentGroupId: state.Main.currentGroupId,
+    currentGroup: state.Main.currentGroup,
 });
 
 export default connect(mapStateToProps)(Sidebar);
