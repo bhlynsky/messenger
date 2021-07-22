@@ -10,6 +10,8 @@ import { loadData } from './services/main-actions';
 
 function MainPage(props) {
     const classes = useStyles();
+    //NOTE you can made const { groupName = '', messages, loadData } = props; for groupname '' - will be default value
+    // and for you will be not necessary check value below groupName ? groupName : ''
     const { groupName, messages, loadData } = props;
 
     useEffect(() => {
