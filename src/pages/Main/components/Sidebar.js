@@ -1,12 +1,12 @@
 import React from 'react';
 import { Divider, Drawer, Typography } from '@material-ui/core';
-import { useStyles } from './styles';
+import { useStyles } from '../styles';
 import { connect } from 'react-redux';
-import { GroupPreview } from './GroupPreview';
-
+import GroupPreview from './GroupPreview';
+import { labels } from '../services/main-constants';
 const Sidebar = (props) => {
     const classes = useStyles();
-    const { groups } = props;
+    const { groups, currentGroup } = props;
 
     return (
         <Drawer
@@ -20,24 +20,38 @@ const Sidebar = (props) => {
         >
             <div className={classes.containerHeader}>
                 <Typography variant="h2" align="center">
-                    Current user
+                    {labels.SIDEBAR_HEADER}
                 </Typography>
             </div>
             <Divider />
-            {groups &&
+            {groups.length ? (
                 groups.map((item) => (
-                    <div className={classes.lastMessages} key={item.groupName}>
+                    <div
+                        className={
+                            currentGroup.id === item.id
+                                ? classes.groupPreviewActive
+                                : classes.groupPreview
+                        }
+                        key={item.id}
+                    >
                         <Divider variant="middle" />
                         <GroupPreview
+                            groupId={item.id}
                             groupName={item.groupName}
                             messageData={item.messages[item.messages.length - 1]}
                         />
                     </div>
-                ))}
+                ))
+            ) : (
+                <Typography variant="subtitle1">{labels.SIDEBAR_NO_GROUPS}</Typography>
+            )}
         </Drawer>
     );
 };
-const mapDispatchToProps = (state) => ({
-    groups: state.MAIN.groups,
+
+const mapStateToProps = (state) => ({
+    groups: state.mainReducer.groups,
+    currentGroup: state.mainReducer.currentGroup,
 });
-export default connect(mapDispatchToProps)(Sidebar);
+
+export default connect(mapStateToProps)(Sidebar);

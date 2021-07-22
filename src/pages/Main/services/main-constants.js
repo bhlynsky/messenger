@@ -1,6 +1,13 @@
 const actionType = {
     SEND_MESSAGE: '[MAIN]Send message',
-    LOAD_ERROR: '[MAIN]Load Error',
-    LOAD: '[MAIN]Load',
+    LOADING_ERROR: '[MAIN]Loading Error',
+    LOAD_GROUPS: '[MAIN]Load groups',
+    CHANGE_CURRENT_GROUP: '[MAIN]Change active group',
 };
-export default actionType;
+
+const labels = {
+    SIDEBAR_HEADER: 'Current group',
+    SIDEBAR_NO_GROUPS: 'No Groups!',
+};
+
+export { actionType, labels };

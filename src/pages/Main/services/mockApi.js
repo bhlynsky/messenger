@@ -1,5 +1,6 @@
 export const mockData = [
     {
+        id: 1,
         groupName: 'Initial Group',
         messages: [
             {
@@ -20,6 +21,7 @@ export const mockData = [
         ],
     },
     {
+        id: 2,
         groupName: 'Second Group',
         messages: [
             {
@@ -40,6 +42,7 @@ export const mockData = [
         ],
     },
     {
+        id: 3,
         groupName: 'Third group',
         messages: [
             {
@@ -60,6 +63,7 @@ export const mockData = [
         ],
     },
     {
+        id: 4,
         groupName: 'New Group!',
         messages: [
             {

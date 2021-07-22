@@ -42,11 +42,19 @@ export const useStyles = makeStyles((theme) => ({
     },
     messagePreview: {
         margin: '0px 15px 0px 15px',
+        cursor: 'pointer',
     },
-    lastMessages: {
+    groupPreview: {
         marginTop: '10px',
         border: '1px black solid',
         borderRadius: '5px',
-        verticalAlign: 'baseline',
+        '&:hover': {
+            background: 'lightgray',
+        },
+    },
+    groupPreviewActive: {
+        marginTop: '10px',
+        border: `2px ${theme.palette.primary.main} solid`,
+        borderRadius: '5px',
     },
 }));

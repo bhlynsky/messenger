@@ -4,9 +4,10 @@ import userReducer from './pages/User/services/user-reducer';
 import { combineReducers } from 'redux';
 
 const reducer = combineReducers({
-    NASA: nasaReducer,
-    MAIN: mainReducer,
-    USER: userReducer,
+    //FIXME naming of reducers not schould be in upper case
+    nasaReducer,
+    mainReducer,
+    userReducer,
 });
 
 export default reducer;

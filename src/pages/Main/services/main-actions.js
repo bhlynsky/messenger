@@ -1,4 +1,4 @@
-import actionType from './main-constants';
+import { actionType } from './main-constants';
 
 const sendMessage = (message) => ({
     type: actionType.SEND_MESSAGE,
@@ -6,7 +6,13 @@ const sendMessage = (message) => ({
 });
 
 const loadData = (data) => ({
-    type: actionType.LOAD,
+    type: actionType.LOAD_GROUPS,
     data,
 });
-export { loadData, sendMessage };
+
+const changeCurrentGroup = (id, name) => ({
+    type: actionType.CHANGE_CURRENT_GROUP,
+    data: { id, groupName: name },
+});
+
+export { loadData, sendMessage, changeCurrentGroup };
