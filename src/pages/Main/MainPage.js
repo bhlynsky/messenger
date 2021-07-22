@@ -47,7 +47,7 @@ function MainPage(props) {
                 <Grid
                     container
                     direction="row"
-                    justifyContent="space-evenly"
+                    justifycontent="space-evenly"
                     alignItems="flex-start"
                     className={classes.containerHeader}
                 >

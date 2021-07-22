@@ -17,7 +17,7 @@ export const Message = (props) => {
                     container
                     direction="row"
                     alignItems="center"
-                    justifyContent={'space-between'}
+                    justify="space-between"
                     className={classes.messageContent}
                 >
                     <Typography variant="body1">{message}</Typography>

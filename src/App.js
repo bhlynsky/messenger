@@ -1,3 +1,4 @@
+import React from 'react';
 import Header from './components/Header/Header';
 import { Route, Switch, HashRouter, Redirect } from 'react-router-dom';
 import AdminPage from './pages/AdminPage';
