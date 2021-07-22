@@ -14,4 +14,5 @@ const changeCurrentGroup = (id, name) => ({
     type: actionType.CHANGE_CURRENT_GROUP,
     data: { id, groupName: name },
 });
+
 export { loadData, sendMessage, changeCurrentGroup };

@@ -48,9 +48,10 @@ const Sidebar = (props) => {
         </Drawer>
     );
 };
+
 const mapStateToProps = (state) => ({
-    groups: state.Main.groups,
-    currentGroup: state.Main.currentGroup,
+    groups: state.mainReducer.groups,
+    currentGroup: state.mainReducer.currentGroup,
 });
 
 export default connect(mapStateToProps)(Sidebar);

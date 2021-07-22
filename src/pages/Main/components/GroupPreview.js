@@ -27,6 +27,7 @@ const GroupPreview = (props) => {
         </div>
     );
 };
+
 const mapDispatchToProps = (dispatch) => ({
     changeCurrentGroup: (id, name) => dispatch(changeCurrentGroup(id, name)),
 });
