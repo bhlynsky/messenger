@@ -8,6 +8,7 @@ const actionType = {
 const labels = {
     SIDEBAR_HEADER: 'Current group',
     SIDEBAR_NO_GROUPS: 'No Groups!',
+    MESSAGE_INPUT_PLACEHOLDER: 'Write Your Message',
 };
 
 export { actionType, labels };

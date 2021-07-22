@@ -25,12 +25,21 @@ function mainReducer(state = initialState, action) {
             };
 
         case actionType.SEND_MESSAGE: {
-            let message = action.message;
+            const newMessage = action.message;
+            const updatedGroup = state.currentGroup;
+            updatedGroup.messages = [...state.currentGroup.messages, newMessage];
+            //did this because prev version was mutating state and
+            //therefore mapStateToProps didnt trigger component update
+            //when message was added
 
-            state.currentGroup.messages.push(message);
+            //// Q:Any simpler way to do this?
+
+            //and also one thing: sidebar does not updates immediately when message was sent,
+            //leave it for now or fix it?
 
             return {
                 ...state,
+                currentGroup: updatedGroup,
             };
         }
         default:
