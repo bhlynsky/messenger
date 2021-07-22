@@ -11,7 +11,7 @@ import { loadData } from './services/main-actions';
 
 function MainPage(props) {
     const classes = useStyles();
-    const { groupName, loadData } = props;
+    const { groupName, messages, loadData } = props;
 
     useEffect(() => {
         loadData(mockData);
@@ -20,14 +20,12 @@ function MainPage(props) {
     return (
         <div>
             <Sidebar />
-            <Typography variant="h2" style={{ marginLeft: '25.5%' }}>
-                {groupName}
-            </Typography>
-            {/*<div className={classes.container}>
+
+            <div className={classes.container}>
                 <Grid
                     container
                     direction="row"
-                    justify="space-evenly"
+                    justifyContent="space-evenly"
                     alignItems="flex-start"
                     className={classes.containerHeader}
                 >
@@ -60,7 +58,7 @@ function MainPage(props) {
                         }}
                     />
                 </div>
-                    </div>*/}
+            </div>
         </div>
     );
 }
@@ -68,9 +66,10 @@ function MainPage(props) {
 const mapStateToProps = (state) => {
     const currentGroup = state.mainReducer.currentGroup;
     const groupName = currentGroup.groupName;
-    //const messages = currentGroup.messages;
+    const messages = currentGroup.messages;
+    console.log(currentGroup);
     return {
-        // messages,
+        messages,
         groupName,
     };
 };

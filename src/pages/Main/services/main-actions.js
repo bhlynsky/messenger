@@ -10,9 +10,9 @@ const loadData = (data) => ({
     data,
 });
 
-const changeCurrentGroup = (id, name) => ({
+const changeCurrentGroup = (group) => ({
     type: actionType.CHANGE_CURRENT_GROUP,
-    data: { id, groupName: name },
+    group,
 });
 
 export { loadData, sendMessage, changeCurrentGroup };

@@ -4,7 +4,6 @@ import userReducer from './pages/User/services/user-reducer';
 import { combineReducers } from 'redux';
 
 const reducer = combineReducers({
-    //FIXME naming of reducers not schould be in upper case
     nasaReducer,
     mainReducer,
     userReducer,

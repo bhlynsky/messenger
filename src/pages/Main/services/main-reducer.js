@@ -20,7 +20,7 @@ function mainReducer(state = initialState, action) {
         case actionType.CHANGE_CURRENT_GROUP:
             return {
                 ...state,
-                currentGroup: action.data,
+                currentGroup: action.group,
             };
 
         case actionType.SEND_MESSAGE:

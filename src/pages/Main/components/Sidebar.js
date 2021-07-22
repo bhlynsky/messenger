@@ -4,6 +4,7 @@ import { useStyles } from '../styles';
 import { connect } from 'react-redux';
 import GroupPreview from './GroupPreview';
 import { labels } from '../services/main-constants';
+
 const Sidebar = (props) => {
     const classes = useStyles();
     const { groups, currentGroup } = props;
@@ -36,8 +37,7 @@ const Sidebar = (props) => {
                     >
                         <Divider variant="middle" />
                         <GroupPreview
-                            groupId={item.id}
-                            groupName={item.groupName}
+                            group={item}
                             messageData={item.messages[item.messages.length - 1]}
                         />
                     </div>
