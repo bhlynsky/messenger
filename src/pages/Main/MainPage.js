@@ -1,5 +1,13 @@
-import { Typography, Grid, Divider, TextField, InputAdornment } from '@material-ui/core';
-import React, { useEffect } from 'react';
+import {
+    Typography,
+    Grid,
+    Divider,
+    TextField,
+    InputAdornment,
+    List,
+    IconButton,
+} from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import Sidebar from './components/Sidebar';
 import { useStyles } from './styles';
 import SendIcon from '@material-ui/icons/Send';
@@ -7,15 +15,29 @@ import AttachmentIcon from '@material-ui/icons/Attachment';
 import { Message } from './components/Message';
 import { connect } from 'react-redux';
 import { mockData } from './services/mockApi';
-import { loadData } from './services/main-actions';
+import { loadData, sendMessage } from './services/main-actions';
 
 function MainPage(props) {
     const classes = useStyles();
-    const { groupName, messages, loadData } = props;
+    const { groupName, messages, loadData, sendMessage } = props;
+    const [newMessage, setNewMessage] = useState('');
 
     useEffect(() => {
         loadData(mockData);
     });
+
+    const onSendMessage = () => {
+        let user = 'Boris';
+        let date = new Date();
+        let message = {
+            userName: user,
+            date: date.toDateString(),
+            message: newMessage,
+        };
+
+        sendMessage(message);
+        setNewMessage('');
+    };
 
     return (
         <div>
@@ -30,17 +52,19 @@ function MainPage(props) {
                     className={classes.containerHeader}
                 >
                     <Typography variant="h2">{groupName ? groupName : ''}</Typography>
-                    <Typography variant="body1" align="right">
+                    {/*<Typography variant="body1" align="right">
                         100 participants
-                    </Typography>
+                    </Typography>*/}
                 </Grid>
                 <Divider />
 
-                <Grid container direction="column-reverse" className={classes.messageContainer}>
+                <List className={classes.messageContainer}>
                     {messages &&
-                        messages.map((msg) => <Message messageData={msg} key={msg.userName} />)}
+                        messages.map((msg) => (
+                            <Message messageData={msg} key={Math.random() * 100} />
+                        ))}
                     <Divider />
-                </Grid>
+                </List>
 
                 <div className={classes.messageInput}>
                     <TextField
@@ -48,11 +72,19 @@ function MainPage(props) {
                         variant="outlined"
                         fullWidth
                         className={classes.input}
+                        onChange={(e) => {
+                            setNewMessage(e.target.value);
+                        }}
+                        value={newMessage}
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <SendIcon />
-                                    <AttachmentIcon />
+                                    <IconButton onClick={onSendMessage}>
+                                        <SendIcon color="primary" />
+                                    </IconButton>
+                                    <IconButton>
+                                        <AttachmentIcon color="secondary" />
+                                    </IconButton>
                                 </InputAdornment>
                             ),
                         }}
@@ -67,7 +99,7 @@ const mapStateToProps = (state) => {
     const currentGroup = state.mainReducer.currentGroup;
     const groupName = currentGroup.groupName;
     const messages = currentGroup.messages;
-    console.log(currentGroup);
+
     return {
         messages,
         groupName,
@@ -76,6 +108,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     loadData: (data) => dispatch(loadData(data)),
+    sendMessage: (message) => dispatch(sendMessage(message)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

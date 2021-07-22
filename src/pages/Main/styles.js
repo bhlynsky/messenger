@@ -29,6 +29,8 @@ export const useStyles = makeStyles((theme) => ({
     messageContainer: {
         width: '100%',
         height: '75vh',
+        maxHeight: '100%',
+        overflow: 'auto',
     },
     messageInput: {
         width: '100%',

@@ -8,7 +8,7 @@ function mainReducer(state = initialState, action) {
             const groups = action.data;
 
             if (groups.length > 0 && defaultGroup.id === 0) {
-                defaultGroup = { id: groups[0].id, groupName: groups[0].groupName };
+                defaultGroup = groups[0];
             }
 
             return {
@@ -24,10 +24,14 @@ function mainReducer(state = initialState, action) {
             };
 
         case actionType.SEND_MESSAGE:
+            let message = action.message;
+
+            state.currentGroup.messages.push(message);
+
             return {
                 ...state,
-                // add message to array / object where other messages stored
             };
+
         default:
             return state;
     }
