@@ -11,7 +11,7 @@ const MessageInput = (props) => {
     const [newMessage, setNewMessage] = useState('');
     const classes = useStyles();
 
-    const { sendMessage } = props;
+    const { sendMessage, id } = props;
 
     const onSendMessage = () => {
         const userName = 'Boris';
@@ -22,7 +22,7 @@ const MessageInput = (props) => {
             message: newMessage,
         };
 
-        sendMessage(message);
+        sendMessage(id, message);
         setNewMessage('');
     };
 
@@ -55,9 +55,11 @@ const MessageInput = (props) => {
         </div>
     );
 };
-
+const mapStateToProps = (state) => ({
+    id: state.messageReducer.currentGroup.id,
+});
 const mapDispatchToProps = (dispatch) => ({
-    sendMessage: (message) => dispatch(sendMessage(message)),
+    sendMessage: (id, message) => dispatch(sendMessage(id, message)),
 });
 
-export default connect(null, mapDispatchToProps)(MessageInput);
+export default connect(mapStateToProps, mapDispatchToProps)(MessageInput);

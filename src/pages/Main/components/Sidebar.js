@@ -7,8 +7,8 @@ import { labels } from '../services/main-constants';
 
 const Sidebar = (props) => {
     const classes = useStyles();
-    const { groups, currentGroup } = props;
-
+    const { groups, currentGroupId } = props;
+    console.log(props);
     return (
         <Drawer
             className={classes.drawer}
@@ -29,17 +29,14 @@ const Sidebar = (props) => {
                 groups.map((item) => (
                     <div
                         className={
-                            currentGroup.id === item.id
+                            currentGroupId === item.id
                                 ? classes.groupPreviewActive
                                 : classes.groupPreview
                         }
                         key={item.id}
                     >
                         <Divider variant="middle" />
-                        <GroupPreview
-                            group={item}
-                            messageData={item.messages[item.messages.length - 1]}
-                        />
+                        <GroupPreview group={item} messageData={item.lastMessage} />
                     </div>
                 ))
             ) : (
@@ -50,8 +47,8 @@ const Sidebar = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    groups: state.mainReducer.groups,
-    currentGroup: state.mainReducer.currentGroup,
+    groups: state.groupReducer.groups,
+    currentGroupId: state.messageReducer.currentGroup.id,
 });
 
 export default connect(mapStateToProps)(Sidebar);

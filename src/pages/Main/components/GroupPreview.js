@@ -10,7 +10,7 @@ const GroupPreview = (props) => {
     const classes = useStyles();
 
     const onChangeGroup = () => {
-        changeCurrentGroup(group);
+        changeCurrentGroup(group.id, group.groupName);
     };
 
     return (
@@ -29,7 +29,7 @@ const GroupPreview = (props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    changeCurrentGroup: (group) => dispatch(changeCurrentGroup(group)),
+    changeCurrentGroup: (groupId, groupName) => dispatch(changeCurrentGroup(groupId, groupName)),
 });
 
 export default connect(null, mapDispatchToProps)(GroupPreview);

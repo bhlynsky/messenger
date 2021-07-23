@@ -5,17 +5,18 @@ import { useStyles } from './styles';
 import MessageInput from './components/MessageInput';
 import { Message } from './components/Message';
 import { connect } from 'react-redux';
-import { mockData } from './services/mockApi';
-import { loadData } from './services/main-actions';
+import { mockGroupData, mockMessageData } from './services/mockApi';
+import { loadMessageData, loadGroupData } from './services/main-actions';
 
 function MainPage(props) {
     const classes = useStyles();
 
-    const { groupName = '', messages, loadData } = props;
+    const { groupName = '', messages, loadMessageData, loadGroupData } = props;
 
     useEffect(() => {
-        loadData(mockData);
-    });
+        loadGroupData(mockGroupData);
+        loadMessageData(mockMessageData);
+    }, []);
 
     return (
         <div>
@@ -50,9 +51,8 @@ function MainPage(props) {
 }
 
 const mapStateToProps = (state) => {
-    const currentGroup = state.mainReducer.currentGroup;
-    const groupName = currentGroup.groupName;
-    const messages = currentGroup.messages;
+    const groupName = state.groupReducer.currentGroupName;
+    const messages = state.messageReducer.currentGroup.messages;
 
     return {
         messages,
@@ -61,7 +61,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    loadData: (data) => dispatch(loadData(data)),
+    loadMessageData: (data) => dispatch(loadMessageData(data)),
+    loadGroupData: (data) => dispatch(loadGroupData(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

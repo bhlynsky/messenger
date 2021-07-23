@@ -3,6 +3,7 @@ const actionType = {
     LOADING_ERROR: '[MAIN]Loading Error',
     LOAD_GROUPS: '[MAIN]Load groups',
     CHANGE_CURRENT_GROUP: '[MAIN]Change active group',
+    LOAD_MESSAGES: '[MAIN]Load messages',
 };
 
 const labels = {

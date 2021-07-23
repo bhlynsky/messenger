@@ -1,18 +1,24 @@
 import { actionType } from './main-constants';
 
-const sendMessage = (message) => ({
+const sendMessage = (groupId, message) => ({
     type: actionType.SEND_MESSAGE,
+    groupId,
     message,
 });
 
-const loadData = (data) => ({
+const loadGroupData = (data) => ({
     type: actionType.LOAD_GROUPS,
     data,
 });
-
-const changeCurrentGroup = (group) => ({
-    type: actionType.CHANGE_CURRENT_GROUP,
-    group,
+const loadMessageData = (data) => ({
+    type: actionType.LOAD_MESSAGES,
+    data,
 });
 
-export { loadData, sendMessage, changeCurrentGroup };
+const changeCurrentGroup = (groupId, groupName) => ({
+    type: actionType.CHANGE_CURRENT_GROUP,
+    groupId,
+    groupName,
+});
+
+export { loadGroupData, loadMessageData, sendMessage, changeCurrentGroup };
