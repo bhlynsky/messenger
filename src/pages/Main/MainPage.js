@@ -10,9 +10,8 @@ import { loadData } from './services/main-actions';
 
 function MainPage(props) {
     const classes = useStyles();
-    //NOTE you can made const { groupName = '', messages, loadData } = props; for groupname '' - will be default value
-    // and for you will be not necessary check value below groupName ? groupName : ''
-    const { groupName, messages, loadData } = props;
+
+    const { groupName = '', messages, loadData } = props;
 
     useEffect(() => {
         loadData(mockData);
@@ -31,13 +30,14 @@ function MainPage(props) {
                     className={classes.containerHeader}
                 >
                     <Typography variant="h2" style={{ marginLeft: '25px' }}>
-                        {groupName ? groupName : ''}
+                        {groupName}
                     </Typography>
                 </Grid>
                 <Divider />
 
                 <List className={classes.messageContainer}>
-                    {messages.length > 0 &&
+                    {messages &&
+                        messages.length > 0 &&
                         messages.map((msg) => (
                             <Message messageData={msg} key={Math.random() * 100} />
                         ))}
