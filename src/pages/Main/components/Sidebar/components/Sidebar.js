@@ -8,7 +8,7 @@ import { labels } from '../../../services/main-constants';
 const Sidebar = (props) => {
     const classes = useStyles();
     const { groups, currentGroupId } = props;
-    console.log(props);
+
     return (
         <Drawer
             className={classes.drawer}

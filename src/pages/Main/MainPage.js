@@ -5,6 +5,7 @@ import { useStyles } from './styles';
 import MessageInput from './components/Messenger/components/MessageInput';
 import { Message } from './components/Messenger/components/Message';
 import { connect } from 'react-redux';
+
 import { mockGroupData, mockMessageData } from './services/mockApi';
 import { loadMessageData, loadGroupData } from './services/main-actions';
 

@@ -15,9 +15,9 @@ function App() {
 
             <Switch>
                 <Route exact path="/">
-                    <Redirect to="/main:/groupId" />
+                    <Redirect to="/main/1" />
                 </Route>
-                <Route path="/main">
+                <Route path="/main/:groupId">
                     <MainPage />
                 </Route>
                 <Route path="/user">
