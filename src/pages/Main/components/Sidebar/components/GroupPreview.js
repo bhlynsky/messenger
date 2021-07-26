@@ -1,8 +1,8 @@
 import React from 'react';
 import { Divider, Grid, Typography } from '@material-ui/core';
-import { useStyles } from '../styles';
+import { useStyles } from '../../../styles';
 import { connect } from 'react-redux';
-import { changeCurrentGroup } from '../services/main-actions';
+import { changeCurrentGroup } from '../../../services/main-actions';
 
 const GroupPreview = (props) => {
     const { userName, message } = props.messageData;

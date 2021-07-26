@@ -1,7 +1,7 @@
-import { initialStateGroup } from './main-services';
-import { actionType } from './main-constants';
+import { initialStateGroup } from '../../../services/main-services';
+import { actionType } from '../../../services/main-constants';
 
-function groupReducer(state = initialStateGroup, action) {
+function sidebarReducer(state = initialStateGroup, action) {
     switch (action.type) {
         case actionType.LOAD_GROUPS: {
             // load groups for sidebar and also load message for default group
@@ -31,4 +31,4 @@ function groupReducer(state = initialStateGroup, action) {
             return { ...state };
     }
 }
-export default groupReducer;
+export default sidebarReducer;

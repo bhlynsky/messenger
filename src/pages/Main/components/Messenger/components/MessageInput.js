@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { TextField, InputAdornment, IconButton } from '@material-ui/core';
-import { useStyles } from '../styles';
+import { useStyles } from '../../../styles';
 import SendIcon from '@material-ui/icons/Send';
 import AttachmentIcon from '@material-ui/icons/Attachment';
-import { sendMessage } from '../services/main-actions';
+import { sendMessage } from '../../../services/main-actions';
 import { connect } from 'react-redux';
-import { labels } from '../services/main-constants';
+import { labels } from '../../../services/main-constants';
 
 const MessageInput = (props) => {
     const [newMessage, setNewMessage] = useState('');

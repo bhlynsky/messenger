@@ -1,9 +1,9 @@
 import { Typography, Grid, Divider, List } from '@material-ui/core';
 import React, { useEffect } from 'react';
-import Sidebar from './components/Sidebar';
+import Sidebar from './components/Sidebar/components/Sidebar';
 import { useStyles } from './styles';
-import MessageInput from './components/MessageInput';
-import { Message } from './components/Message';
+import MessageInput from './components/Messenger/components/MessageInput';
+import { Message } from './components/Messenger/components/Message';
 import { connect } from 'react-redux';
 import { mockGroupData, mockMessageData } from './services/mockApi';
 import { loadMessageData, loadGroupData } from './services/main-actions';

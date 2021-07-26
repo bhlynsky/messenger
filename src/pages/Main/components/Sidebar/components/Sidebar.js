@@ -1,9 +1,9 @@
 import React from 'react';
 import { Divider, Drawer, Typography } from '@material-ui/core';
-import { useStyles } from '../styles';
+import { useStyles } from '../../../styles';
 import { connect } from 'react-redux';
 import GroupPreview from './GroupPreview';
-import { labels } from '../services/main-constants';
+import { labels } from '../../../services/main-constants';
 
 const Sidebar = (props) => {
     const classes = useStyles();
