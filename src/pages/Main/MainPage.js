@@ -51,7 +51,7 @@ function MainPage(props) {
 }
 
 const mapStateToProps = (state) => {
-    const groupName = state.groupReducer.currentGroupName;
+    const groupName = state.sidebarReducer.currentGroup.groupName;
     const messages = state.messageReducer.currentGroup.messages;
 
     return {

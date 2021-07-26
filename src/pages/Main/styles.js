@@ -44,6 +44,7 @@ export const useStyles = makeStyles((theme) => ({
     messagePreview: {
         margin: '0px 15px 0px 15px',
         cursor: 'pointer',
+        textDecoration: 'none',
     },
     groupPreview: {
         marginTop: '10px',
@@ -57,5 +58,13 @@ export const useStyles = makeStyles((theme) => ({
         marginTop: '10px',
         border: `2px ${theme.palette.primary.main} solid`,
         borderRadius: '5px',
+    },
+    linkWithoutStyles: {
+        textDecoration: 'none',
+
+        '&:focus, &:hover, &:visited, &:link, &:active': {
+            textDecoration: 'none',
+            color: 'black',
+        },
     },
 }));

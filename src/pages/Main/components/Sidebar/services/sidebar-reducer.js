@@ -1,7 +1,7 @@
-import { initialStateGroup } from '../../../services/main-services';
+import { initialState } from '../../../services/main-services';
 import { actionType } from '../../../services/main-constants';
 
-function sidebarReducer(state = initialStateGroup, action) {
+function sidebarReducer(state = initialState, action) {
     switch (action.type) {
         case actionType.LOAD_GROUPS: {
             // load groups for sidebar and also load message for default group
@@ -15,7 +15,7 @@ function sidebarReducer(state = initialStateGroup, action) {
             return {
                 ...state,
                 groups,
-                currentGroupName: groups[0].groupName,
+                currentGroup: { id: groups[0].id },
             };
         }
 
@@ -24,7 +24,7 @@ function sidebarReducer(state = initialStateGroup, action) {
 
             return {
                 ...state,
-                currentGroupName: action.groupName,
+                currentGroup: { id: action.groupId, groupName: action.groupName },
             };
         }
         default:

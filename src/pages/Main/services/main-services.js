@@ -1,8 +1,5 @@
-export const initialStateGroup = {
-    currentGroupName: '',
-    groups: [],
-};
-export const initialStateMessage = {
+export const initialState = {
     currentGroup: {},
+    groups: [],
     messages: [],
 };

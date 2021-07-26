@@ -47,7 +47,7 @@ const Sidebar = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    groups: state.groupReducer.groups,
+    groups: state.sidebarReducer.groups,
     currentGroupId: state.messageReducer.currentGroup.id,
 });
 
