@@ -25,6 +25,11 @@ const MessageInput = (props) => {
         sendMessage(id, message);
         setNewMessage('');
     };
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            onSendMessage();
+        }
+    };
 
     const onChange = (e) => {
         setNewMessage(e.target.value);
@@ -39,6 +44,7 @@ const MessageInput = (props) => {
                 className={classes.input}
                 onChange={onChange}
                 value={newMessage}
+                onKeyDown={handleKeyDown}
                 InputProps={{
                     endAdornment: (
                         <InputAdornment position="end">
