@@ -14,8 +14,13 @@ function MainPage(props) {
     const { groupName = '', messages, loadMessageData, loadGroupData } = props;
 
     useEffect(() => {
-        loadGroupData(mockGroupData);
-        loadMessageData(mockMessageData);
+        // setting data if ls is empty before dispatching loading actions
+        if (!localStorage.getItem('groupData') && !localStorage.getItem('messageData')) {
+            localStorage.setItem('groupData', JSON.stringify(mockGroupData));
+            localStorage.setItem('messageData', JSON.stringify(mockMessageData));
+        }
+        loadGroupData();
+        loadMessageData(); // data request is in reducer
     }, []);
 
     return (

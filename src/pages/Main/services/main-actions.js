@@ -6,13 +6,11 @@ const sendMessage = (groupId, message) => ({
     message,
 });
 
-const loadGroupData = (data) => ({
+const loadGroupData = () => ({
     type: actionType.LOAD_GROUPS,
-    data,
 });
-const loadMessageData = (data) => ({
+const loadMessageData = () => ({
     type: actionType.LOAD_MESSAGES,
-    data,
 });
 
 const changeCurrentGroup = (groupId, groupName) => ({

@@ -48,7 +48,7 @@ const Sidebar = (props) => {
 
 const mapStateToProps = (state) => ({
     groups: state.sidebarReducer.groups,
-    currentGroupId: state.messageReducer.currentGroup.id,
+    currentGroupId: state.sidebarReducer.currentGroup.id,
 });
 
 export default connect(mapStateToProps)(Sidebar);
