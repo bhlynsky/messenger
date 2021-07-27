@@ -27,11 +27,9 @@ function messageReducer(state = initialState, action) {
             const index = state.messages.findIndex((msg) => msg.groupId === state.currentGroup.id);
             newMessages[index].messages.push(message);
 
-            localStorage.setItem('messageData', JSON.stringify(newMessages)); // update messages
-
             return {
                 ...state,
-                messages: JSON.parse(localStorage.getItem('messageData')),
+                messages: newMessages,
                 currentGroup: {
                     ...state.currentGroup,
                     messages: [...state.currentGroup.messages, message],
