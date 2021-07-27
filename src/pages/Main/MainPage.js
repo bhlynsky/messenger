@@ -20,8 +20,11 @@ function MainPage(props) {
             localStorage.setItem('groupData', JSON.stringify(mockGroupData));
             localStorage.setItem('messageData', JSON.stringify(mockMessageData));
         }
-        loadGroupData();
-        loadMessageData(); // data request is in reducer
+        const groupData = JSON.parse(localStorage.getItem('groupData'));
+        const messageData = JSON.parse(localStorage.getItem('messageData'));
+
+        loadGroupData(groupData);
+        loadMessageData(messageData);
     }, []);
 
     return (

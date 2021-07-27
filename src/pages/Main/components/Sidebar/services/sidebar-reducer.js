@@ -5,7 +5,7 @@ function sidebarReducer(state = initialState, action) {
     switch (action.type) {
         case actionType.LOAD_GROUPS: {
             // load groups for sidebar and also load message for default group
-            const groups = JSON.parse(localStorage.getItem('groupData'));
+            const groups = action.data;
 
             return {
                 ...state,
