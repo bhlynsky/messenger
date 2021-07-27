@@ -5,23 +5,27 @@ import { useStyles } from './styles';
 import MessageInput from './components/Messenger/components/MessageInput';
 import { Message } from './components/Messenger/components/Message';
 import { connect } from 'react-redux';
-
-import { mockGroupData, mockMessageData } from './services/mockApi';
+import { getGroupsFromFile, getMessagesFromFile } from './services/main-services';
+//import { mockGroupData, mockMessageData } from './services/mockApi';
 import { loadMessageData, loadGroupData } from './services/main-actions';
 
 function MainPage(props) {
     const classes = useStyles();
 
     const { groupName = '', messages, loadMessageData, loadGroupData } = props;
+    let groupData;
+    let messageData;
+
+    const request = async () => {
+        /// Promise.all[]?
+        groupData = await getGroupsFromFile();
+        loadGroupData(JSON.parse(groupData));
+        messageData = await getMessagesFromFile();
+        loadMessageData(JSON.parse(messageData));
+    };
 
     useEffect(() => {
-        // setting data if ls is empty before dispatching loading actions
-        if (!localStorage.getItem('groupData') && !localStorage.getItem('messageData')) {
-            localStorage.setItem('groupData', JSON.stringify(mockGroupData));
-            localStorage.setItem('messageData', JSON.stringify(mockMessageData));
-        }
-        loadGroupData();
-        loadMessageData(); // data request is in reducer
+        request();
     }, []);
 
     return (
@@ -32,7 +36,7 @@ function MainPage(props) {
                 <Grid
                     container
                     direction="row"
-                    justifyContent="space-evenly"
+                    justify="space-evenly"
                     alignItems="flex-start"
                     className={classes.containerHeader}
                 >

@@ -1,0 +1,1 @@
+[{"id":1,"groupName":"Initial Group","lastMessage":{"userName":"Boris","date":"Tue Jul 27 2021","message":"des"}},{"id":2,"groupName":"Second Group","lastMessage":{"userName":"some user","message":"other last message","date":"2021-07-17"}},{"id":3,"groupName":"Third Group","lastMessage":{"userName":"some user","message":"last message","date":"2021-07-17"}}]

@@ -4,8 +4,7 @@ import { actionType } from '../../../services/main-constants';
 function messageReducer(state = initialState, action) {
     switch (action.type) {
         case actionType.LOAD_MESSAGES: {
-            //const messages = action.data;
-            const messages = JSON.parse(localStorage.getItem('messageData')); // can we just igonore action data and make this request?
+            const messages = action.data;
             return {
                 ...state,
                 messages,
