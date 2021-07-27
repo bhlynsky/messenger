@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import userActions from './services/user-actions';
 import { useStyles } from './styles';
-import { FormControl, InputLabel, Input, Button, Fab, Grid } from '@material-ui/core';
+import { FormControl, InputLabel, Input, Button, Fab, Grid, Typography } from '@material-ui/core';
 import Add from '@material-ui/icons/Add';
 import { ACTIONS_LABELS, userConstants } from './services/user-constants';
 
 const ChangeDataModal = (props) => {
     const { handleClose, user, changeData } = props;
     const [newUserData, setNewUserData] = useState(user);
+    const [imagePreview, setPreview] = useState('');
     const classes = useStyles();
 
     const onSave = () => {
@@ -23,6 +24,22 @@ const ChangeDataModal = (props) => {
             ...prevState,
             [name]: value,
         }));
+    };
+
+    const handleImageChange = (e) => {
+        e.preventDefault();
+
+        let reader = new FileReader();
+        let file = e.target.files[0];
+
+        reader.onloadend = () => {
+            setNewUserData({
+                image: file,
+            });
+            setPreview(reader.result);
+        };
+
+        reader.readAsDataURL(file);
     };
 
     return (
@@ -54,6 +71,7 @@ const ChangeDataModal = (props) => {
                     id="upload-photo"
                     name="upload-photo"
                     type="file"
+                    onChange={handleImageChange}
                 />
 
                 <Fab
@@ -67,6 +85,17 @@ const ChangeDataModal = (props) => {
                     <Add /> {userConstants.CHANGE_IMAGE}
                 </Fab>
             </label>
+
+            <div>
+                {imagePreview && (
+                    <div>
+                        <Typography variant="caption">Image preview</Typography>
+                        <div className={classes.imgPreview}>
+                            <img src={imagePreview} />{' '}
+                        </div>
+                    </div>
+                )}
+            </div>
 
             <Grid container justify="flex-start">
                 <Button

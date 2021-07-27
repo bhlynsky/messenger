@@ -31,6 +31,20 @@ export const useStyles = makeStyles((theme) => ({
         width: '47.5%',
         marginLeft: '5%',
     },
+    imgPreview: {
+        textalign: 'center',
+        margin: '5px 15px',
+        height: '100%',
+        width: '100%',
+        maxWidth: '375px',
+        maxHeight: '200px',
+        border: '2px gray solid',
+        '& img': {
+            maxWidth: '375px',
+            maxHeight: '200px',
+            height: ' 100%',
+        },
+    },
 }));
 
 export default useStyles;
