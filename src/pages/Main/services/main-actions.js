@@ -1,8 +1,9 @@
 import { actionType } from './main-constants';
 
-const sendMessage = (groupId, message) => ({
+const sendMessage = (newMessages, newGroups, message) => ({
     type: actionType.SEND_MESSAGE,
-    groupId,
+    newMessages,
+    newGroups,
     message,
 });
 

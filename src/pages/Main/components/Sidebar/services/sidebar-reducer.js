@@ -27,13 +27,7 @@ function sidebarReducer(state = initialState, action) {
         }
 
         case actionType.SEND_MESSAGE: {
-            const { message } = action;
-
-            const newGroups = JSON.parse(JSON.stringify(state.groups)); // deep copy
-            const index = state.groups.findIndex((gr) => gr.id === state.currentGroup.id);
-            newGroups[index].lastMessage = message;
-
-            localStorage.setItem('groupData', JSON.stringify(newGroups)); // update group
+            const { newGroups } = action;
 
             return { ...state, groups: newGroups };
         }

@@ -6,12 +6,13 @@ import AttachmentIcon from '@material-ui/icons/Attachment';
 import { sendMessage } from '../../../services/main-actions';
 import { connect } from 'react-redux';
 import { labels } from '../../../services/main-constants';
+import { updateValuesOnSendMessage } from '../services/message-services';
 
 const MessageInput = (props) => {
     const [newMessage, setNewMessage] = useState('');
     const classes = useStyles();
 
-    const { sendMessage, id } = props;
+    const { sendMessage, messages, groups, id } = props;
 
     const onSendMessage = () => {
         const userName = 'Boris';
@@ -22,9 +23,11 @@ const MessageInput = (props) => {
             message: newMessage,
         };
 
-        sendMessage(id, message);
+        const { newMessages, newGroups } = updateValuesOnSendMessage(messages, groups, message, id);
+        sendMessage(newMessages, newGroups, message);
         setNewMessage('');
     };
+
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             onSendMessage();
@@ -63,9 +66,12 @@ const MessageInput = (props) => {
 };
 const mapStateToProps = (state) => ({
     id: state.messageReducer.currentGroup.id,
+    messages: state.messageReducer.messages,
+    groups: state.sidebarReducer.groups,
 });
 const mapDispatchToProps = (dispatch) => ({
-    sendMessage: (id, message) => dispatch(sendMessage(id, message)),
+    sendMessage: (newMessages, newGroups, message) =>
+        dispatch(sendMessage(newMessages, newGroups, message)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageInput);

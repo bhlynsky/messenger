@@ -5,7 +5,9 @@ function messageReducer(state = initialState, action) {
     switch (action.type) {
         case actionType.LOAD_MESSAGES: {
             const messages = action.data;
-
+            //const index = 0; messages.findIndex((msg) => msg.groupId === state.currentGroup.id);
+            // currentGroup.id === undefined for some reason
+            // get current group id from action.id?
             return {
                 ...state,
                 messages,
@@ -22,13 +24,7 @@ function messageReducer(state = initialState, action) {
             };
         }
         case actionType.SEND_MESSAGE: {
-            const { message } = action;
-
-            const newMessages = JSON.parse(JSON.stringify(state.messages)); // deep copy
-            const index = state.messages.findIndex((msg) => msg.groupId === state.currentGroup.id);
-            newMessages[index].messages.push(message);
-
-            localStorage.setItem('messageData', JSON.stringify(newMessages)); // update messages
+            const { message, newMessages } = action;
 
             return {
                 ...state,
