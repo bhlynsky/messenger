@@ -1,7 +1,32 @@
-export const initialState = {
-    currentGroup: {
-        id: 0,
-        groupName: '',
-    },
+import { mockGroupData, mockMessageData } from './mockApi';
+
+const initialState = {
+    currentGroup: {},
     groups: [],
+    messages: [],
 };
+
+const getMessagesFromFile = async () => {
+    const filePath = 'messageData.txt';
+    const response = await fetch(filePath);
+    const result = await response.text();
+
+    return result;
+};
+
+const getGroupsFromFile = async () => {
+    const filePath = 'groupData.txt';
+    const response = await fetch(filePath);
+    const result = await response.text();
+
+    return result;
+};
+
+const checkLocalStorage = () => {
+    if (!localStorage.getItem('groupData') && !localStorage.getItem('messageData')) {
+        localStorage.setItem('groupData', JSON.stringify(mockGroupData));
+        localStorage.setItem('messageData', JSON.stringify(mockMessageData));
+    }
+};
+
+export { initialState, getGroupsFromFile, getMessagesFromFile, checkLocalStorage };

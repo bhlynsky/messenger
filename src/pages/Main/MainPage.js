@@ -1,29 +1,36 @@
-import { Typography, Grid, Divider, TextField, InputAdornment } from '@material-ui/core';
+import { Typography, Grid, Divider, List } from '@material-ui/core';
 import React, { useEffect } from 'react';
-import Sidebar from './components/Sidebar';
+import Sidebar from './components/Sidebar/components/Sidebar';
 import { useStyles } from './styles';
-import SendIcon from '@material-ui/icons/Send';
-import AttachmentIcon from '@material-ui/icons/Attachment';
-import { Message } from './components/Message';
+import MessageInput from './components/Messenger/components/MessageInput';
+import { Message } from './components/Messenger/components/Message';
 import { connect } from 'react-redux';
-import { mockData } from './services/mockApi';
-import { loadData } from './services/main-actions';
+import { loadMessageData, loadGroupData, changeCurrentGroup } from './services/main-actions';
+import { checkLocalStorage } from './services/main-services';
 
 function MainPage(props) {
     const classes = useStyles();
-    const { groupName, loadData } = props;
+
+    const { groupName = '', messages, loadMessageData, loadGroupData, changeCurrentGroup } = props;
 
     useEffect(() => {
-        loadData(mockData);
-    });
+        // setting data if ls is empty before dispatching loading actions
+        checkLocalStorage();
+        const groupData = JSON.parse(localStorage.getItem('groupData'));
+        const messageData = JSON.parse(localStorage.getItem('messageData'));
+        const indexGroup = groupData.findIndex((gr) => gr.id === 1);
+
+        loadGroupData(groupData);
+        loadMessageData(messageData);
+
+        changeCurrentGroup(1, groupData[indexGroup].groupName); //default group is first group in list
+    }, []);
 
     return (
         <div>
             <Sidebar />
-            <Typography variant="h2" style={{ marginLeft: '25.5%' }}>
-                {groupName}
-            </Typography>
-            {/*<div className={classes.container}>
+
+            <div className={classes.container}>
                 <Grid
                     container
                     direction="row"
@@ -31,52 +38,40 @@ function MainPage(props) {
                     alignItems="flex-start"
                     className={classes.containerHeader}
                 >
-                    <Typography variant="h2">{groupName ? groupName : ''}</Typography>
-                    <Typography variant="body1" align="right">
-                        100 participants
+                    <Typography variant="h2" style={{ marginLeft: '25px' }}>
+                        {groupName}
                     </Typography>
                 </Grid>
                 <Divider />
 
-                <Grid container direction="column-reverse" className={classes.messageContainer}>
+                <List className={classes.messageContainer}>
                     {messages &&
-                        messages.map((msg) => <Message messageData={msg} key={msg.userName} />)}
+                        messages.length > 0 &&
+                        messages.map((msg) => (
+                            <Message messageData={msg} key={Math.random() * 100} />
+                        ))}
                     <Divider />
-                </Grid>
-
-                <div className={classes.messageInput}>
-                    <TextField
-                        label={'Write message'}
-                        variant="outlined"
-                        fullWidth
-                        className={classes.input}
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <SendIcon />
-                                    <AttachmentIcon />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                </div>
-                    </div>*/}
+                </List>
+                <MessageInput />
+            </div>
         </div>
     );
 }
 
 const mapStateToProps = (state) => {
-    const currentGroup = state.mainReducer.currentGroup;
-    const groupName = currentGroup.groupName;
-    //const messages = currentGroup.messages;
+    const groupName = state.sidebarReducer.currentGroup.groupName;
+    const messages = state.messageReducer.currentGroup.messages;
+
     return {
-        // messages,
+        messages,
         groupName,
     };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    loadData: (data) => dispatch(loadData(data)),
+    loadMessageData: (data) => dispatch(loadMessageData(data)),
+    loadGroupData: (data) => dispatch(loadGroupData(data)),
+    changeCurrentGroup: (id, name) => dispatch(changeCurrentGroup(id, name)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import Loading from '../components/Loading';
 
 export const withLoading = (WrappedComponent) => {

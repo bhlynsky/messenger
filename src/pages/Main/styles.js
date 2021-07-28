@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core';
-import theme from '../../theme';
 
 const drawerWidth = '25%';
 export const useStyles = makeStyles((theme) => ({
@@ -29,6 +28,8 @@ export const useStyles = makeStyles((theme) => ({
     messageContainer: {
         width: '100%',
         height: '75vh',
+        maxHeight: '100%',
+        overflow: 'auto',
     },
     messageInput: {
         width: '100%',
@@ -43,6 +44,7 @@ export const useStyles = makeStyles((theme) => ({
     messagePreview: {
         margin: '0px 15px 0px 15px',
         cursor: 'pointer',
+        textDecoration: 'none',
     },
     groupPreview: {
         marginTop: '10px',
@@ -56,5 +58,13 @@ export const useStyles = makeStyles((theme) => ({
         marginTop: '10px',
         border: `2px ${theme.palette.primary.main} solid`,
         borderRadius: '5px',
+    },
+    linkWithoutStyles: {
+        textDecoration: 'none',
+
+        '&:focus, &:hover, &:visited, &:link, &:active': {
+            textDecoration: 'none',
+            color: 'black',
+        },
     },
 }));

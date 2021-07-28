@@ -1,3 +1,4 @@
+import React from 'react';
 import Header from './components/Header/Header';
 import { Route, Switch, HashRouter, Redirect } from 'react-router-dom';
 import AdminPage from './pages/AdminPage';
@@ -14,9 +15,9 @@ function App() {
 
             <Switch>
                 <Route exact path="/">
-                    <Redirect to="/main" />
+                    <Redirect to="/main/1" />
                 </Route>
-                <Route path="/main">
+                <Route path="/main/:groupId">
                     <MainPage />
                 </Route>
                 <Route path="/user">
