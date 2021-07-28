@@ -10,7 +10,7 @@ const UserPage = (props) => {
     const [open, setOpen] = useState(false);
     const classes = useStyles();
     let { name, email, imgSrc } = props;
-
+    const newImage = localStorage.getItem('recent-image');
     console.log(props);
 
     const handleOpen = () => {
@@ -29,7 +29,11 @@ const UserPage = (props) => {
             <Divider className={classes.margin} />
             <Card className={classes.root}>
                 <CardActionArea>
-                    <CardMedia className={classes.media} title="Avatar" image={`/${imgSrc}`} />
+                    <CardMedia
+                        className={classes.media}
+                        title="Avatar"
+                        image={newImage ? `${newImage}` : `${imgSrc}`}
+                    />
                     <CardContent>
                         <Grid container spacing={1} direction="column">
                             <Typography variant="body1">

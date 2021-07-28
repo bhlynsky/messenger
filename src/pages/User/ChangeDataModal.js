@@ -34,9 +34,13 @@ const ChangeDataModal = (props) => {
 
         reader.onloadend = () => {
             setNewUserData({
-                image: file,
+                ...newUserData,
+                imgSrc: file,
             });
+
             setPreview(reader.result);
+
+            localStorage.setItem('recent-image', reader.result);
         };
 
         reader.readAsDataURL(file);
@@ -69,7 +73,7 @@ const ChangeDataModal = (props) => {
                 <input
                     style={{ display: 'none' }}
                     id="upload-photo"
-                    name="upload-photo"
+                    name="imgSrc"
                     type="file"
                     onChange={handleImageChange}
                 />

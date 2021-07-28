@@ -19,8 +19,9 @@ function MainPage(props) {
     const request = async () => {
         /// Promise.all[]?
         groupData = await getGroupsFromFile();
-        loadGroupData(JSON.parse(groupData));
         messageData = await getMessagesFromFile();
+
+        loadGroupData(JSON.parse(groupData));
         loadMessageData(JSON.parse(messageData));
     };
 
