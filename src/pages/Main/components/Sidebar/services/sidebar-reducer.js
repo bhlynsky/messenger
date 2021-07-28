@@ -16,7 +16,6 @@ function sidebarReducer(state = initialState, action) {
                 },
             };
         }
-
         case actionType.CHANGE_CURRENT_GROUP: {
             // get messages for current group when changing group
 
@@ -25,12 +24,12 @@ function sidebarReducer(state = initialState, action) {
                 currentGroup: { id: action.groupId, groupName: action.groupName },
             };
         }
-
         case actionType.SEND_MESSAGE: {
             const { newGroups } = action;
 
             return { ...state, groups: newGroups };
         }
+
         default:
             return { ...state };
     }

@@ -5,8 +5,8 @@ import { useStyles } from './styles';
 import MessageInput from './components/Messenger/components/MessageInput';
 import { Message } from './components/Messenger/components/Message';
 import { connect } from 'react-redux';
-import { mockGroupData, mockMessageData } from './services/mockApi';
 import { loadMessageData, loadGroupData, changeCurrentGroup } from './services/main-actions';
+import { checkLocalStorage } from './services/main-services';
 
 function MainPage(props) {
     const classes = useStyles();
@@ -15,17 +15,14 @@ function MainPage(props) {
 
     useEffect(() => {
         // setting data if ls is empty before dispatching loading actions
-        if (!localStorage.getItem('groupData') && !localStorage.getItem('messageData')) {
-            localStorage.setItem('groupData', JSON.stringify(mockGroupData));
-            localStorage.setItem('messageData', JSON.stringify(mockMessageData));
-        }
+        checkLocalStorage();
         const groupData = JSON.parse(localStorage.getItem('groupData'));
         const messageData = JSON.parse(localStorage.getItem('messageData'));
+        const indexGroup = groupData.findIndex((gr) => gr.id === 1);
 
         loadGroupData(groupData);
         loadMessageData(messageData);
 
-        const indexGroup = groupData.findIndex((gr) => gr.id === 1);
         changeCurrentGroup(1, groupData[indexGroup].groupName); //default group is first group in list
     }, []);
 

@@ -15,6 +15,8 @@ const MessageInput = (props) => {
     const { sendMessage, messages, groups, id } = props;
 
     const onSendMessage = () => {
+        if (!newMessage) return; // empty message validation
+
         const userName = 'Boris';
         const date = new Date();
         const message = {
@@ -22,8 +24,8 @@ const MessageInput = (props) => {
             date: date.toDateString(),
             message: newMessage,
         };
-
         const { newMessages, newGroups } = updateValuesOnSendMessage(messages, groups, message, id);
+
         sendMessage(newMessages, newGroups, message);
         setNewMessage('');
     };

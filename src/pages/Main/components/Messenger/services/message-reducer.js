@@ -5,9 +5,7 @@ function messageReducer(state = initialState, action) {
     switch (action.type) {
         case actionType.LOAD_MESSAGES: {
             const messages = action.data;
-            //const index = 0; messages.findIndex((msg) => msg.groupId === state.currentGroup.id);
-            // currentGroup.id === undefined for some reason
-            // get current group id from action.id?
+
             return {
                 ...state,
                 messages,
