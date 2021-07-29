@@ -11,7 +11,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     drawerPaper: {
         width: drawerWidth,
-        marginTop: '50px',
+        marginTop: '60px',
         marginLeft: '8px',
     },
 

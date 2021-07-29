@@ -3,6 +3,7 @@ import { AppBar, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { useStyles } from './styles';
 import { useLocation } from 'react-router-dom';
+import { SearchBar } from '../SearchBar';
 
 export default function Header() {
     const classes = useStyles();
@@ -47,6 +48,7 @@ export default function Header() {
                     Styles examples
                 </Link>
             </Typography>
+            <SearchBar />
         </AppBar>
     );
 }
