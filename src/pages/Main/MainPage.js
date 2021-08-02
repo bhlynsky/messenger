@@ -42,7 +42,9 @@ function MainPage(props) {
                         {groupName}
                     </Typography>
                 </Grid>
+
                 <SearchBar />
+
                 <Divider />
 
                 <MessageList messages={messages} />

@@ -20,11 +20,13 @@ export const SearchBar = () => {
 
         innerHTML =
             innerHTML.substring(0, index) +
-            `<span class=${classes.highlight} >` +
+            `<span class=${classes.highlight}>` +
             innerHTML.substring(index, index + text.length) +
             `</span>` +
             innerHTML.substring(index + text.length);
-
+        // this approach is probably bad because it add span every time you search same thing with more details
+        // recreate : try to search for 'f' then for 'fi'  etc
+        // any better way?
         inputElem.innerHTML = innerHTML;
     };
 
@@ -38,20 +40,32 @@ export const SearchBar = () => {
                 if (p.textContent.includes(searchValue)) {
                     highlightText(searchValue, p);
 
-                    p.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' }); // scroll to last founded,first in list
+                    p.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' }); // scroll to last found,first in list
                 }
             }
         }
     };
 
+    const removeHighlight = () => {
+        const className = 'div > div > p.MuiTypography-root.MuiTypography-body1 > *';
+
+        document.querySelectorAll(className).forEach((a) => {
+            a.className = '';
+        });
+    };
+
     const onClear = () => {
         setSearchValue('');
+        removeHighlight();
     };
+
+    if (searchValue === '') {
+        removeHighlight();
+    }
 
     return (
         <div className={classes.searchBar}>
             <Input
-                fullWidth
                 value={searchValue}
                 placeholder={labels.SEARCH_MESSAGES}
                 onKeyDown={searchMessage}
@@ -68,6 +82,7 @@ export const SearchBar = () => {
                         </IconButton>
                     </InputAdornment>
                 }
+                style={{ width: '80%', marginLeft: '10%' }}
             />
         </div>
     );
