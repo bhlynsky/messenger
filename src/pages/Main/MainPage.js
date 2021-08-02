@@ -1,16 +1,15 @@
-import { Typography, Grid, Divider, List } from '@material-ui/core';
+import { Typography, Grid, Divider } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import Sidebar from './components/Sidebar/components/Sidebar';
 import { useStyles } from './styles';
 import MessageInput from './components/Messenger/components/MessageInput';
-import { Message } from './components/Messenger/components/Message';
 import { connect } from 'react-redux';
 import { loadMessageData, loadGroupData, changeCurrentGroup } from './services/main-actions';
 import { checkLocalStorage } from './services/main-services';
+import { MessageList } from './components/Messenger/components/MessageList';
 
 function MainPage(props) {
     const classes = useStyles();
-
     const { groupName = '', messages, loadMessageData, loadGroupData, changeCurrentGroup } = props;
 
     useEffect(() => {
@@ -44,14 +43,7 @@ function MainPage(props) {
                 </Grid>
                 <Divider />
 
-                <List className={classes.messageContainer}>
-                    {messages &&
-                        messages.length > 0 &&
-                        messages.map((msg) => (
-                            <Message messageData={msg} key={Math.random() * 100} />
-                        ))}
-                    <Divider />
-                </List>
+                <MessageList messages={messages} />
                 <MessageInput />
             </div>
         </div>
