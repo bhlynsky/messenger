@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Input, InputAdornment } from '@material-ui/core';
+import { IconButton, Input, InputAdornment } from '@material-ui/core';
 import { useStyles } from '../styles';
-
 import SearchIcon from '@material-ui/icons/Search';
+import ClearIcon from '@material-ui/icons/Clear';
+import { labels } from '../services/main-constants';
 
-export const SearchBar = ({ open }) => {
+export const SearchBar = () => {
     const [searchValue, setSearchValue] = useState('');
 
     const classes = useStyles();
@@ -43,23 +44,31 @@ export const SearchBar = ({ open }) => {
         }
     };
 
+    const onClear = () => {
+        setSearchValue('');
+    };
+
     return (
-        <div>
-            {open && (
-                <div className={classes.searchBar}>
-                    <Input
-                        fullWidth
-                        value={searchValue}
-                        onKeyDown={searchMessage}
-                        onChange={handleSearchBarChange}
-                        startAdornment={
-                            <InputAdornment position="start">
-                                <SearchIcon />
-                            </InputAdornment>
-                        }
-                    />
-                </div>
-            )}
+        <div className={classes.searchBar}>
+            <Input
+                fullWidth
+                value={searchValue}
+                placeholder={labels.SEARCH_MESSAGES}
+                onKeyDown={searchMessage}
+                onChange={handleSearchBarChange}
+                startAdornment={
+                    <InputAdornment position="start">
+                        <SearchIcon />
+                    </InputAdornment>
+                }
+                endAdornment={
+                    <InputAdornment>
+                        <IconButton onClick={onClear}>
+                            <ClearIcon />
+                        </IconButton>
+                    </InputAdornment>
+                }
+            />
         </div>
     );
 };

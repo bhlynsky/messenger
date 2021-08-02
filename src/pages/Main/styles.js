@@ -68,11 +68,9 @@ export const useStyles = makeStyles((theme) => ({
         },
     },
     searchBar: {
-        width: '59.3%',
-        background: 'darkgrey',
-        position: 'absolute',
+        width: '100%',
+        background: 'lightgray',
         zIndex: '1',
-        borderRadius: '5px',
     },
     highlight: {
         background: 'pink',
