@@ -1,15 +1,11 @@
 import { makeStyles } from '@material-ui/styles';
 
 export const useStyles = makeStyles({
-    input: {
-        height: 1,
-    },
-    searchBar: {
-        padding: '5px',
-        marginLeft: 'auto',
-        marginRight: 0,
-    },
-    highlight: {
-        background: 'pink',
+    spinner: {
+        height: '100px',
+        width: '100px',
+        position: 'absolute',
+        left: '50%',
+        top: '50%',
     },
 });

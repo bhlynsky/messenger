@@ -1,5 +1,5 @@
-import { Typography, Grid, Divider } from '@material-ui/core';
-import React, { useEffect } from 'react';
+import { Typography, Grid, Divider, Button } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import Sidebar from './components/Sidebar/components/Sidebar';
 import { useStyles } from './styles';
 import MessageInput from './components/Messenger/components/MessageInput';
@@ -7,10 +7,18 @@ import { connect } from 'react-redux';
 import { loadMessageData, loadGroupData, changeCurrentGroup } from './services/main-actions';
 import { checkLocalStorage } from './services/main-services';
 import { MessageList } from './components/Messenger/components/MessageList';
+import { SearchBar } from './components/SearchBar';
+import { labels } from './services/main-constants';
 
 function MainPage(props) {
     const classes = useStyles();
     const { groupName = '', messages, loadMessageData, loadGroupData, changeCurrentGroup } = props;
+
+    const [openSearchBar, setOpenSearchBar] = useState(false);
+
+    const toggleSearchBar = () => {
+        setOpenSearchBar(!openSearchBar);
+    };
 
     useEffect(() => {
         // setting data if ls is empty before dispatching loading actions
@@ -33,17 +41,25 @@ function MainPage(props) {
             <div className={classes.container}>
                 <Grid
                     container
-                    direction="row"
+                    direction="column"
                     alignItems="baseline"
                     className={classes.containerHeader}
                 >
                     <Typography variant="h2" style={{ margin: 'auto' }}>
                         {groupName}
                     </Typography>
+                    <Button
+                        style={{ margin: 'auto', fontSize: '0.7rem', padding: '0px' }}
+                        onClick={toggleSearchBar}
+                    >
+                        {labels.FIND_MESSAGE_BUTTON}
+                    </Button>
                 </Grid>
+                <SearchBar open={openSearchBar} />
                 <Divider />
 
                 <MessageList messages={messages} />
+
                 <MessageInput />
             </div>
         </div>

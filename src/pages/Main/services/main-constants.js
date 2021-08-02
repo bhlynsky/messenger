@@ -10,6 +10,7 @@ const labels = {
     SIDEBAR_HEADER: 'Current group',
     SIDEBAR_NO_GROUPS: 'No Groups!',
     MESSAGE_INPUT_PLACEHOLDER: 'Write Your Message',
+    FIND_MESSAGE_BUTTON: 'Find message',
 };
 
 export { actionType, labels };

@@ -27,7 +27,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     messageContainer: {
         width: '100%',
-        height: '75vh',
+        height: '73vh',
         maxHeight: '100%',
         overflow: 'auto',
     },
@@ -66,5 +66,15 @@ export const useStyles = makeStyles((theme) => ({
             textDecoration: 'none',
             color: 'black',
         },
+    },
+    searchBar: {
+        width: '59.3%',
+        background: 'darkgrey',
+        position: 'absolute',
+        zIndex: '1',
+        borderRadius: '5px',
+    },
+    highlight: {
+        background: 'pink',
     },
 }));

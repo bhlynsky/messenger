@@ -20,9 +20,10 @@ export const useStyles = makeStyles({
     activeLink: {
         padding: '5px',
         marginLeft: '50px',
+        marginTop: '20px',
         textDecoration: 'underline',
-        verticalAlign: 'text-top',
-        fontWeight: 'bold',
         color: 'white',
+        fontWeight: 'bold',
+        lineHeight: '45px',
     },
 });
