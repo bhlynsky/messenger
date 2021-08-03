@@ -3,27 +3,26 @@ import { Avatar, Divider, Grid, Typography } from '@material-ui/core';
 import { useStyles } from '../../../styles';
 
 export const Message = (props) => {
-    const { userName, message, date } = props.messageData;
-    const { searchValue } = props;
+    const { searchValue, messageData } = props;
+    const { userName, message, date } = messageData;
 
     const classes = useStyles();
     const scrollRef = useRef(null);
 
-    const getHighlightedText = (text, highlight) => {
-        // Split on highlight term and include term into parts, ignore case
-        const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
+    const getHighlightedText = (text, target) => {
+        const parts = text.split(new RegExp(`(${target})`));
+
         return (
             <span>
-                {' '}
                 {parts.map((part, i) => (
                     <span
                         key={i}
-                        style={part === highlight ? { fontWeight: 'bold', background: 'pink' } : {}}
-                        ref={part === highlight ? scrollRef : null}
+                        style={part === target ? { fontWeight: 'bold', background: 'pink' } : {}}
+                        ref={part === target ? scrollRef : null}
                     >
                         {part}
                     </span>
-                ))}{' '}
+                ))}
             </span>
         );
     };
