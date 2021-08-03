@@ -1,10 +1,46 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Avatar, Divider, Grid, Typography } from '@material-ui/core';
 import { useStyles } from '../../../styles';
 
 export const Message = (props) => {
     const { userName, message, date } = props.messageData;
+    const { searchValue } = props;
+
     const classes = useStyles();
+    const scrollRef = useRef(null);
+
+    const getHighlightedText = (text, highlight) => {
+        // Split on highlight term and include term into parts, ignore case
+        const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
+        return (
+            <span>
+                {' '}
+                {parts.map((part, i) => (
+                    <span
+                        key={i}
+                        style={part === highlight ? { fontWeight: 'bold', background: 'pink' } : {}}
+                        ref={part === highlight ? scrollRef : null}
+                    >
+                        {part}
+                    </span>
+                ))}{' '}
+            </span>
+        );
+    };
+
+    let messageComponent = (
+        <Typography variant="body1">{getHighlightedText(message, searchValue)}</Typography>
+    );
+
+    useEffect(() => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollIntoView({
+                behaviour: 'smooth',
+                block: 'end',
+                inline: 'nearest',
+            });
+        }
+    }, [searchValue]);
 
     return (
         <div key={userName}>
@@ -20,7 +56,7 @@ export const Message = (props) => {
                     justify="space-between"
                     className={classes.messageContent}
                 >
-                    <Typography variant="body1">{message}</Typography>
+                    {messageComponent}
                     <Typography variant="body2" align="left">
                         {date}
                     </Typography>

@@ -1,5 +1,5 @@
 import { Typography, Grid, Divider } from '@material-ui/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from './components/Sidebar/components/Sidebar';
 import { useStyles } from './styles';
 import MessageInput from './components/Messenger/components/MessageInput';
@@ -12,6 +12,16 @@ import { SearchBar } from './components/SearchBar';
 function MainPage(props) {
     const classes = useStyles();
     const { groupName = '', messages, loadMessageData, loadGroupData, changeCurrentGroup } = props;
+
+    const [searchValue, setSearchValue] = useState('');
+
+    const handleSearchBarChange = (e) => {
+        setSearchValue(e.target.value);
+    };
+
+    const onClear = () => {
+        setSearchValue('');
+    };
 
     useEffect(() => {
         // setting data if ls is empty before dispatching loading actions
@@ -43,11 +53,15 @@ function MainPage(props) {
                     </Typography>
                 </Grid>
 
-                <SearchBar />
+                <SearchBar
+                    handleChange={handleSearchBarChange}
+                    searchValue={searchValue}
+                    onClear={onClear}
+                />
 
                 <Divider />
 
-                <MessageList messages={messages} />
+                <MessageList messages={messages} searchValue={searchValue} />
 
                 <MessageInput />
             </div>

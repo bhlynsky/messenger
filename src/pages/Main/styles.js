@@ -71,6 +71,7 @@ export const useStyles = makeStyles((theme) => ({
         width: '100%',
         background: 'lightgray',
         zIndex: '1',
+        paddingBottom: '5px',
     },
     highlight: {
         background: 'pink',
