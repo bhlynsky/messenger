@@ -27,7 +27,7 @@ export const Message = (props) => {
         );
     };
 
-    let messageComponent = (
+    const messageComponent = (
         <Typography variant="body1">{getHighlightedText(message, searchValue)}</Typography>
     );
 
