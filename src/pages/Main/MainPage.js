@@ -38,7 +38,7 @@ function MainPage(props) {
     }, []);
 
     return (
-        <div>
+        <div style={{ display: 'flex' }}>
             <Sidebar />
 
             <div className={classes.container}>

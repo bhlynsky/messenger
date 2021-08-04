@@ -45,7 +45,7 @@ export const Message = (props) => {
         <div key={userName}>
             <div className={classes.message}>
                 <Grid container direction="row" alignItems="flex-start">
-                    <Avatar style={{ margin: '-5px 10px 10px' }}>A</Avatar>
+                    <Avatar style={{ margin: '-5px 10px 10px' }}>{userName.charAt(0)}</Avatar>
                     <Typography variant="subtitle1">{userName}</Typography>
                 </Grid>
                 <Grid

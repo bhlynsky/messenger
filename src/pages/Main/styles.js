@@ -11,12 +11,13 @@ export const useStyles = makeStyles((theme) => ({
     },
     drawerPaper: {
         width: drawerWidth,
+        postition: 'relative',
         marginTop: '60px',
         marginLeft: '8px',
     },
 
     container: {
-        marginLeft: '25.5%',
+        marginLeft: '10px',
         marginTop: '2px',
         width: '60%',
         borderLeft: '1px #e3e3e3 solid',
@@ -24,11 +25,15 @@ export const useStyles = makeStyles((theme) => ({
     },
     containerHeader: {
         background: 'lightgray',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     messageContainer: {
         width: '100%',
-        height: '73vh',
-        maxHeight: '100%',
+        minHeight: '300px',
+        height: '70vh',
+        maxHeight: '1440px',
         overflow: 'auto',
     },
     messageInput: {
@@ -58,6 +63,9 @@ export const useStyles = makeStyles((theme) => ({
         marginTop: '10px',
         border: `2px ${theme.palette.primary.main} solid`,
         borderRadius: '5px',
+        '&:hover': {
+            background: 'lightgray',
+        },
     },
     linkWithoutStyles: {
         textDecoration: 'none',
@@ -75,5 +83,21 @@ export const useStyles = makeStyles((theme) => ({
     },
     highlight: {
         background: 'pink',
+    },
+    newGroupButton: {
+        width: '50%',
+        marginTop: '5px',
+    },
+    modalForm: {
+        position: 'absolute',
+        top: '20%',
+        left: '50%',
+        marginLeft: -250,
+        width: 400,
+
+        backgroundColor: 'white',
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
     },
 }));

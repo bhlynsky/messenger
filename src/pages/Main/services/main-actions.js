@@ -21,5 +21,9 @@ const changeCurrentGroup = (groupId, groupName) => ({
     groupId,
     groupName,
 });
+const createNewGroup = (group) => ({
+    type: actionType.CREATE_NEW_GROUP,
+    group,
+});
 
-export { loadGroupData, loadMessageData, sendMessage, changeCurrentGroup };
+export { loadGroupData, loadMessageData, sendMessage, changeCurrentGroup, createNewGroup };

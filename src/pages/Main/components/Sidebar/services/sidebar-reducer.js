@@ -29,6 +29,12 @@ function sidebarReducer(state = initialState, action) {
 
             return { ...state, groups: newGroups };
         }
+        case actionType.CREATE_NEW_GROUP: {
+            const { group } = action;
+            group.id = Math.random() * 100;
+
+            return { ...state, groups: [...state.groups, group] };
+        }
 
         default:
             return { ...state };
