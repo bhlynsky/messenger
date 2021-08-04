@@ -11,7 +11,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     drawerPaper: {
         width: drawerWidth,
-        marginTop: '50px',
+        marginTop: '60px',
         marginLeft: '8px',
     },
 
@@ -27,7 +27,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     messageContainer: {
         width: '100%',
-        height: '75vh',
+        height: '73vh',
         maxHeight: '100%',
         overflow: 'auto',
     },
@@ -66,5 +66,14 @@ export const useStyles = makeStyles((theme) => ({
             textDecoration: 'none',
             color: 'black',
         },
+    },
+    searchBar: {
+        width: '100%',
+        background: 'lightgray',
+        zIndex: '1',
+        paddingBottom: '5px',
+    },
+    highlight: {
+        background: 'pink',
     },
 }));

@@ -1,21 +1,32 @@
-import { Typography, Grid, Divider, List } from '@material-ui/core';
-import React, { useEffect } from 'react';
+import { Typography, Grid, Divider } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import Sidebar from './components/Sidebar/components/Sidebar';
 import { useStyles } from './styles';
 import MessageInput from './components/Messenger/components/MessageInput';
-import { Message } from './components/Messenger/components/Message';
 import { connect } from 'react-redux';
 import { loadMessageData, loadGroupData, changeCurrentGroup } from './services/main-actions';
 import { checkLocalStorage } from './services/main-services';
+import { MessageList } from './components/Messenger/components/MessageList';
+import { SearchBar } from './components/SearchBar';
 
 function MainPage(props) {
     const classes = useStyles();
-
     const { groupName = '', messages, loadMessageData, loadGroupData, changeCurrentGroup } = props;
+
+    const [searchValue, setSearchValue] = useState('');
+
+    const handleSearchBarChange = (e) => {
+        setSearchValue(e.target.value);
+    };
+
+    const onClear = () => {
+        setSearchValue('');
+    };
 
     useEffect(() => {
         // setting data if ls is empty before dispatching loading actions
         checkLocalStorage();
+
         const groupData = JSON.parse(localStorage.getItem('groupData'));
         const messageData = JSON.parse(localStorage.getItem('messageData'));
         const indexGroup = groupData.findIndex((gr) => gr.id === 1);
@@ -33,25 +44,25 @@ function MainPage(props) {
             <div className={classes.container}>
                 <Grid
                     container
-                    direction="row"
-                    justify="space-evenly"
-                    alignItems="flex-start"
+                    direction="column"
+                    alignItems="baseline"
                     className={classes.containerHeader}
                 >
-                    <Typography variant="h2" style={{ marginLeft: '25px' }}>
+                    <Typography variant="h2" style={{ margin: 'auto' }}>
                         {groupName}
                     </Typography>
                 </Grid>
+
+                <SearchBar
+                    handleChange={handleSearchBarChange}
+                    searchValue={searchValue}
+                    onClear={onClear}
+                />
+
                 <Divider />
 
-                <List className={classes.messageContainer}>
-                    {messages &&
-                        messages.length > 0 &&
-                        messages.map((msg) => (
-                            <Message messageData={msg} key={Math.random() * 100} />
-                        ))}
-                    <Divider />
-                </List>
+                <MessageList messages={messages} searchValue={searchValue} />
+
                 <MessageInput />
             </div>
         </div>

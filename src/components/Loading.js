@@ -1,6 +1,6 @@
 import React from 'react';
 import { CircularProgress } from '@material-ui/core';
-import { useStyles } from '../pages/NasaPics/styles.js';
+import { useStyles } from './styles.js';
 
 const Loading = ({ isLoading, children }) => {
     const classes = useStyles();

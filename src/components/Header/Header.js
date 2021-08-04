@@ -11,7 +11,10 @@ export default function Header() {
     return (
         <AppBar className={classes.header}>
             <Typography variant="subtitle1">
-                <Link className={'/main' === location ? classes.activeLink : classes.link} to="/">
+                <Link
+                    className={location.includes('/main') ? classes.activeLink : classes.link}
+                    to="/"
+                >
                     Main Page
                 </Link>
             </Typography>

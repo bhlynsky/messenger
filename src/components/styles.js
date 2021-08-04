@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 
-export const useStyles = makeStyles(() => ({
+export const useStyles = makeStyles({
     spinner: {
         height: '100px',
         width: '100px',
@@ -8,4 +8,4 @@ export const useStyles = makeStyles(() => ({
         left: '50%',
         top: '50%',
     },
-}));
+});
