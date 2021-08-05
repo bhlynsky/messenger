@@ -14,4 +14,18 @@ const labels = {
     SEARCH_MESSAGES: 'Search messages in this group.',
 };
 
-export { actionType, labels };
+const createGroupLabels = {
+    HEADER: 'Create new Group!',
+    NAME_INPUT: 'New Group Name',
+    SUBTITLE_NAME: 'Come up with name',
+    SUBTITLE_ADD_USERS: 'Add users to your group',
+    ERROR_NO_GROUPNAME: 'Group name is required',
+    ERROR_NO_USERS: 'You need to add users to your group',
+};
+
+const actionButtons = {
+    SAVE: 'Save',
+    CLOSE: 'Close',
+};
+
+export { actionType, labels, createGroupLabels, actionButtons };

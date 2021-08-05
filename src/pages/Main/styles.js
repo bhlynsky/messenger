@@ -7,6 +7,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     drawer: {
         width: drawerWidth,
+        minWidth: '200px',
         flexShrink: 0,
     },
     drawerPaper: {
@@ -19,6 +20,7 @@ export const useStyles = makeStyles((theme) => ({
     container: {
         marginLeft: '10px',
         marginTop: '2px',
+        minWidth: '400px',
         width: '60%',
         borderLeft: '1px #e3e3e3 solid',
         borderRight: '1px #e3e3e3 solid',
@@ -94,7 +96,6 @@ export const useStyles = makeStyles((theme) => ({
         left: '50%',
         marginLeft: -250,
         width: 400,
-
         backgroundColor: 'white',
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
