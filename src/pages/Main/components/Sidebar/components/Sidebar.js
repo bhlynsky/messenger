@@ -35,7 +35,6 @@ const Sidebar = (props) => {
                             marginTop: 'auto',
                             marginBottom: 'auto',
                         }}
-                        color="primary"
                     >
                         <AddIcon />
                     </IconButton>

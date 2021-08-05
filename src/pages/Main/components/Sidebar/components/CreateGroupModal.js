@@ -8,22 +8,28 @@ import {
     FormControl,
     Typography,
     FormHelperText,
+    Divider,
+    IconButton,
+    Select,
+    MenuItem,
 } from '@material-ui/core';
 import { useStyles } from '../../../styles';
 import { createNewGroup } from '../../../services/main-actions';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 import { createGroupLabels, actionButtons } from '../../../services/main-constants';
+import Clear from '@material-ui/icons/Clear';
 
 const CreateGroupModal = (props) => {
     const [newGroup, setNewGroup] = useState({ groupName: '', users: [] });
     const [errors, setErrors] = useState({ groupName: '', users: '' });
+    const [selectedUser, setSelectedUser] = useState('');
 
     const { handleClose, createNewGroup } = props;
 
     const classes = useStyles();
 
-    const users = ['User1', 'user2', 'user3', 'user4', 'user3', 'user4'];
+    const users = ['Eva', 'Vadim', 'Yurii', 'Lena', 'John', 'Sofia'];
 
     const onSave = () => {
         if (!newGroup.groupName) {
@@ -47,29 +53,48 @@ const CreateGroupModal = (props) => {
         }));
     };
 
-    const handleChipClick = (chip) => {
-        // has a few bugs but for now is ok
-        // should totally implement chip click differently
-        const userName = chip.target.childNodes[0].data;
+    const handleSelect = (e) => {
+        setSelectedUser(e.target.value);
+    };
 
-        if (userName && !newGroup.users.includes(userName)) {
-            newGroup.users.push(userName);
-        } else {
-            const withoutUser = newGroup.users.filter((elem) => {
-                return elem != userName;
-            });
-            setNewGroup({ ...newGroup, users: [...withoutUser] });
+    const handleChipDelete = (username) => () => {
+        console.log(username);
+        const withoutUser = newGroup.users.filter((elem) => elem !== username);
+        console.log(withoutUser);
+        setNewGroup({ ...newGroup, users: [...withoutUser] });
+    };
+
+    const addUserToGroup = () => {
+        console.log(newGroup);
+        if (selectedUser && !newGroup.users.includes(selectedUser)) {
+            newGroup.users.push(selectedUser);
+            setSelectedUser('');
         }
     };
 
     return (
         <form className={classes.modalForm}>
-            <Typography variant="h2" align="center">
-                {createGroupLabels.HEADER}
-            </Typography>
+            <div style={{ position: 'relative' }}>
+                <Typography variant="h2" align="center">
+                    <b>{createGroupLabels.HEADER}</b>
+                </Typography>
+                <IconButton
+                    onClick={handleClose}
+                    style={{ position: 'absolute', top: '-27px', right: '-43px ' }}
+                >
+                    <Clear style={{ margin: 'auto' }} />
+                </IconButton>
+            </div>
+
+            <Divider
+                variant="middle"
+                style={{ margin: '5px 60px 20px 60px', background: 'black' }}
+            />
 
             <Grid item>
-                <Typography variant="subtitle1">{createGroupLabels.SUBTITLE_NAME}</Typography>
+                <Typography variant="body1" align="center">
+                    <i>{createGroupLabels.SUBTITLE_NAME}</i>
+                </Typography>
                 <FormControl style={{ width: '100%' }} error={errors.groupName ? true : false}>
                     <InputLabel>{createGroupLabels.NAME_INPUT}</InputLabel>
                     <Input
@@ -84,30 +109,65 @@ const CreateGroupModal = (props) => {
                 </FormControl>
 
                 <div style={{ marginTop: '40px' }}>
-                    <Typography variant="subtitle1">
-                        {createGroupLabels.SUBTITLE_ADD_USERS}
+                    <Typography variant="body1" align="center">
+                        <i>{createGroupLabels.SUBTITLE_ADD_USERS}</i>
                     </Typography>
-                    {errors.users ? (
-                        <FormHelperText style={{ color: 'red', margin: '5px ' }}>
-                            {errors.users}
-                        </FormHelperText>
-                    ) : (
-                        ''
-                    )}
+                    <div>
+                        <FormControl error={errors.users ? true : false} style={{ width: '80%' }}>
+                            <InputLabel>Select someone</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={selectedUser}
+                                onChange={handleSelect}
+                                fullwidth="true"
+                            >
+                                {users.map((user) => (
+                                    <MenuItem value={user} key={user}>
+                                        {user}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                            {errors.users ? (
+                                <FormHelperText style={{ color: 'red', margin: '5px ' }}>
+                                    {errors.users}
+                                </FormHelperText>
+                            ) : (
+                                ''
+                            )}
+                        </FormControl>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            style={{ width: '10%', margin: '10px 0px 0px 15px' }}
+                            onClick={addUserToGroup}
+                        >
+                            Add
+                        </Button>
+                    </div>
                     <Grid
                         container
                         direction="row"
                         alignItems="center"
                         style={{ marginTop: '15px' }}
                     >
-                        {users.map((user) => (
+                        <Typography>Participants :</Typography>
+                        <Chip
+                            key={Math.random() * 100}
+                            color="primary"
+                            label={'You'}
+                            avatar={<Avatar>Y</Avatar>}
+                            style={{ margin: '3px' }}
+                        />
+
+                        {newGroup.users.map((user) => (
                             <Chip
                                 key={Math.random() * 100}
                                 color="secondary"
-                                onClick={handleChipClick}
                                 label={user}
                                 avatar={<Avatar>{user.charAt(0).toUpperCase()}</Avatar>}
                                 style={{ margin: '3px' }}
+                                onDelete={handleChipDelete(user)}
                             />
                         ))}
                     </Grid>
@@ -130,7 +190,6 @@ const CreateGroupModal = (props) => {
                         style={{
                             width: '47.5%',
                             marginLeft: '5%',
-                            background: '#ad1457',
                             color: 'white',
                         }}
                     >
