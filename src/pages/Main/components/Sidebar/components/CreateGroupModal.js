@@ -18,8 +18,12 @@ import { createGroupLabels, actionButtons } from '../../../services/main-constan
 const CreateGroupModal = (props) => {
     const [newGroup, setNewGroup] = useState({ groupName: '', users: [] });
     const [errors, setErrors] = useState({ groupName: '', users: '' });
+
     const { handleClose, createNewGroup } = props;
+
     const classes = useStyles();
+
+    const users = ['User1', 'user2', 'user3', 'user4', 'user3', 'user4'];
 
     const onSave = () => {
         if (!newGroup.groupName) {
@@ -58,7 +62,6 @@ const CreateGroupModal = (props) => {
         }
     };
 
-    const users = ['User1', 'user2', 'user3', 'user4', 'user3', 'user4'];
     return (
         <form className={classes.modalForm}>
             <Typography variant="h2" align="center">
@@ -67,7 +70,7 @@ const CreateGroupModal = (props) => {
 
             <Grid item>
                 <Typography variant="subtitle1">{createGroupLabels.SUBTITLE_NAME}</Typography>
-                <FormControl style={{ width: '100%' }} error={errors.groupName}>
+                <FormControl style={{ width: '100%' }} error={errors.groupName ? true : false}>
                     <InputLabel>{createGroupLabels.NAME_INPUT}</InputLabel>
                     <Input
                         id="new-group-name"
@@ -84,6 +87,13 @@ const CreateGroupModal = (props) => {
                     <Typography variant="subtitle1">
                         {createGroupLabels.SUBTITLE_ADD_USERS}
                     </Typography>
+                    {errors.users ? (
+                        <FormHelperText style={{ color: 'red', margin: '5px ' }}>
+                            {errors.users}
+                        </FormHelperText>
+                    ) : (
+                        ''
+                    )}
                     <Grid
                         container
                         direction="row"
@@ -101,11 +111,6 @@ const CreateGroupModal = (props) => {
                             />
                         ))}
                     </Grid>
-                    {errors.users ? (
-                        <FormHelperText color="error">{errors.users}</FormHelperText>
-                    ) : (
-                        ''
-                    )}
                 </div>
 
                 <Grid container justify="flex-start" style={{ marginTop: '20px' }}>

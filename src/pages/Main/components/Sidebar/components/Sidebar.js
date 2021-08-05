@@ -35,6 +35,7 @@ const Sidebar = (props) => {
                             marginTop: 'auto',
                             marginBottom: 'auto',
                         }}
+                        color="primary"
                     >
                         <AddIcon />
                     </IconButton>
@@ -44,8 +45,11 @@ const Sidebar = (props) => {
             <Divider />
 
             <Modal open={modalIsOpen} onClose={handleClose}>
-                <CreateGroupModal handleClose={handleClose} />
+                <>
+                    <CreateGroupModal handleClose={handleClose} />
+                </>
             </Modal>
+
             {groups.length ? (
                 groups.map((item) => (
                     <div
