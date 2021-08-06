@@ -25,6 +25,7 @@ export const useStyles = makeStyles(() => ({
         zIndex: '1',
         paddingBottom: '5px',
     },
+    searchBarInput: { marginLeft: '20%', width: '60%' },
     highlight: {
         background: 'pink',
     },
