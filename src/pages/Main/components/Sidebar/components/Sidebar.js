@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Divider, Typography, Modal, IconButton, Tooltip } from '@material-ui/core';
-import { useStyles } from '../../../styles';
+import { useStyles } from './styles';
 import { connect } from 'react-redux';
 import GroupPreview from './GroupPreview';
-import { labels } from '../../../services/main-constants';
+import { createGroupLabels, labels } from '../../../services/main-constants';
 import CreateGroupModal from './CreateGroupModal';
 import AddIcon from '@material-ui/icons/Add';
 
@@ -26,16 +26,8 @@ const Sidebar = (props) => {
                 <Typography variant="h2" align="left">
                     {labels.SIDEBAR_HEADER}
                 </Typography>
-                <Tooltip title="New group">
-                    <IconButton
-                        onClick={handleOpen}
-                        style={{
-                            width: '16px',
-                            height: '16px',
-                            marginTop: 'auto',
-                            marginBottom: 'auto',
-                        }}
-                    >
+                <Tooltip title={createGroupLabels.ICON_TOOLTIP}>
+                    <IconButton onClick={handleOpen} className={classes.openModalIcon}>
                         <AddIcon />
                     </IconButton>
                 </Tooltip>

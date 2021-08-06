@@ -99,13 +99,13 @@ const CreateGroupModal = (props) => {
                     {errors.groupName ? <FormHelperText>{errors.groupName}</FormHelperText> : ''}
                 </FormControl>
 
-                <div style={{ marginTop: '40px' }}>
+                <div className={classes.userSelect}>
                     <Typography variant="body1" align="center">
                         <i>{createGroupLabels.SUBTITLE_ADD_USERS}</i>
                     </Typography>
                     <div>
                         <FormControl error={errors.users ? true : false} className={classes.input}>
-                            <InputLabel>Select someone</InputLabel>
+                            <InputLabel>{createGroupLabels.SELECT_PLACEHOLDER}</InputLabel>
                             <Select
                                 labelId="user-select"
                                 id="user-select"
@@ -129,9 +129,9 @@ const CreateGroupModal = (props) => {
                         container
                         direction="row"
                         alignItems="center"
-                        style={{ marginTop: '15px' }}
+                        className={classes.participants}
                     >
-                        <Typography>Participants :</Typography>
+                        <Typography>{createGroupLabels.PATRICIPANTS} :</Typography>
                         <Chip
                             key={Math.random() * 100}
                             color="primary"
@@ -153,7 +153,7 @@ const CreateGroupModal = (props) => {
                     </Grid>
                 </div>
 
-                <Grid container justify="flex-start" style={{ marginTop: '20px' }}>
+                <Grid container justify="flex-start" className={classes.buttonsContainer}>
                     <Button
                         variant="contained"
                         color="primary"
