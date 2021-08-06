@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { List, Divider } from '@material-ui/core';
-import { useStyles } from '../../../styles';
+import { useStyles } from './styles';
 import { Message } from './Message';
 
 export const MessageList = ({ messages, searchValue }) => {

@@ -19,25 +19,6 @@ export const useStyles = makeStyles(() => ({
         borderLeft: '1px #e3e3e3 solid',
         borderRight: '1px #e3e3e3 solid',
     },
-
-    messageContainer: {
-        width: '100%',
-        minHeight: '300px',
-        height: '71vh',
-        maxHeight: '1440px',
-        overflow: 'auto',
-    },
-    messageInput: {
-        width: '100%',
-        paddingTop: '5px',
-    },
-    input: {
-        height: '30px',
-    },
-    message: {
-        margin: '20px 25px 20px 25px',
-    },
-
     searchBar: {
         width: '100%',
         background: 'lightgray',
@@ -50,5 +31,11 @@ export const useStyles = makeStyles(() => ({
     newGroupButton: {
         width: '50%',
         marginTop: '5px',
+    },
+    dFlex: {
+        display: 'flex',
+    },
+    mAuto: {
+        margin: 'auto',
     },
 }));

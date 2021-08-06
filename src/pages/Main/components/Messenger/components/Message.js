@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Avatar, Divider, Grid, Typography } from '@material-ui/core';
-import { useStyles } from '../../../styles';
+import { useStyles } from './styles';
 
 export const Message = (props) => {
     const { searchValue, messageData } = props;
@@ -17,7 +17,7 @@ export const Message = (props) => {
                 {parts.map((part, i) => (
                     <span
                         key={i}
-                        style={part === target ? { fontWeight: 'bold', background: 'pink' } : {}}
+                        className={part === target && classes.textHighlight}
                         ref={part === target ? scrollRef : null}
                     >
                         {part}
@@ -45,16 +45,10 @@ export const Message = (props) => {
         <div key={userName}>
             <div className={classes.message}>
                 <Grid container direction="row" alignItems="flex-start">
-                    <Avatar style={{ margin: '-5px 10px 10px' }}>{userName.charAt(0)}</Avatar>
+                    <Avatar className={classes.avatar}>{userName.charAt(0)}</Avatar>
                     <Typography variant="subtitle1">{userName}</Typography>
                 </Grid>
-                <Grid
-                    container
-                    direction="row"
-                    alignItems="center"
-                    justify="space-between"
-                    className={classes.messageContent}
-                >
+                <Grid container direction="row" alignItems="center" justify="space-between">
                     {messageComponent}
                     <Typography variant="body2" align="left">
                         {date}

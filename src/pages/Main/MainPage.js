@@ -38,7 +38,7 @@ function MainPage(props) {
     }, []);
 
     return (
-        <div style={{ display: 'flex' }}>
+        <div className={classes.dFlex}>
             <Sidebar />
 
             <div className={classes.container}>
@@ -48,7 +48,7 @@ function MainPage(props) {
                     alignItems="baseline"
                     className={classes.containerHeader}
                 >
-                    <Typography variant="h2" style={{ margin: 'auto' }}>
+                    <Typography variant="h2" className={classes.mAuto}>
                         {groupName}
                     </Typography>
                 </Grid>
