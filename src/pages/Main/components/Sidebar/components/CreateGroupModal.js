@@ -19,7 +19,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 import { createGroupLabels, actionButtons } from '../../../services/main-constants';
 import Clear from '@material-ui/icons/Clear';
-
+import { users } from '../../../services/mockApi';
 const CreateGroupModal = (props) => {
     const [newGroup, setNewGroup] = useState({ groupName: '', users: [] });
     const [errors, setErrors] = useState({ groupName: '', users: '' });
@@ -29,16 +29,16 @@ const CreateGroupModal = (props) => {
 
     const classes = useStyles();
 
-    const users = ['Eva', 'Vadim', 'Yurii', 'Lena', 'John', 'Sofia'];
-
     const onSave = () => {
+        if (newGroup.users.length === 0) {
+            setErrors({ ...errors, users: createGroupLabels.ERROR_NO_USERS });
+        }
+
         if (!newGroup.groupName) {
             setErrors({ ...errors, groupName: createGroupLabels.ERROR_NO_GROUPNAME });
-        } else if (newGroup.users.length === 0 && newGroup.groupName) {
-            setErrors({ groupName: '', users: createGroupLabels.ERROR_NO_USERS });
-        } else if (newGroup.users.length === 0) {
-            setErrors({ ...errors, users: createGroupLabels.ERROR_NO_USERS });
-        } else {
+        }
+
+        if (newGroup.users.length > 0 && newGroup.groupName) {
             createNewGroup(newGroup);
             handleClose();
         }
@@ -86,7 +86,7 @@ const CreateGroupModal = (props) => {
                 <Typography variant="body1" align="center">
                     <i>{createGroupLabels.SUBTITLE_NAME}</i>
                 </Typography>
-                <FormControl className={classes.input} error={errors.groupName ? true : false}>
+                <FormControl className={classes.input} error={!!errors.groupName}>
                     <InputLabel>{createGroupLabels.NAME_INPUT}</InputLabel>
                     <Input
                         id="new-group-name"
@@ -104,7 +104,7 @@ const CreateGroupModal = (props) => {
                         <i>{createGroupLabels.SUBTITLE_ADD_USERS}</i>
                     </Typography>
                     <div>
-                        <FormControl error={errors.users ? true : false} className={classes.input}>
+                        <FormControl error={!!errors.users} className={classes.input}>
                             <InputLabel>{createGroupLabels.SELECT_PLACEHOLDER}</InputLabel>
                             <Select
                                 labelId="user-select"
@@ -135,7 +135,7 @@ const CreateGroupModal = (props) => {
                         <Chip
                             key={Math.random() * 100}
                             color="primary"
-                            label={'You'}
+                            label={createGroupLabels.CURRENT_USERNAME}
                             avatar={<Avatar>Y</Avatar>}
                             className={classes.chip}
                         />

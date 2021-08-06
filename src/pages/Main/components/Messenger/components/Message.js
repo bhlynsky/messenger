@@ -17,7 +17,7 @@ export const Message = (props) => {
                 {parts.map((part, i) => (
                     <span
                         key={i}
-                        className={part === target && classes.textHighlight}
+                        className={part === target ? classes.textHighlight : undefined}
                         ref={part === target ? scrollRef : null}
                     >
                         {part}

@@ -33,10 +33,10 @@ export const useStyles = makeStyles(() => ({
         width: '50%',
         marginTop: '5px',
     },
-    dFlex: {
+    displayFlex: {
         display: 'flex',
     },
-    mAuto: {
+    marginAuto: {
         margin: 'auto',
     },
 }));

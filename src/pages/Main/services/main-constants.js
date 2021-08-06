@@ -25,6 +25,7 @@ const createGroupLabels = {
     ERROR_NO_USERS: 'You need to add users to your group',
     PATRICIPANTS: 'Participants',
     SELECT_PLACEHOLDER: 'Select someone',
+    CURRENT_USERNAME: 'You',
 };
 
 const actionButtons = {
