@@ -13,7 +13,7 @@ import {
     Select,
     MenuItem,
 } from '@material-ui/core';
-import { useStyles } from '../../../styles';
+import { useStyles } from './styles';
 import { createNewGroup } from '../../../services/main-actions';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
@@ -58,44 +58,35 @@ const CreateGroupModal = (props) => {
     };
 
     const handleChipDelete = (username) => () => {
-        console.log(username);
         const withoutUser = newGroup.users.filter((elem) => elem !== username);
-        console.log(withoutUser);
+
         setNewGroup({ ...newGroup, users: [...withoutUser] });
     };
 
-    const addUserToGroup = () => {
-        console.log(newGroup);
-        if (selectedUser && !newGroup.users.includes(selectedUser)) {
-            newGroup.users.push(selectedUser);
-            setSelectedUser('');
+    const addUserToGroup = (user) => () => {
+        if (user && !newGroup.users.includes(user)) {
+            newGroup.users.push(user);
         }
     };
 
     return (
         <form className={classes.modalForm}>
-            <div style={{ position: 'relative' }}>
+            <div>
                 <Typography variant="h2" align="center">
                     <b>{createGroupLabels.HEADER}</b>
                 </Typography>
-                <IconButton
-                    onClick={handleClose}
-                    style={{ position: 'absolute', top: '-27px', right: '-43px ' }}
-                >
-                    <Clear style={{ margin: 'auto' }} />
+                <IconButton onClick={handleClose} className={classes.closeModalIcon}>
+                    <Clear />
                 </IconButton>
             </div>
 
-            <Divider
-                variant="middle"
-                style={{ margin: '5px 60px 20px 60px', background: 'black' }}
-            />
+            <Divider variant="middle" className={classes.divider} />
 
             <Grid item>
                 <Typography variant="body1" align="center">
                     <i>{createGroupLabels.SUBTITLE_NAME}</i>
                 </Typography>
-                <FormControl style={{ width: '100%' }} error={errors.groupName ? true : false}>
+                <FormControl className={classes.input} error={errors.groupName ? true : false}>
                     <InputLabel>{createGroupLabels.NAME_INPUT}</InputLabel>
                     <Input
                         id="new-group-name"
@@ -113,37 +104,26 @@ const CreateGroupModal = (props) => {
                         <i>{createGroupLabels.SUBTITLE_ADD_USERS}</i>
                     </Typography>
                     <div>
-                        <FormControl error={errors.users ? true : false} style={{ width: '80%' }}>
+                        <FormControl error={errors.users ? true : false} className={classes.input}>
                             <InputLabel>Select someone</InputLabel>
                             <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
+                                labelId="user-select"
+                                id="user-select"
                                 value={selectedUser}
                                 onChange={handleSelect}
-                                fullwidth="true"
                             >
                                 {users.map((user) => (
-                                    <MenuItem value={user} key={user}>
+                                    <MenuItem
+                                        value={user}
+                                        key={user}
+                                        onClick={addUserToGroup(user)}
+                                    >
                                         {user}
                                     </MenuItem>
                                 ))}
                             </Select>
-                            {errors.users ? (
-                                <FormHelperText style={{ color: 'red', margin: '5px ' }}>
-                                    {errors.users}
-                                </FormHelperText>
-                            ) : (
-                                ''
-                            )}
+                            {errors.users ? <FormHelperText>{errors.users}</FormHelperText> : ''}
                         </FormControl>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            style={{ width: '10%', margin: '10px 0px 0px 15px' }}
-                            onClick={addUserToGroup}
-                        >
-                            Add
-                        </Button>
                     </div>
                     <Grid
                         container
@@ -157,7 +137,7 @@ const CreateGroupModal = (props) => {
                             color="primary"
                             label={'You'}
                             avatar={<Avatar>Y</Avatar>}
-                            style={{ margin: '3px' }}
+                            className={classes.chip}
                         />
 
                         {newGroup.users.map((user) => (
@@ -166,7 +146,7 @@ const CreateGroupModal = (props) => {
                                 color="secondary"
                                 label={user}
                                 avatar={<Avatar>{user.charAt(0).toUpperCase()}</Avatar>}
-                                style={{ margin: '3px' }}
+                                className={classes.chip}
                                 onDelete={handleChipDelete(user)}
                             />
                         ))}
@@ -178,7 +158,7 @@ const CreateGroupModal = (props) => {
                         variant="contained"
                         color="primary"
                         onClick={onSave}
-                        style={{ width: '47.5%' }}
+                        className={classes.buttonSave}
                     >
                         {actionButtons.SAVE}
                     </Button>
@@ -187,11 +167,7 @@ const CreateGroupModal = (props) => {
                         variant="contained"
                         color="secondary"
                         onClick={handleClose}
-                        style={{
-                            width: '47.5%',
-                            marginLeft: '5%',
-                            color: 'white',
-                        }}
+                        className={classes.buttonClose}
                     >
                         {actionButtons.CLOSE}
                     </Button>

@@ -21,6 +21,7 @@ export const useStyles = makeStyles((theme) => ({
         marginLeft: '10px',
         marginTop: '2px',
         minWidth: '400px',
+        height: '100%',
         width: '60%',
         borderLeft: '1px #e3e3e3 solid',
         borderRight: '1px #e3e3e3 solid',
@@ -34,7 +35,7 @@ export const useStyles = makeStyles((theme) => ({
     messageContainer: {
         width: '100%',
         minHeight: '300px',
-        height: '70vh',
+        height: '71vh',
         maxHeight: '1440px',
         overflow: 'auto',
     },
