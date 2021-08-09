@@ -36,9 +36,7 @@ const Sidebar = (props) => {
             <Divider />
 
             <Modal open={modalIsOpen} onClose={handleClose}>
-                <>
-                    <CreateGroupModal handleClose={handleClose} />
-                </>
+                <CreateGroupModal handleClose={handleClose} />
             </Modal>
             <List className={classes.groupList}>
                 {groups.length ? (
