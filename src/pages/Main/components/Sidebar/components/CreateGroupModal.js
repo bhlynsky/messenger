@@ -57,9 +57,11 @@ const CreateGroupModal = (props) => {
         setSelectedUser(e.target.value);
     };
 
-    const handleChipDelete = (username) => () => {
-        const withoutUser = newGroup.users.filter((elem) => elem !== username);
+    const onDeleteUser = (userToDelete) => () => {
+        // delete user from list of chips,
+        const withoutUser = newGroup.users.filter((user) => user !== userToDelete);
 
+        // update state with values without deleted user
         setNewGroup({ ...newGroup, users: [...withoutUser] });
     };
 
@@ -70,7 +72,7 @@ const CreateGroupModal = (props) => {
     };
 
     return (
-        <form className={classes.modalForm}>
+        <div className={classes.modalForm}>
             <div>
                 <Typography variant="h2" align="center">
                     <b>{createGroupLabels.HEADER}</b>
@@ -79,101 +81,110 @@ const CreateGroupModal = (props) => {
                     <Clear />
                 </IconButton>
             </div>
+            <form>
+                <Divider variant="middle" className={classes.divider} />
 
-            <Divider variant="middle" className={classes.divider} />
-
-            <Grid item>
-                <Typography variant="body1" align="center">
-                    <i>{createGroupLabels.SUBTITLE_NAME}</i>
-                </Typography>
-                <FormControl className={classes.input} error={!!errors.groupName}>
-                    <InputLabel>{createGroupLabels.NAME_INPUT}</InputLabel>
-                    <Input
-                        id="new-group-name"
-                        type="text"
-                        value={newGroup.name}
-                        onChange={handleChange}
-                        name="groupName"
-                        required
-                    />
-                    {errors.groupName ? <FormHelperText>{errors.groupName}</FormHelperText> : ''}
-                </FormControl>
-
-                <div className={classes.userSelect}>
+                <Grid item>
                     <Typography variant="body1" align="center">
-                        <i>{createGroupLabels.SUBTITLE_ADD_USERS}</i>
+                        <i>{createGroupLabels.SUBTITLE_NAME}</i>
                     </Typography>
-                    <div>
-                        <FormControl error={!!errors.users} className={classes.input}>
-                            <InputLabel>{createGroupLabels.SELECT_PLACEHOLDER}</InputLabel>
-                            <Select
-                                labelId="user-select"
-                                id="user-select"
-                                value={selectedUser}
-                                onChange={handleSelect}
-                            >
-                                {users.map((user) => (
-                                    <MenuItem
-                                        value={user}
-                                        key={user}
-                                        onClick={addUserToGroup(user)}
-                                    >
-                                        {user}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                            {errors.users ? <FormHelperText>{errors.users}</FormHelperText> : ''}
-                        </FormControl>
-                    </div>
-                    <Grid
-                        container
-                        direction="row"
-                        alignItems="center"
-                        className={classes.participants}
-                    >
-                        <Typography>{createGroupLabels.PATRICIPANTS} :</Typography>
-                        <Chip
-                            key={Math.random() * 100}
-                            color="primary"
-                            label={createGroupLabels.CURRENT_USERNAME}
-                            avatar={<Avatar>Y</Avatar>}
-                            className={classes.chip}
+                    <FormControl className={classes.input} error={!!errors.groupName}>
+                        <InputLabel>{createGroupLabels.NAME_INPUT}</InputLabel>
+                        <Input
+                            id="new-group-name"
+                            type="text"
+                            value={newGroup.name}
+                            onChange={handleChange}
+                            name="groupName"
+                            required
                         />
+                        {errors.groupName ? (
+                            <FormHelperText>{errors.groupName}</FormHelperText>
+                        ) : (
+                            ''
+                        )}
+                    </FormControl>
 
-                        {newGroup.users.map((user) => (
+                    <div className={classes.userSelect}>
+                        <Typography variant="body1" align="center">
+                            <i>{createGroupLabels.SUBTITLE_ADD_USERS}</i>
+                        </Typography>
+                        <div>
+                            <FormControl error={!!errors.users} className={classes.input}>
+                                <InputLabel>{createGroupLabels.SELECT_PLACEHOLDER}</InputLabel>
+                                <Select
+                                    labelId="user-select"
+                                    id="user-select"
+                                    value={selectedUser}
+                                    onChange={handleSelect}
+                                >
+                                    {users.map((user) => (
+                                        <MenuItem
+                                            value={user}
+                                            key={user}
+                                            onClick={addUserToGroup(user)}
+                                        >
+                                            {user}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                                {errors.users ? (
+                                    <FormHelperText>{errors.users}</FormHelperText>
+                                ) : (
+                                    ''
+                                )}
+                            </FormControl>
+                        </div>
+                        <Grid
+                            container
+                            direction="row"
+                            alignItems="center"
+                            className={classes.participants}
+                        >
+                            <Typography>{createGroupLabels.PATRICIPANTS} :</Typography>
                             <Chip
                                 key={Math.random() * 100}
-                                color="secondary"
-                                label={user}
-                                avatar={<Avatar>{user.charAt(0).toUpperCase()}</Avatar>}
+                                color="primary"
+                                label={createGroupLabels.CURRENT_USERNAME}
+                                avatar={<Avatar>Y</Avatar>}
                                 className={classes.chip}
-                                onDelete={handleChipDelete(user)}
                             />
-                        ))}
+
+                            {newGroup.users.map((user) => (
+                                <Chip
+                                    key={Math.random() * 100}
+                                    color="secondary"
+                                    label={user}
+                                    avatar={<Avatar>{user.charAt(0).toUpperCase()}</Avatar>}
+                                    className={classes.chip}
+                                    onDelete={onDeleteUser(user)}
+                                />
+                            ))}
+                        </Grid>
+                    </div>
+
+                    <Grid container justify="flex-start" className={classes.buttonsContainer}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={onSave}
+                            className={classes.buttonSave}
+                        >
+                            {actionButtons.SAVE}
+                        </Button>
+
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={handleClose}
+                            className={classes.buttonClose}
+                        >
+                            {actionButtons.CLOSE}
+                        </Button>
                     </Grid>
-                </div>
-
-                <Grid container justify="flex-start" className={classes.buttonsContainer}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={onSave}
-                        className={classes.buttonSave}
-                    >
-                        {actionButtons.SAVE}
-                    </Button>
-
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={handleClose}
-                        className={classes.buttonClose}
-                    >
-                        {actionButtons.CLOSE}
-                    </Button>
                 </Grid>
-            </Grid>
-        </form>
+            </form>
+        </div>
     );
 };
 

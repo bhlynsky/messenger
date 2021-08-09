@@ -24,6 +24,10 @@ export const useStyles = makeStyles((theme) => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
+    groupList: {
+        maxHeight: '500px',
+        overflow: 'auto',
+    },
     buttonClose: {
         width: '47.5%',
         marginLeft: '5%',
@@ -87,6 +91,7 @@ export const useStyles = makeStyles((theme) => ({
         marginTop: '10px',
         border: '1px black solid',
         borderRadius: '5px',
+        padding: '5px 2px 5px 2px',
         '&:hover': {
             background: 'lightgray',
         },
@@ -95,6 +100,7 @@ export const useStyles = makeStyles((theme) => ({
         marginTop: '10px',
         border: `2px ${theme.palette.primary.main} solid`,
         borderRadius: '5px',
+        padding: '5px 2px 5px 2px',
         '&:hover': {
             background: 'lightgray',
         },

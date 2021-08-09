@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Divider, Typography, Modal, IconButton, Tooltip } from '@material-ui/core';
+import { Divider, Typography, Modal, IconButton, Tooltip, ListItem, List } from '@material-ui/core';
 import { useStyles } from './styles';
 import { connect } from 'react-redux';
 import GroupPreview from './GroupPreview';
@@ -40,25 +40,24 @@ const Sidebar = (props) => {
                     <CreateGroupModal handleClose={handleClose} />
                 </>
             </Modal>
-
-            {groups.length ? (
-                groups.map((item) => (
-                    <div
-                        className={
-                            currentGroupId === item.id
-                                ? classes.groupPreviewActive
-                                : classes.groupPreview
-                        }
-                        key={item.id}
-                    >
-                        <Divider variant="middle" />
-
-                        <GroupPreview group={item} messageData={item.lastMessage} />
-                    </div>
-                ))
-            ) : (
-                <Typography variant="subtitle1">{labels.SIDEBAR_NO_GROUPS}</Typography>
-            )}
+            <List className={classes.groupList}>
+                {groups.length ? (
+                    groups.map((item) => (
+                        <ListItem
+                            className={
+                                currentGroupId === item.id
+                                    ? classes.groupPreviewActive
+                                    : classes.groupPreview
+                            }
+                            key={item.id}
+                        >
+                            <GroupPreview group={item} messageData={item.lastMessage} />
+                        </ListItem>
+                    ))
+                ) : (
+                    <Typography variant="subtitle1">{labels.SIDEBAR_NO_GROUPS}</Typography>
+                )}
+            </List>
         </div>
     );
 };

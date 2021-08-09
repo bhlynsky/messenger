@@ -14,13 +14,13 @@ export const Message = (props) => {
 
         return (
             <span>
-                {parts.map((part, i) => (
+                {parts.map((partOfText, i) => (
                     <span
                         key={i}
-                        className={part === target ? classes.textHighlight : undefined}
-                        ref={part === target ? scrollRef : null}
+                        className={partOfText === target ? classes.textHighlight : ''}
+                        ref={partOfText === target ? scrollRef : null}
                     >
-                        {part}
+                        {partOfText}
                     </span>
                 ))}
             </span>
@@ -45,7 +45,9 @@ export const Message = (props) => {
         <div key={userName}>
             <div className={classes.message}>
                 <Grid container direction="row" alignItems="flex-start">
-                    <Avatar className={classes.avatar}>{userName.charAt(0)}</Avatar>
+                    <Avatar className={classes.avatar}>
+                        {userName ? userName.charAt(0) : 'U'}
+                    </Avatar>
                     <Typography variant="subtitle1">{userName}</Typography>
                 </Grid>
                 <Grid container direction="row" alignItems="center" justify="space-between">
