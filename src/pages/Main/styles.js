@@ -33,10 +33,10 @@ export const useStyles = makeStyles(() => ({
         width: '50%',
         marginTop: '5px',
     },
-    displayFlex: {
+    pageWrapper: {
         display: 'flex',
     },
-    marginAuto: {
+    groupHeaderText: {
         margin: 'auto',
     },
 }));

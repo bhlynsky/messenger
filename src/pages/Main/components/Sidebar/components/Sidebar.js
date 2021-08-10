@@ -38,6 +38,7 @@ const Sidebar = (props) => {
             <Modal open={modalIsOpen} onClose={handleClose}>
                 <CreateGroupModal handleClose={handleClose} />
             </Modal>
+
             <List className={classes.groupList}>
                 {groups.length ? (
                     groups.map((item) => (
