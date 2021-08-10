@@ -80,5 +80,6 @@ const mockMessageData = [
         ],
     },
 ];
+const users = ['Eva', 'Vadim', 'Yurii', 'Lena', 'John', 'Sofia'];
 
-export { mockGroupData, mockMessageData };
+export { mockGroupData, mockMessageData, users };

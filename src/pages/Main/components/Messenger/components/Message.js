@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Avatar, Divider, Grid, Typography } from '@material-ui/core';
-import { useStyles } from '../../../styles';
+import { useStyles } from './styles';
 
 export const Message = (props) => {
     const { searchValue, messageData } = props;
@@ -14,13 +14,13 @@ export const Message = (props) => {
 
         return (
             <span>
-                {parts.map((part, i) => (
+                {parts.map((partOfText, i) => (
                     <span
                         key={i}
-                        style={part === target ? { fontWeight: 'bold', background: 'pink' } : {}}
-                        ref={part === target ? scrollRef : null}
+                        className={partOfText === target ? classes.textHighlight : ''}
+                        ref={partOfText === target ? scrollRef : null}
                     >
-                        {part}
+                        {partOfText}
                     </span>
                 ))}
             </span>
@@ -45,16 +45,12 @@ export const Message = (props) => {
         <div key={userName}>
             <div className={classes.message}>
                 <Grid container direction="row" alignItems="flex-start">
-                    <Avatar style={{ margin: '-5px 10px 10px' }}>A</Avatar>
+                    <Avatar className={classes.avatar}>
+                        {userName ? userName.charAt(0) : 'U'}
+                    </Avatar>
                     <Typography variant="subtitle1">{userName}</Typography>
                 </Grid>
-                <Grid
-                    container
-                    direction="row"
-                    alignItems="center"
-                    justify="space-between"
-                    className={classes.messageContent}
-                >
+                <Grid container direction="row" alignItems="center" justify="space-between">
                     {messageComponent}
                     <Typography variant="body2" align="left">
                         {date}

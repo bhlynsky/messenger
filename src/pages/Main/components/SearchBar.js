@@ -28,7 +28,7 @@ export const SearchBar = (props) => {
                         </IconButton>
                     </InputAdornment>
                 }
-                style={{ marginLeft: '20%', width: '60%' }}
+                className={classes.searchBarInput}
             />
         </div>
     );

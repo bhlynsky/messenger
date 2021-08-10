@@ -1,71 +1,23 @@
 import { makeStyles } from '@material-ui/core';
 
-const drawerWidth = '25%';
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(() => ({
     root: {
         display: 'flex',
     },
-    drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
+    containerHeader: {
+        background: 'lightgray',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
-    drawerPaper: {
-        width: drawerWidth,
-        marginTop: '60px',
-        marginLeft: '8px',
-    },
-
     container: {
-        marginLeft: '25.5%',
+        marginLeft: '10px',
         marginTop: '2px',
+        minWidth: '400px',
+        height: '100%',
         width: '60%',
         borderLeft: '1px #e3e3e3 solid',
         borderRight: '1px #e3e3e3 solid',
-    },
-    containerHeader: {
-        background: 'lightgray',
-    },
-    messageContainer: {
-        width: '100%',
-        height: '73vh',
-        maxHeight: '100%',
-        overflow: 'auto',
-    },
-    messageInput: {
-        width: '100%',
-        paddingTop: '5px',
-    },
-    input: {
-        height: '30px',
-    },
-    message: {
-        margin: '20px 25px 20px 25px',
-    },
-    messagePreview: {
-        margin: '0px 15px 0px 15px',
-        cursor: 'pointer',
-        textDecoration: 'none',
-    },
-    groupPreview: {
-        marginTop: '10px',
-        border: '1px black solid',
-        borderRadius: '5px',
-        '&:hover': {
-            background: 'lightgray',
-        },
-    },
-    groupPreviewActive: {
-        marginTop: '10px',
-        border: `2px ${theme.palette.primary.main} solid`,
-        borderRadius: '5px',
-    },
-    linkWithoutStyles: {
-        textDecoration: 'none',
-
-        '&:focus, &:hover, &:visited, &:link, &:active': {
-            textDecoration: 'none',
-            color: 'black',
-        },
     },
     searchBar: {
         width: '100%',
@@ -73,7 +25,18 @@ export const useStyles = makeStyles((theme) => ({
         zIndex: '1',
         paddingBottom: '5px',
     },
+    searchBarInput: { marginLeft: '20%', width: '60%' },
     highlight: {
         background: 'pink',
+    },
+    newGroupButton: {
+        width: '50%',
+        marginTop: '5px',
+    },
+    pageWrapper: {
+        display: 'flex',
+    },
+    groupHeaderText: {
+        margin: 'auto',
     },
 }));
