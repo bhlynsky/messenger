@@ -30,17 +30,15 @@ const CreateGroupModal = (props) => {
     const classes = useStyles();
 
     const onSave = () => {
-        if (newGroup.users.length === 0) {
-            setErrors({ ...errors, users: createGroupLabels.ERROR_NO_USERS });
-        }
-
-        if (!newGroup.groupName) {
+        if (newGroup.groupName) {
+            if (newGroup.users.length === 0) {
+                setErrors({ ...errors, users: createGroupLabels.ERROR_NO_USERS });
+            } else {
+                createNewGroup(newGroup);
+                handleClose();
+            }
+        } else {
             setErrors({ ...errors, groupName: createGroupLabels.ERROR_NO_GROUPNAME });
-        }
-
-        if (newGroup.users.length > 0 && newGroup.groupName) {
-            createNewGroup(newGroup);
-            handleClose();
         }
     };
 
