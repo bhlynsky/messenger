@@ -53,7 +53,7 @@ const MessageInput = (props) => {
                 InputProps={{
                     endAdornment: (
                         <InputAdornment position="end">
-                            <IconButton onClick={onSendMessage}>
+                            <IconButton onClick={onSendMessage} data-testid="send-message">
                                 <SendIcon color="primary" />
                             </IconButton>
                             <IconButton>
@@ -61,6 +61,7 @@ const MessageInput = (props) => {
                             </IconButton>
                         </InputAdornment>
                     ),
+                    'data-testid': 'message-input',
                 }}
             />
         </div>
