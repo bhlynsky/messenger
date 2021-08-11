@@ -1,14 +1,10 @@
 import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import { Message } from '../components/Messenger/components/Message';
 import MainPage from '../MainPage';
-import reducer from '../../../reducers';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import { HashRouter } from 'react-router-dom';
+import { renderWithRedux } from '../../../services/root-service';
 
 let container = null;
 beforeEach(() => {
-    // подготавливаем DOM-элемент, куда будем рендерить
     container = document.createElement('div');
     document.body.appendChild(container);
 });
@@ -16,21 +12,6 @@ beforeEach(() => {
 afterEach(() => {
     cleanup();
 });
-
-//redux HOC
-function renderWithRedux(
-    component,
-    { initialState, store = createStore(reducer, initialState) } = {},
-) {
-    return {
-        ...render(
-            <Provider store={store}>
-                <HashRouter>{component}</HashRouter>
-            </Provider>,
-        ),
-        store,
-    };
-}
 
 function mockRouter() {
     const original = jest.requireActual('react-router-dom');
@@ -87,7 +68,8 @@ describe('functionality test', () => {
         const newMessage = screen.getByText(message);
         expect(newMessage).toBeInTheDocument();
     });
-    it('change group', () => {
-        const { getByTestId } = renderWithRedux(<MainPage />);
-    });
+});
+
+describe('request test', () => {
+    it('test request successfull', () => {});
 });

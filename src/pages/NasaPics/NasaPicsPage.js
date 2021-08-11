@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { loadData } from './services/nasa-actions';
 import { getData } from './services/nasa-services';
-import withLoading from '../../services/root-service';
+import { withLoading } from '../../services/root-service';
 
 const NasaPicsPage = (props) => {
     const { fetchEndpointAdop, data, error } = props;
