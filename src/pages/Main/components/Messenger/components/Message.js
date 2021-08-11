@@ -50,7 +50,7 @@ export const Message = (props) => {
                     </Avatar>
                     <Typography variant="subtitle1">{userName}</Typography>
                 </Grid>
-                <Grid container direction="row" alignItems="center">
+                <Grid container direction="row" alignItems="center" justifyContent="space-between">
                     {messageComponent}
                     <Typography variant="body2" align="left">
                         {date}

@@ -74,7 +74,7 @@ describe('functionality test', () => {
         const inputNode = getByTestId('message-input').querySelector('input');
 
         //enter message into input
-        const message = 'test message';
+        const message = 'WADDw23424WAdweqw';
 
         fireEvent.change(inputNode, { target: { value: message } });
         expect(inputNode.value).toBe(message);
@@ -86,5 +86,8 @@ describe('functionality test', () => {
         //check state changed with new message
         const newMessage = screen.getByText(message);
         expect(newMessage).toBeInTheDocument();
+    });
+    it('change group', () => {
+        const { getByTestId } = renderWithRedux(<MainPage />);
     });
 });
