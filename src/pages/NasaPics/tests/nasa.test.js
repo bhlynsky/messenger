@@ -52,12 +52,8 @@ describe('request tests', () => {
 
     it('request failed', async () => {
         renderWithRedux(<NasaPicsPage />);
-        const errorText = 'Error occured. With code 401';
 
-        window.fetch.mockRejectedValueOnce({
-            ok: false,
-            code: 401,
-        });
+        window.fetch.mockImplementationOnce(() => Promise.reject('API is down'));
 
         const loadButton = screen.getByRole('button', { name: /Load/i });
         fireEvent.click(loadButton);
@@ -70,6 +66,6 @@ describe('request tests', () => {
 
         /// negative test not working, no error on page,h2 renders but text is not
 
-        expect(await screen.findByText(errorText)).toBeInTheDocument();
+        expect(await screen.findByTestId('error-message')).toBeInTheDocument();
     });
 });

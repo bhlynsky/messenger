@@ -7,6 +7,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
 import thunk from 'redux-thunk';
+
 const withLoading = (WrappedComponent) => {
     function HOC(props) {
         const { isLoading } = props;

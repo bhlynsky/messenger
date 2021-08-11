@@ -15,11 +15,9 @@ const NasaPicsPage = (props) => {
     return (
         <div>
             {error ? (
-                <div>
-                    <Typography variant="h2" color="error">
-                        {error.message}
-                    </Typography>
-                </div>
+                <Typography variant="h2" color="error" data-testid="error-message">
+                    {error.message}
+                </Typography>
             ) : (
                 <div>
                     <Button variant="contained" color="primary" onClick={onNext}>
