@@ -10,6 +10,13 @@ const useStyles = makeStyles({
         margin: 'auto',
         marginTop: '15px',
     },
+    input: {
+        display: 'none',
+    },
+    inputDecoration: {
+        borderRadius: '5px',
+        marginBottom: '-10px',
+    },
 });
 
 export default useStyles;

@@ -42,11 +42,11 @@ const Stylesheets = () => {
                     <TextField error label={inputsType.ERROR} helperText="error" />
                     <TextField label={inputsType.DISABLED} disabled={true} />
 
-                    <label htmlFor="upload-photo">
+                    <label htmlFor="upload-file">
                         <input
-                            style={{ display: 'none' }}
-                            id="upload-photo"
-                            name="upload-photo"
+                            className={classes.input}
+                            id="upload-file"
+                            name="upload-file"
                             type="file"
                         />
 
@@ -56,7 +56,7 @@ const Stylesheets = () => {
                             component="button"
                             aria-label="add"
                             variant="extended"
-                            style={{ borderRadius: '5px', marginBottom: '-10px' }}
+                            className={classes.inputDecoration}
                         >
                             <Add /> {inputsType.UPLOAD}
                         </Fab>

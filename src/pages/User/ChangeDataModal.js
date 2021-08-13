@@ -50,9 +50,9 @@ const ChangeDataModal = (props) => {
 
             <label htmlFor="upload-photo">
                 <input
-                    style={{ display: 'none' }}
                     id="upload-photo"
                     name="upload-photo"
+                    className={classes.input}
                     type="file"
                 />
 
