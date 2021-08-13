@@ -1,45 +1,49 @@
-# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: CI/CD
-
+name: build
 on:
-    push:
-        branches: [master]
-    pull_request:
-        branches: [master]
-
+  push:
+    branches:
+      - master
+    tags:
+      - '!*' # Do not execute on tags
+    paths:
+      - src/*
+      - test/*
+      - '*.json'
+      - yarn.lock
+  pull_request:
+    paths:
+      - '!*.MD'
 jobs:
-    build:
-        runs-on: ubuntu-latest
-
-        strategy:
-            matrix:
-                node-version: [12.x]
-
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v2
-
-            - name: Set up Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v1
-              with:
-                  node-version: ${{ matrix.node-version }}
-
-            - name: Install dependencies
-              run: npm install
-
-            - name: Run the tests
-              run: npm test --coverage
-
-            - name: Build
-              run: npm run build
-              
-            - name: Code Climate Coverage Action
-              uses: paambaati/codeclimate-action@v2.7.5
-              
-              env:
-                  CC_TEST_REPORTER_ID: bb05a3c12d69d8522ff8d01cc40e93e6a4014e7d98ff609c042094f3903d5060
-              with:
-                  coverageCommand: npm run coverage
-            
+  test:
+    strategy:
+      matrix:
+        platform: [ ubuntu-latest, macOS-latest ]
+        node: [ '12', '10' ]
+    name: test/node ${{ matrix.node }}/${{ matrix.platform }}
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@master
+      with:
+        node-version: ${{ matrix.node }}
+    - run: npm install -g yarn
+    - run: yarn install
+    - run: yarn build
+    - run: yarn test
+  coverage:
+    needs: [ test ]
+    name: coverage
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@master
+      with:
+        node-version: '12'
+    - run: npm install -g yarn
+    - run: yarn install
+    - run: yarn build
+    - uses: paambaati/codeclimate-action@v2.2.4
+      env:
+        CC_TEST_REPORTER_ID: 945dfb58a832d233a3caeb84e3e6d3be212e8c7abcb48117fce63b9adcb43647
+      with:
+        coverageCommand: yarn coverage
