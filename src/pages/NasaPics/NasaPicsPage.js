@@ -27,7 +27,7 @@ const NasaPicsPage = (props) => {
                         Object.keys(data).map((item) => (
                             <div style={{ marginBottom: '20px' }} key={item}>
                                 <Typography variant="subtitle1">{data[item].title}</Typography>
-                                <img src={`${data[item].url}`}></img>
+                                <img src={`${data[item].url}`} alt={`${data[item].url}`}></img>
                                 <Typography variant="body2">{data[item].date}</Typography>
                                 <Typography variant="body1">{data[item].explanation}</Typography>
                             </div>
