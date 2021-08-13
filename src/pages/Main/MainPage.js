@@ -35,7 +35,7 @@ function MainPage(props) {
         loadMessageData(messageData);
 
         changeCurrentGroup(1, groupData[indexGroup].groupName); //default group is first group in list
-    }, []);
+    }, [loadGroupData, loadMessageData, changeCurrentGroup]);
 
     return (
         <div className={classes.pageWrapper}>
