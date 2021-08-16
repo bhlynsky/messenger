@@ -24,6 +24,8 @@ function MainPage(props) {
     };
 
     const loadData = () => {
+        // eslint-disable
+
         // setting data if ls is empty before dispatching loading actions
         checkLocalStorage();
 
