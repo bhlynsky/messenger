@@ -9,12 +9,8 @@ export default function Header() {
     const classes = useStyles();
     const location = useLocation().pathname;
 
-    const checkIsLinkActive = (target) => {
-        if (target === location) {
-            return classes.activeLink;
-        } else {
-            return classes.link;
-        }
+    const checkIsLinkActive = (route) => {
+        return route === location ? classes.activeLink : classes.link;
     };
 
     return (

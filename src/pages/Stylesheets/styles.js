@@ -10,9 +10,11 @@ const useStyles = makeStyles({
         margin: 'auto',
         marginTop: '15px',
     },
-    input: {
+    fileInputBase: {
         display: 'none',
     },
+    /* here input is hidden because fab is actual look of input,but it dont have functionality of this element so I 
+     hide input to place him behind fab consequently we have good loooking file input  */
     inputDecoration: {
         borderRadius: '5px',
         marginBottom: '-10px',

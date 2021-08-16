@@ -4,6 +4,7 @@ import { renderWithRedux } from '../../../services/root-service';
 
 function mockRouter() {
     const original = jest.requireActual('react-router-dom');
+
     return {
         ...original,
         useLocation: jest.fn().mockReturnValue({
@@ -39,6 +40,7 @@ describe('request tests', () => {
         });
 
         const loadButton = screen.getByRole('button', { name: /Load/i });
+
         fireEvent.click(loadButton);
 
         expect(window.fetch).toHaveBeenCalledWith(
@@ -56,6 +58,7 @@ describe('request tests', () => {
         window.fetch.mockImplementationOnce(() => Promise.reject('API is down'));
 
         const loadButton = screen.getByRole('button', { name: /Load/i });
+
         fireEvent.click(loadButton);
 
         expect(window.fetch).toHaveBeenCalledWith(

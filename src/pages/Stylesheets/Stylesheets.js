@@ -44,7 +44,7 @@ const Stylesheets = () => {
 
                     <label htmlFor="upload-file">
                         <input
-                            className={classes.input}
+                            className={classes.fileInputBase}
                             id="upload-file"
                             name="upload-file"
                             type="file"

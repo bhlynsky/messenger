@@ -4,6 +4,7 @@ import MainPage from '../MainPage';
 import { renderWithRedux } from '../../../services/root-service';
 
 let container = null;
+
 beforeEach(() => {
     container = document.createElement('div');
     document.body.appendChild(container);
@@ -15,6 +16,7 @@ afterEach(() => {
 
 function mockRouter() {
     const original = jest.requireActual('react-router-dom');
+
     return {
         ...original,
         useLocation: jest.fn().mockReturnValue({
@@ -66,6 +68,7 @@ describe('functionality test', () => {
 
         //check state changed with new message
         const newMessage = screen.getByText(message);
+
         expect(newMessage).toBeInTheDocument();
     });
 });
