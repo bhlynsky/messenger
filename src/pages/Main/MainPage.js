@@ -36,6 +36,7 @@ function MainPage(props) {
         loadMessageData(messageData);
 
         changeCurrentGroup(1, groupData[indexGroup].groupName); //default group is first group in list
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
