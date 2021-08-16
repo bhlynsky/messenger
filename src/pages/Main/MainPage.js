@@ -1,5 +1,5 @@
 import { Typography, Grid, Divider } from '@material-ui/core';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from './components/Sidebar/components/Sidebar';
 import { useStyles } from './styles';
 import MessageInput from './components/Messenger/components/MessageInput';
@@ -23,7 +23,8 @@ function MainPage(props) {
         setSearchValue('');
     };
 
-    const loadData = useCallback(() => {
+    // eslint-disable-next-line
+    useEffect(() => {
         // setting data if ls is empty before dispatching loading actions
         checkLocalStorage();
 
@@ -36,10 +37,6 @@ function MainPage(props) {
 
         changeCurrentGroup(1, groupData[indexGroup].groupName); //default group is first group in list
     }, []);
-
-    useEffect(() => {
-        loadData();
-    }, [loadData]);
 
     return (
         <div className={classes.pageWrapper}>
