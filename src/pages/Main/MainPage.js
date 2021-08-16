@@ -1,5 +1,5 @@
 import { Typography, Grid, Divider } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Sidebar from './components/Sidebar/components/Sidebar';
 import { useStyles } from './styles';
 import MessageInput from './components/Messenger/components/MessageInput';
@@ -23,23 +23,23 @@ function MainPage(props) {
         setSearchValue('');
     };
 
-    useEffect(() => {
-        const loadData = () => {
-            // setting data if ls is empty before dispatching loading actions
-            checkLocalStorage();
+    const loadData = useCallback(() => {
+        // setting data if ls is empty before dispatching loading actions
+        checkLocalStorage();
 
-            const groupData = JSON.parse(localStorage.getItem('groupData'));
-            const messageData = JSON.parse(localStorage.getItem('messageData'));
-            const indexGroup = groupData.findIndex((gr) => gr.id === 1);
+        const groupData = JSON.parse(localStorage.getItem('groupData'));
+        const messageData = JSON.parse(localStorage.getItem('messageData'));
+        const indexGroup = groupData.findIndex((gr) => gr.id === 1);
 
-            loadGroupData(groupData);
-            loadMessageData(messageData);
+        loadGroupData(groupData);
+        loadMessageData(messageData);
 
-            changeCurrentGroup(1, groupData[indexGroup].groupName); //default group is first group in list
-        };
-
-        loadData();
+        changeCurrentGroup(1, groupData[indexGroup].groupName); //default group is first group in list
     }, []);
+
+    useEffect(() => {
+        loadData();
+    }, [loadData]);
 
     return (
         <div className={classes.pageWrapper}>
