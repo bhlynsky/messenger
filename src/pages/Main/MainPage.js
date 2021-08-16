@@ -37,9 +37,7 @@ function MainPage(props) {
         changeCurrentGroup(1, groupData[indexGroup].groupName); //default group is first group in list
     };
 
-    useEffect(() => {
-        loadData();
-    }, []);
+    useEffect(loadData, []);
 
     return (
         <div className={classes.pageWrapper}>
