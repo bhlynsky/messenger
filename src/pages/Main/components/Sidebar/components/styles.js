@@ -81,12 +81,6 @@ export const useStyles = makeStyles((theme) => ({
         marginTop: 'auto',
         marginBottom: 'auto',
     },
-    openSearchBarIcon: {
-        width: '16px',
-        height: '16px',
-        margin: 'auto',
-        marginRight: '10px',
-    },
 
     drawer: {
         width: drawerWidth,
