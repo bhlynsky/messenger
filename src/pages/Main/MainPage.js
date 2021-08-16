@@ -23,23 +23,23 @@ function MainPage(props) {
         setSearchValue('');
     };
 
-    const loadData = () => {
-        // eslint-disable
+    useEffect(() => {
+        const loadData = () => {
+            // setting data if ls is empty before dispatching loading actions
+            checkLocalStorage();
 
-        // setting data if ls is empty before dispatching loading actions
-        checkLocalStorage();
+            const groupData = JSON.parse(localStorage.getItem('groupData'));
+            const messageData = JSON.parse(localStorage.getItem('messageData'));
+            const indexGroup = groupData.findIndex((gr) => gr.id === 1);
 
-        const groupData = JSON.parse(localStorage.getItem('groupData'));
-        const messageData = JSON.parse(localStorage.getItem('messageData'));
-        const indexGroup = groupData.findIndex((gr) => gr.id === 1);
+            loadGroupData(groupData);
+            loadMessageData(messageData);
 
-        loadGroupData(groupData);
-        loadMessageData(messageData);
+            changeCurrentGroup(1, groupData[indexGroup].groupName); //default group is first group in list
+        };
 
-        changeCurrentGroup(1, groupData[indexGroup].groupName); //default group is first group in list
-    };
-
-    useEffect(loadData, []);
+        loadData();
+    }, []);
 
     return (
         <div className={classes.pageWrapper}>
