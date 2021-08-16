@@ -81,6 +81,13 @@ export const useStyles = makeStyles((theme) => ({
         marginTop: 'auto',
         marginBottom: 'auto',
     },
+    openSearchBarIcon: {
+        width: '16px',
+        height: '16px',
+        margin: 'auto',
+        marginRight: '10px',
+    },
+
     drawer: {
         width: drawerWidth,
         minWidth: '200px',
@@ -104,5 +111,9 @@ export const useStyles = makeStyles((theme) => ({
         '&:hover': {
             background: 'lightgray',
         },
+    },
+    groupSearchBar: {
+        margin: '20px 0px 0px 20px',
+        width: '90%',
     },
 }));

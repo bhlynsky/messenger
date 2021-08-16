@@ -16,7 +16,8 @@ const labels = {
 };
 
 const createGroupLabels = {
-    ICON_TOOLTIP: 'New group',
+    NEW_GROUP_TOOLTIP: 'New group',
+
     HEADER: 'Create new Group!',
     NAME_INPUT: 'New Group Name',
     SUBTITLE_NAME: 'Come up with name',
@@ -28,9 +29,14 @@ const createGroupLabels = {
     CURRENT_USERNAME: 'You',
 };
 
+const searchGroupLabels = {
+    SEARCH_GROUPS_TOOLTIP: 'Search Groups',
+    SEARCH_BAR_LABEL: 'Type to find groups',
+};
+
 const actionButtons = {
     SAVE: 'Save',
     CLOSE: 'Close',
 };
 
-export { actionType, labels, createGroupLabels, actionButtons };
+export { actionType, labels, createGroupLabels, actionButtons, searchGroupLabels };
