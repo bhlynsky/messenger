@@ -18,11 +18,8 @@ const GroupPreview = (props) => {
     const maxMessageLength = 20;
     let displayMessage = '';
 
-    if (message.length > maxMessageLength) {
-        displayMessage = message.slice(maxMessageLength) + '...';
-    } else {
-        displayMessage = message;
-    }
+    displayMessage =
+        message.length > maxMessageLength ? message.slice(maxMessageLength) + '...' : message;
 
     return (
         <Link to={`/main/${group.id}`} className={classes.linkWithoutStyles}>
