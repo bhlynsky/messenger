@@ -8,7 +8,7 @@ export const useStyles = makeStyles(() => ({
         width: '100%',
         minHeight: '500px',
         minWidth: '400px',
-        height: '860px',
+        height: 'calc(100vh - 210px)',
         overflow: 'auto',
     },
     messageInput: {
@@ -24,30 +24,5 @@ export const useStyles = makeStyles(() => ({
     },
     avatar: {
         margin: '-5px 10px 10px',
-    },
-    '@media (max-height: 840px)': {
-        messageContainer: {
-            height: '71vh',
-        },
-    },
-    '@media (min-height: 840px)': {
-        messageContainer: {
-            height: '690px',
-        },
-    },
-    '@media (min-height: 920px)': {
-        messageContainer: {
-            height: '750px',
-        },
-    },
-    '@media (min-height: 1080px)': {
-        messageContainer: {
-            height: '860px',
-        },
-    },
-    '@media (min-height: 1440px)': {
-        messageContainer: {
-            height: '1225px',
-        },
     },
 }));

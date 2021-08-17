@@ -13,11 +13,11 @@ const labels = {
     MESSAGE_INPUT_PLACEHOLDER: 'Write Your Message',
     SEARCH_MESSAGES: 'Search messages in this group.',
     NO_MESSAGES: 'No messages in this group yet...',
+    SIDEBAR_OPEN_TOOLTIP: 'Open sidebar ',
 };
 
 const createGroupLabels = {
     NEW_GROUP_TOOLTIP: 'New group',
-
     HEADER: 'Create new Group!',
     NAME_INPUT: 'New Group Name',
     SUBTITLE_NAME: 'Come up with name',

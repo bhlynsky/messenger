@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { changeCurrentGroup } from '../../../services/main-actions';
 import { labels } from '../../../services/main-constants';
+
 const GroupPreview = (props) => {
     const { userName, message } = { ...props.messageData }; // handling error when undefined data
     const { group, changeCurrentGroup } = props;
@@ -13,6 +14,15 @@ const GroupPreview = (props) => {
     const onChangeGroup = () => {
         changeCurrentGroup(group.id, group.groupName);
     };
+
+    const maxMessageLength = 20;
+    let displayMessage = '';
+
+    if (message.length > maxMessageLength) {
+        displayMessage = message.slice(maxMessageLength) + '...';
+    } else {
+        displayMessage = message;
+    }
 
     return (
         <Link to={`/main/${group.id}`} className={classes.linkWithoutStyles}>
@@ -30,7 +40,7 @@ const GroupPreview = (props) => {
                             className={classes.verticalDivider}
                         ></Divider>
 
-                        <Typography variant="body2">{message}</Typography>
+                        <Typography variant="body2">{displayMessage}</Typography>
                     </Grid>
                 ) : (
                     <Typography variant="body2">{labels.NO_MESSAGES}</Typography>

@@ -1,7 +1,5 @@
 import { makeStyles } from '@material-ui/core';
 
-const drawerWidth = '25%';
-
 export const useStyles = makeStyles((theme) => ({
     divider: {
         margin: '5px 60px 20px 60px',
@@ -78,14 +76,25 @@ export const useStyles = makeStyles((theme) => ({
     openModalIcon: {
         width: '16px',
         height: '16px',
-        marginTop: 'auto',
-        marginBottom: 'auto',
+        margin: 'auto 5px auto auto',
     },
-
-    drawer: {
-        width: drawerWidth,
-        minWidth: '200px',
+    menuIcon: {
+        width: '16px',
+        height: '16px',
+        margin: 'auto 0px auto 5px',
+    },
+    menuIconMinimized: {
+        width: '16px',
+        height: '16px',
+        margin: '5px',
+    },
+    sidebar: {
+        width: '25%',
         flexShrink: 0,
+    },
+    sidebarMinimized: {
+        background: 'lightgray',
+        height: 'calc(100vh - 65px)',
     },
 
     groupPreview: {
