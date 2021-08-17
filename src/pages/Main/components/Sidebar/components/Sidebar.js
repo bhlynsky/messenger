@@ -3,7 +3,7 @@ import { Typography, Modal, IconButton, Tooltip, List } from '@material-ui/core'
 import { useStyles } from './styles';
 import { connect } from 'react-redux';
 import GroupPreview from './GroupPreview';
-import { createGroupLabels, labels } from '../../../services/main-constants';
+import { createGroupLabels, labels } from '../services/sidebar-constants';
 import CreateGroupModal from './CreateGroupModal';
 import AddIcon from '@material-ui/icons/Add';
 import MenuIcon from '@material-ui/icons/Menu';

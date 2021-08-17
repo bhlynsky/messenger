@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchIcon from '@material-ui/icons/Search';
-import { searchGroupLabels } from '../../../services/main-constants';
+import { searchGroupLabels } from '../services/sidebar-constants';
 import { TextField, InputAdornment } from '@material-ui/core';
 import { useStyles } from './styles';
 

@@ -1,0 +1,39 @@
+const actionType = {
+    LOADING_ERROR: '[MAIN]Loading Error',
+    LOAD_GROUPS: '[MAIN]Load groups',
+    CHANGE_CURRENT_GROUP: '[MAIN]Change active group',
+    CREATE_NEW_GROUP: '[MAIN]Create Group',
+    SEND_MESSAGE: '[MAIN]Send message',
+};
+
+const createGroupLabels = {
+    NEW_GROUP_TOOLTIP: 'New group',
+    HEADER: 'Create new Group!',
+    NAME_INPUT: 'New Group Name',
+    SUBTITLE_NAME: 'Come up with name',
+    SUBTITLE_ADD_USERS: 'Add users to your group',
+    ERROR_NO_GROUPNAME: 'Group name is required',
+    ERROR_NO_USERS: 'You need to add users to your group',
+    PATRICIPANTS: 'Participants',
+    SELECT_PLACEHOLDER: 'Select someone',
+    CURRENT_USERNAME: 'You',
+};
+
+const searchGroupLabels = {
+    SEARCH_GROUPS_TOOLTIP: 'Search Groups',
+    SEARCH_BAR_LABEL: 'Type to find groups',
+};
+
+const labels = {
+    SIDEBAR_HEADER: 'Current group',
+    SIDEBAR_NO_GROUPS: 'No Groups!',
+    SIDEBAR_OPEN: 'Open sidebar ',
+    SIDEBAR_CLOSE: ' Close sidebar',
+};
+
+const actionButtons = {
+    SAVE: 'Save',
+    CLOSE: 'Close',
+};
+
+export { actionType, actionButtons, createGroupLabels, searchGroupLabels, labels };

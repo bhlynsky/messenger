@@ -1,5 +1,5 @@
 import { initialState } from '../../../services/main-services';
-import { actionType } from '../../../services/main-constants';
+import { actionType } from '../services/sidebar-constants';
 
 function sidebarReducer(state = initialState, action) {
     switch (action.type) {

@@ -3,8 +3,8 @@ import { Divider, Grid, Typography } from '@material-ui/core';
 import { useStyles } from './styles';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { changeCurrentGroup } from '../../../services/main-actions';
-import { labels } from '../../../services/main-constants';
+import { changeCurrentGroup } from '../services/sidebar-actions';
+import { labels } from '../services/sidebar-constants';
 
 const GroupPreview = (props) => {
     const { userName, message } = { ...props.messageData }; // handling error when undefined data
@@ -19,7 +19,9 @@ const GroupPreview = (props) => {
     let displayMessage = '';
 
     displayMessage =
-        message.length > maxMessageLength ? message.slice(maxMessageLength) + '...' : message;
+        message && message.length > maxMessageLength
+            ? message.slice(maxMessageLength) + '...'
+            : message;
 
     return (
         <Link to={`/main/${group.id}`} className={classes.linkWithoutStyles}>

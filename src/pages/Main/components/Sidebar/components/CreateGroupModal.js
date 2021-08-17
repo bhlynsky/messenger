@@ -14,12 +14,13 @@ import {
     MenuItem,
 } from '@material-ui/core';
 import { useStyles } from './styles';
-import { createNewGroup } from '../../../services/main-actions';
+import { createNewGroup } from '../services/sidebar-actions';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
-import { createGroupLabels, actionButtons } from '../../../services/main-constants';
+import { createGroupLabels, actionButtons } from '../services/sidebar-constants';
 import Clear from '@material-ui/icons/Clear';
 import { users } from '../../../services/mockApi';
+
 const CreateGroupModal = (props) => {
     const [newGroup, setNewGroup] = useState({ groupName: '', users: [] });
     const [errors, setErrors] = useState({ groupName: '', users: '' });

@@ -53,7 +53,7 @@ const mockMessageData = [
         groupId: 2,
         messages: [
             {
-                userName: 'sencond group user',
+                userName: 'second group user',
                 message: 'message',
                 date: '2021-07-17',
             },

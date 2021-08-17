@@ -1,5 +1,5 @@
 import { initialState } from '../../../services/main-services';
-import { actionType } from '../../../services/main-constants';
+import { actionType } from '../services/message-constants';
 
 function messageReducer(state = initialState, action) {
     switch (action.type) {
