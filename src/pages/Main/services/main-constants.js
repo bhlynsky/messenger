@@ -13,7 +13,8 @@ const labels = {
     MESSAGE_INPUT_PLACEHOLDER: 'Write Your Message',
     SEARCH_MESSAGES: 'Search messages in this group.',
     NO_MESSAGES: 'No messages in this group yet...',
-    SIDEBAR_OPEN_TOOLTIP: 'Open sidebar ',
+    SIDEBAR_OPEN: 'Open sidebar ',
+    SIDEBAR_CLOSE: ' Close sidebar',
 };
 
 const createGroupLabels = {

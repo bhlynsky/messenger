@@ -15,10 +15,11 @@ export const useStyles = makeStyles(() => ({
         marginTop: '2px',
         minWidth: '400px',
         height: '100%',
-        width: '60%',
+        width: '100%',
         borderLeft: '1px #e3e3e3 solid',
         borderRight: '1px #e3e3e3 solid',
     },
+
     searchBar: {
         width: '100%',
         background: 'lightgray',

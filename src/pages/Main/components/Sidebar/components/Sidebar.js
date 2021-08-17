@@ -43,7 +43,7 @@ const Sidebar = (props) => {
 
     const MenuButton = () => {
         return (
-            <Tooltip title={labels.SIDEBAR_OPEN_TOOLTIP}>
+            <Tooltip title={sidebarIsOpen ? labels.SIDEBAR_CLOSE : labels.SIDEBAR_OPEN}>
                 <IconButton
                     onClick={() => {
                         setSidebarOpen(!sidebarIsOpen);
