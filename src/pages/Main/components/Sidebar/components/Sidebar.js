@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import {
-    Typography,
-    Modal,
-    IconButton,
-    Tooltip,
-    List,
-    TextField,
-    InputAdornment,
-} from '@material-ui/core';
+import { Typography, Modal, IconButton, Tooltip, List } from '@material-ui/core';
 import { useStyles } from './styles';
 import { connect } from 'react-redux';
 import GroupPreview from './GroupPreview';
-import { createGroupLabels, labels, searchGroupLabels } from '../../../services/main-constants';
+import { createGroupLabels, labels } from '../../../services/main-constants';
 import CreateGroupModal from './CreateGroupModal';
 import AddIcon from '@material-ui/icons/Add';
-import SearchIcon from '@material-ui/icons/Search';
 
+import { GroupSearch } from './GroupSearch';
 const Sidebar = (props) => {
     const classes = useStyles();
     const { groups, currentGroupId } = props;
@@ -63,23 +55,11 @@ const Sidebar = (props) => {
                 </Tooltip>
             </div>
 
+            <GroupSearch onSearch={onGroupSearch} searchValue={groupSearchValue} />
+
             <Modal open={modalIsOpen} onClose={handleCloseModal}>
                 <CreateGroupModal handleClose={handleCloseModal} />
             </Modal>
-
-            <TextField
-                className={classes.groupSearchBar}
-                placeholder={searchGroupLabels.SEARCH_BAR_LABEL}
-                value={groupSearchValue}
-                onChange={onGroupSearch}
-                InputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start">
-                            <SearchIcon></SearchIcon>
-                        </InputAdornment>
-                    ),
-                }}
-            ></TextField>
 
             <List className={classes.groupList}>
                 {groupList.length ? (
