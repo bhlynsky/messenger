@@ -29,6 +29,7 @@ const labels = {
     SIDEBAR_NO_GROUPS: 'No Groups!',
     SIDEBAR_OPEN: 'Open sidebar ',
     SIDEBAR_CLOSE: ' Close sidebar',
+    NO_MESSAGES: 'No messages in this group yet',
 };
 
 const actionButtons = {
