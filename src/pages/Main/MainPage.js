@@ -5,7 +5,7 @@ import { useStyles } from './styles';
 import MessageInput from './components/Messenger/components/MessageInput';
 import { connect } from 'react-redux';
 import { groupActions } from './components/Sidebar/services/group-actions';
-import { loadMessageData } from './components/Messenger/services/message-actions';
+import { messageActions } from './components/Messenger/services/message-actions';
 import { checkLocalStorage } from './services/main-services';
 import { MessageList } from './components/Messenger/components/MessageList';
 import { SearchBar } from './components/SearchBar';
@@ -83,7 +83,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    loadMessageData: (data) => dispatch(loadMessageData(data)),
+    loadMessageData: (data) => dispatch(messageActions.loadMessageData(data)),
     loadGroupData: (data) => dispatch(groupActions.loadGroupData(data)),
     changeCurrentGroup: (id, name) => dispatch(groupActions.changeCurrentGroup(id, name)),
 });

@@ -4,7 +4,6 @@ import { useStyles } from './styles';
 import { Message } from './Message';
 
 export const MessageList = ({ messages, searchValue }) => {
-    // useContext for search value?
     const classes = useStyles();
     const bottomScrollRef = useRef(null);
 

@@ -1,15 +1,23 @@
-import { actionType } from './message-constants';
+const messageActions = {};
 
-const sendMessage = (newMessages, newGroups, message) => ({
-    type: actionType.SEND_MESSAGE,
+messageActions.actionType = {
+    SEND_MESSAGE: '[MAIN]Send message',
+    LOADING_ERROR: '[MAIN]Loading Error',
+    LOAD_MESSAGES: '[MAIN]Load messages',
+    CHANGE_CURRENT_GROUP: '[MAIN]Change active group',
+    CREATE_NEW_GROUP: '[MAIN]Create Group',
+};
+
+messageActions.sendMessage = (newMessages, newGroups, message) => ({
+    type: messageActions.actionType.SEND_MESSAGE,
     newMessages,
     newGroups,
     message,
 });
 
-const loadMessageData = (data) => ({
-    type: actionType.LOAD_MESSAGES,
+messageActions.loadMessageData = (data) => ({
+    type: messageActions.actionType.LOAD_MESSAGES,
     data,
 });
 
-export { loadMessageData, sendMessage };
+export { messageActions };
