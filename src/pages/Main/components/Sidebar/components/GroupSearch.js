@@ -6,6 +6,7 @@ import { useStyles } from './styles';
 
 export const GroupSearch = ({ searchValue, onSearch }) => {
     const classes = useStyles();
+
     return (
         <TextField
             className={classes.groupSearchBar}
@@ -15,7 +16,7 @@ export const GroupSearch = ({ searchValue, onSearch }) => {
             InputProps={{
                 startAdornment: (
                     <InputAdornment position="start">
-                        <SearchIcon></SearchIcon>
+                        <SearchIcon />
                     </InputAdornment>
                 ),
             }}

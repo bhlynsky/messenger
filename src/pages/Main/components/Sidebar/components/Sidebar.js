@@ -8,6 +8,7 @@ import CreateGroupModal from './CreateGroupModal';
 import AddIcon from '@material-ui/icons/Add';
 import MenuIcon from '@material-ui/icons/Menu';
 import { GroupSearch } from './GroupSearch';
+import { searchGroup } from '../services/group-services';
 
 const Sidebar = (props) => {
     const classes = useStyles();
@@ -26,19 +27,11 @@ const Sidebar = (props) => {
     };
 
     const onGroupSearch = (e) => {
-        const targetName = e.target.value;
+        const target = e.target.value;
+        const searchResult = searchGroup(target, groups);
 
-        if (targetName !== '') {
-            const filteredGroups = groups.filter((group) => {
-                return group.groupName.toLowerCase().startsWith(targetName.toLowerCase());
-            });
-
-            setGroupList(filteredGroups);
-        } else {
-            setGroupList(groups);
-        }
-
-        setGroupSearchValue(targetName);
+        setGroupList(searchResult);
+        setGroupSearchValue(target);
     };
 
     const MenuButton = () => {
