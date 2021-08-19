@@ -70,7 +70,7 @@ const MessageInput = (props) => {
 const mapStateToProps = (state) => ({
     id: state.messageReducer.currentGroup.id,
     messages: state.messageReducer.messages,
-    groups: state.sidebarReducer.groups,
+    groups: state.groupReducer.groups,
 });
 const mapDispatchToProps = (dispatch) => ({
     sendMessage: (newMessages, newGroups, message) =>

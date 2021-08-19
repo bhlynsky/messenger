@@ -3,8 +3,8 @@ import { Divider, Grid, Typography } from '@material-ui/core';
 import { useStyles } from './styles';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { changeCurrentGroup } from '../services/sidebar-actions';
-import { labels } from '../services/sidebar-constants';
+import { groupActions } from '../services/group-actions';
+import { labels } from '../services/group-constants';
 
 const GroupPreview = (props) => {
     const { userName, message } = { ...props.messageData }; // handling error when undefined data
@@ -50,7 +50,8 @@ const GroupPreview = (props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    changeCurrentGroup: (groupId, groupName) => dispatch(changeCurrentGroup(groupId, groupName)),
+    changeCurrentGroup: (groupId, groupName) =>
+        dispatch(groupActions.changeCurrentGroup(groupId, groupName)),
 });
 
 export default connect(null, mapDispatchToProps)(GroupPreview);

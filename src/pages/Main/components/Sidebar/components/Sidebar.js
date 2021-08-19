@@ -3,7 +3,7 @@ import { Typography, Modal, IconButton, Tooltip, List } from '@material-ui/core'
 import { useStyles } from './styles';
 import { connect } from 'react-redux';
 import GroupPreview from './GroupPreview';
-import { createGroupLabels, labels } from '../services/sidebar-constants';
+import { createGroupLabels, labels } from '../services/group-constants';
 import CreateGroupModal from './CreateGroupModal';
 import AddIcon from '@material-ui/icons/Add';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -113,8 +113,8 @@ const Sidebar = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    groups: state.sidebarReducer.groups,
-    currentGroupId: state.sidebarReducer.currentGroup.id,
+    groups: state.groupReducer.groups,
+    currentGroupId: state.groupReducer.currentGroup.id,
 });
 
 export default connect(mapStateToProps)(Sidebar);

@@ -1,9 +1,9 @@
 import { initialState } from '../../../services/main-services';
-import { actionType } from '../services/sidebar-constants';
+import { groupActions } from '../services/group-actions';
 
-function sidebarReducer(state = initialState, action) {
+function groupReducer(state = initialState, action) {
     switch (action.type) {
-        case actionType.LOAD_GROUPS: {
+        case groupActions.actionType.LOAD_GROUPS: {
             // load groups for sidebar and also load message for default group
             const groups = action.data;
 
@@ -16,7 +16,7 @@ function sidebarReducer(state = initialState, action) {
                 },
             };
         }
-        case actionType.CHANGE_CURRENT_GROUP: {
+        case groupActions.actionType.CHANGE_CURRENT_GROUP: {
             // get messages for current group when changing group
 
             return {
@@ -24,12 +24,12 @@ function sidebarReducer(state = initialState, action) {
                 currentGroup: { id: action.groupId, groupName: action.groupName },
             };
         }
-        case actionType.SEND_MESSAGE: {
+        case groupActions.actionType.SEND_MESSAGE: {
             const { newGroups } = action;
 
             return { ...state, groups: newGroups };
         }
-        case actionType.CREATE_NEW_GROUP: {
+        case groupActions.actionType.CREATE_NEW_GROUP: {
             const { group } = action;
             group.id = Math.random() * 100;
 
@@ -40,4 +40,4 @@ function sidebarReducer(state = initialState, action) {
             return { ...state };
     }
 }
-export default sidebarReducer;
+export default groupReducer;

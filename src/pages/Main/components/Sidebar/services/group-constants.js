@@ -1,11 +1,3 @@
-const actionType = {
-    LOADING_ERROR: '[MAIN]Loading Error',
-    LOAD_GROUPS: '[MAIN]Load groups',
-    CHANGE_CURRENT_GROUP: '[MAIN]Change active group',
-    CREATE_NEW_GROUP: '[MAIN]Create Group',
-    SEND_MESSAGE: '[MAIN]Send message',
-};
-
 const createGroupLabels = {
     NEW_GROUP_TOOLTIP: 'New group',
     HEADER: 'Create new Group!',
@@ -37,4 +29,4 @@ const actionButtons = {
     CLOSE: 'Close',
 };
 
-export { actionType, actionButtons, createGroupLabels, searchGroupLabels, labels };
+export { actionButtons, createGroupLabels, searchGroupLabels, labels };
