@@ -31,6 +31,9 @@ export const useStyles = makeStyles((theme) => ({
         width: '47.5%',
         marginLeft: '5%',
     },
+    input: {
+        display: 'none',
+    },
 }));
 
 export default useStyles;

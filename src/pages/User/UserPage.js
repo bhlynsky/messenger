@@ -54,7 +54,7 @@ const UserPage = (props) => {
                         <div>
                             <ChangeDataModal
                                 handleClose={handleClose}
-                                data={(name, email, imgSrc)}
+                                data={{ name, email, imgSrc }}
                             />
                         </div>
                     </Modal>

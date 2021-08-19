@@ -161,7 +161,11 @@ const CreateGroupModal = (props) => {
                         </Grid>
                     </div>
 
-                    <Grid container justify="flex-start" className={classes.buttonsContainer}>
+                    <Grid
+                        container
+                        justifyContent="flex-start"
+                        className={classes.buttonsContainer}
+                    >
                         <Button
                             variant="contained"
                             color="primary"

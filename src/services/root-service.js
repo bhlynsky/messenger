@@ -1,7 +1,14 @@
 import React from 'react';
 import Loading from '../components/Loading';
 
-export const withLoading = (WrappedComponent) => {
+import { render } from '@testing-library/react';
+import reducer from '../reducers';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import { HashRouter } from 'react-router-dom';
+import thunk from 'redux-thunk';
+
+const withLoading = (WrappedComponent) => {
     function HOC(props) {
         const { isLoading } = props;
 
@@ -15,4 +22,18 @@ export const withLoading = (WrappedComponent) => {
     return HOC;
 };
 
-export default withLoading;
+const renderWithRedux = (
+    component,
+    { initialState, store = createStore(reducer, initialState, applyMiddleware(thunk)) } = {},
+) => {
+    return {
+        ...render(
+            <Provider store={store}>
+                <HashRouter>{component}</HashRouter>
+            </Provider>,
+        ),
+        store,
+    };
+};
+
+export { withLoading, renderWithRedux };

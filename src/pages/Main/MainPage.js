@@ -23,6 +23,7 @@ function MainPage(props) {
         setSearchValue('');
     };
 
+    // eslint-disable-next-line
     useEffect(() => {
         // setting data if ls is empty before dispatching loading actions
         checkLocalStorage();
@@ -35,6 +36,7 @@ function MainPage(props) {
         loadMessageData(messageData);
 
         changeCurrentGroup(1, groupData[indexGroup].groupName); //default group is first group in list
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

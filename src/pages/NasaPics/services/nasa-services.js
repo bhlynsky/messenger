@@ -1,13 +1,14 @@
 import { loadData, loadError, setData } from './nasa-actions';
 
-const fetchUrl = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&count=5';
-
 const getData = () => (dispatch) => {
+    const fetchUrl = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&count=5';
+
     dispatch(loadData());
+
     fetch(fetchUrl)
         .then((res) => res.json())
         .then((res) => {
-            if (res.code && (res.code > 300 || res < 200)) {
+            if (res.code && (res.code > 300 || res.code < 200)) {
                 throw new Error(`Error occured. With code ${res.code}`);
             } else {
                 dispatch(setData(res));

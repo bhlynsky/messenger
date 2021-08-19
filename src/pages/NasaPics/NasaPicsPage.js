@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { loadData } from './services/nasa-actions';
 import { getData } from './services/nasa-services';
-import withLoading from '../../services/root-service';
+import { withLoading } from '../../services/root-service';
 
 const NasaPicsPage = (props) => {
     const { fetchEndpointAdop, data, error } = props;
@@ -15,11 +15,9 @@ const NasaPicsPage = (props) => {
     return (
         <div>
             {error ? (
-                <div>
-                    <Typography variant="h2" color="error">
-                        {error.message}
-                    </Typography>
-                </div>
+                <Typography variant="h2" color="error" data-testid="error-message">
+                    {error.message}
+                </Typography>
             ) : (
                 <div>
                     <Button variant="contained" color="primary" onClick={onNext}>
@@ -29,7 +27,7 @@ const NasaPicsPage = (props) => {
                         Object.keys(data).map((item) => (
                             <div style={{ marginBottom: '20px' }} key={item}>
                                 <Typography variant="subtitle1">{data[item].title}</Typography>
-                                <img src={`${data[item].url}`}></img>
+                                <img src={`${data[item].url}`} alt={`${data[item].url}`}></img>
                                 <Typography variant="body2">{data[item].date}</Typography>
                                 <Typography variant="body1">{data[item].explanation}</Typography>
                             </div>
