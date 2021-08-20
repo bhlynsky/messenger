@@ -86,7 +86,8 @@ export const useStyles = makeStyles((theme) => ({
     menuIconMinimized: {
         width: '16px',
         height: '16px',
-        margin: '5px',
+        marginRight: '0px',
+        marginLeft: 'auto',
     },
     sidebar: {
         width: '25%',
@@ -95,6 +96,7 @@ export const useStyles = makeStyles((theme) => ({
     sidebarMinimized: {
         background: 'lightgray',
         height: 'calc(100vh - 65px)',
+        width: '10vw',
     },
 
     groupPreview: {
@@ -114,6 +116,17 @@ export const useStyles = makeStyles((theme) => ({
         '&:hover': {
             background: 'lightgray',
         },
+    },
+    groupPreviewMinimized: {
+        border: '1px solid black',
+        borderRadius: '10px',
+        marginTop: '5px',
+    },
+    groupPreviewMinimizedActive: {
+        border: `1px ${theme.palette.primary.main} solid`,
+        borderRadius: '10px',
+        marginTop: '5px',
+        background: theme.palette.secondary.main,
     },
     groupSearchBar: {
         margin: '20px 0px 0px 20px',

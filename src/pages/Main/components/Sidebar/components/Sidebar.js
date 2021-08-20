@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Modal, IconButton, Tooltip, List } from '@material-ui/core';
+import { Typography, Modal, IconButton, Tooltip, List, Divider, Grid } from '@material-ui/core';
 import { useStyles } from './styles';
 import { connect } from 'react-redux';
 import GroupPreview from './GroupPreview';
 import { createGroupLabels, labels } from '../services/group-constants';
 import CreateGroupModal from './CreateGroupModal';
 import AddIcon from '@material-ui/icons/Add';
-import MenuIcon from '@material-ui/icons/Menu';
 import { GroupSearch } from './GroupSearch';
 import { searchGroup } from '../services/group-services';
+import GroupPreviewMinimized from './GroupPreviewMinimized';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 const Sidebar = (props) => {
     const classes = useStyles();
@@ -34,21 +36,6 @@ const Sidebar = (props) => {
         setGroupSearchValue(target);
     };
 
-    const MenuButton = () => {
-        return (
-            <Tooltip title={sidebarIsOpen ? labels.SIDEBAR_CLOSE : labels.SIDEBAR_OPEN}>
-                <IconButton
-                    onClick={() => {
-                        setSidebarOpen(!sidebarIsOpen);
-                    }}
-                    className={sidebarIsOpen ? classes.menuIcon : classes.menuIconMinimized}
-                >
-                    <MenuIcon />
-                </IconButton>
-            </Tooltip>
-        );
-    };
-
     useEffect(() => {
         setGroupList(groups);
     }, [groups]);
@@ -67,7 +54,16 @@ const Sidebar = (props) => {
                         </IconButton>
                     </Tooltip>
 
-                    <MenuButton />
+                    <Tooltip title={labels.SIDEBAR_CLOSE}>
+                        <IconButton
+                            onClick={() => {
+                                setSidebarOpen(!sidebarIsOpen);
+                            }}
+                            className={classes.menuIcon}
+                        >
+                            <ChevronLeftIcon color="primary" />
+                        </IconButton>
+                    </Tooltip>
                 </div>
 
                 <GroupSearch onSearch={onGroupSearch} searchValue={groupSearchValue} />
@@ -91,7 +87,9 @@ const Sidebar = (props) => {
                             </div>
                         ))
                     ) : (
-                        <Typography variant="subtitle1">{labels.SIDEBAR_NO_GROUPS}</Typography>
+                        <Typography variant="subtitle1" align="center">
+                            {labels.SIDEBAR_NO_GROUPS}
+                        </Typography>
                     )}
                 </List>
             </div>
@@ -99,7 +97,38 @@ const Sidebar = (props) => {
     } else {
         return (
             <div className={classes.sidebarMinimized}>
-                <MenuButton />
+                <Grid container direction="row">
+                    <Typography align="left">
+                        <i>Your groups</i>
+                    </Typography>
+                    <Tooltip title={labels.SIDEBAR_OPEN}>
+                        <IconButton
+                            onClick={() => {
+                                setSidebarOpen(!sidebarIsOpen);
+                            }}
+                            className={classes.menuIconMinimized}
+                        >
+                            <ChevronRightIcon color="primary" />
+                        </IconButton>
+                    </Tooltip>
+                </Grid>
+                <Divider />
+                <div>
+                    {groups.length
+                        ? groups.map((item) => (
+                              <div
+                                  className={
+                                      currentGroupId === item.id
+                                          ? classes.groupPreviewMinimizedActive
+                                          : classes.groupPreviewMinimized
+                                  }
+                                  key={item.id}
+                              >
+                                  <GroupPreviewMinimized group={item} key={item.id} />
+                              </div>
+                          ))
+                        : ''}
+                </div>
             </div>
         );
     }
