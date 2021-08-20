@@ -1,11 +1,8 @@
 export const searchGroup = (target, groups) => {
-    if (!target) {
-        const filteredGroups = groups.filter((group) => {
+    if (target) {
+        return groups.filter((group) => {
             return group.groupName.toLowerCase().includes(target.toLowerCase());
         });
-
-        return filteredGroups;
-    } else {
-        return groups;
     }
+    return groups;
 };
