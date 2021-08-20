@@ -1,23 +1,23 @@
-import actionType from './nasa-constants';
+import nasaActions from './nasa-actions';
 import { initialState } from './nasa-services';
 
 function nasaReducer(state = initialState, action) {
     switch (action.type) {
         //load data
-        case actionType.LOAD:
+        case nasaActions.actionType.LOAD:
             return {
                 ...state,
                 isLoading: true,
             };
         //load success
-        case actionType.LOAD_SUCCESS:
+        case nasaActions.actionType.LOAD_SUCCESS:
             return {
                 ...state,
                 data: action.data,
                 isLoading: false,
             };
         //load error
-        case actionType.LOAD_ERROR: {
+        case nasaActions.actionType.LOAD_ERROR: {
             return {
                 ...state,
                 error: action.error,

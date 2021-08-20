@@ -1,9 +1,9 @@
 import { Typography, Button } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadData } from './services/nasa-actions';
-import { getData } from './services/nasa-services';
+import nasaActions from './services/nasa-actions';
 import { withLoading } from '../../services/root-service';
+import { getData } from './services/nasa-services';
 
 const NasaPicsPage = (props) => {
     const { fetchEndpointAdop, data, error } = props;
@@ -51,7 +51,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     fetchEndpointAdop: () => dispatch(getData()),
-    onLoad: () => dispatch(loadData()),
+    onLoad: () => dispatch(nasaActions.loadData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withLoading(NasaPicsPage));
