@@ -1,8 +1,9 @@
 import { makeStyles } from '@material-ui/core';
 
-export const useStyles = makeStyles(() => ({
+export const useStyles = makeStyles((theme) => ({
     message: {
         margin: '20px 25px 20px 25px',
+        color: theme.palette.text.primary,
     },
     messageContainer: {
         width: '100%',

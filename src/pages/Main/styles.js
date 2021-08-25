@@ -1,11 +1,12 @@
 import { makeStyles } from '@material-ui/core';
 
-export const useStyles = makeStyles(() => ({
+export const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
     },
     containerHeader: {
-        background: 'lightgray',
+        background: theme.palette.type === 'dark' ? 'black' : 'lightgray',
+        color: theme.palette.text.primary,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -22,11 +23,13 @@ export const useStyles = makeStyles(() => ({
 
     searchBar: {
         width: '100%',
-        background: 'lightgray',
+        background: theme.palette.type === 'dark' ? 'black' : 'lightgray',
+        color: theme.palette.text.primary,
         zIndex: '1',
         paddingBottom: '5px',
     },
-    searchBarInput: { marginLeft: '20%', width: '60%' },
+
+    searchBarInput: { marginLeft: '20%', width: '60%', color: 'gray' },
     highlight: {
         background: 'pink',
     },
@@ -39,5 +42,8 @@ export const useStyles = makeStyles(() => ({
     },
     groupHeaderText: {
         margin: 'auto',
+    },
+    clearIcon: {
+        color: 'gray',
     },
 }));

@@ -26,4 +26,13 @@ export const useStyles = makeStyles({
         fontWeight: 'bold',
         lineHeight: '45px',
     },
+    darkModeToggle: {
+        margin: '5px 40px auto auto',
+        display: 'flex',
+        justifyItems: 'center',
+    },
+    darkModeIcon: {
+        width: '36px',
+        height: '36px',
+    },
 });

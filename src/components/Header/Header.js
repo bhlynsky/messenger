@@ -1,13 +1,17 @@
 import React from 'react';
-import { AppBar, Typography } from '@material-ui/core';
+import { AppBar, Typography, Switch, Tooltip } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { useStyles } from './styles';
 import { useLocation } from 'react-router-dom';
 import { headerRoutes } from '../../services/headerRoutes';
+import { useThemeContext } from '../../App.js';
+import Brightness4Icon from '@material-ui/icons/Brightness4';
 
 export default function Header() {
     const classes = useStyles();
     const location = useLocation().pathname;
+
+    const { isDarkMode, setDarkMode } = useThemeContext();
 
     const checkIsLinkActive = (route) => {
         return route === location ? classes.activeLink : classes.link;
@@ -46,6 +50,13 @@ export default function Header() {
                     Styles examples
                 </Link>
             </Typography>
+
+            <div className={classes.darkModeToggle}>
+                <Tooltip title="Toggle dark mode">
+                    <Switch checked={isDarkMode} onChange={() => setDarkMode(!isDarkMode)} />
+                </Tooltip>
+                <Brightness4Icon className={classes.darkModeIcon} />
+            </div>
         </AppBar>
     );
 }
