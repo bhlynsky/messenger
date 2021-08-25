@@ -1,7 +1,5 @@
 import { makeStyles } from '@material-ui/core';
 
-const drawerWidth = '25%';
-
 export const useStyles = makeStyles((theme) => ({
     divider: {
         margin: '5px 60px 20px 60px',
@@ -78,13 +76,26 @@ export const useStyles = makeStyles((theme) => ({
     openModalIcon: {
         width: '16px',
         height: '16px',
-        marginTop: 'auto',
-        marginBottom: 'auto',
+        margin: 'auto 5px auto auto',
     },
-    drawer: {
-        width: drawerWidth,
-        minWidth: '200px',
+    menuIcon: {
+        width: '16px',
+        height: '16px',
+        margin: 'auto 0px auto 5px',
+    },
+    menuIconMinimized: {
+        width: '16px',
+        height: '16px',
+        marginRight: '0px',
+        marginLeft: 'auto',
+    },
+    sidebar: {
+        width: '25%',
         flexShrink: 0,
+    },
+    sidebarMinimized: {
+        height: 'calc(100vh - 65px)',
+        width: '10vw',
     },
 
     groupPreview: {
@@ -100,9 +111,31 @@ export const useStyles = makeStyles((theme) => ({
         marginTop: '10px',
         border: `2px ${theme.palette.primary.main} solid`,
         borderRadius: '5px',
+        background: theme.palette.secondary.main,
         padding: '5px 2px 5px 2px',
         '&:hover': {
             background: 'lightgray',
         },
+    },
+    groupPreviewMinimized: {
+        border: '1px solid black',
+        borderRadius: '10px',
+        marginTop: '5px',
+        '&:hover': {
+            background: 'lightgray',
+        },
+    },
+    groupPreviewMinimizedActive: {
+        border: `1px ${theme.palette.primary.main} solid`,
+        borderRadius: '10px',
+        marginTop: '5px',
+        background: theme.palette.secondary.main,
+        '&:hover': {
+            background: 'lightgray',
+        },
+    },
+    groupSearchBar: {
+        margin: '20px 0px 0px 20px',
+        width: '90%',
     },
 }));

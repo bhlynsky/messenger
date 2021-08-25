@@ -3,7 +3,7 @@ import { IconButton, Input, InputAdornment } from '@material-ui/core';
 import { useStyles } from '../styles';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
-import { labels } from '../services/main-constants';
+import { labels } from './Messenger/services/message-constants';
 
 export const SearchBar = (props) => {
     const classes = useStyles();

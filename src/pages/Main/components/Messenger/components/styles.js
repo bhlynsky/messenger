@@ -6,9 +6,9 @@ export const useStyles = makeStyles(() => ({
     },
     messageContainer: {
         width: '100%',
-        minHeight: '300px',
-        height: '71vh',
-        maxHeight: '1440px',
+        minHeight: '500px',
+        minWidth: '400px',
+        height: 'calc(100vh - 210px)',
         overflow: 'auto',
     },
     messageInput: {

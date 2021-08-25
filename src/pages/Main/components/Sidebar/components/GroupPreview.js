@@ -3,8 +3,9 @@ import { Divider, Grid, Typography } from '@material-ui/core';
 import { useStyles } from './styles';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { changeCurrentGroup } from '../../../services/main-actions';
-import { labels } from '../../../services/main-constants';
+import { groupActions } from '../services/group-actions';
+import { labels } from '../services/group-constants';
+
 const GroupPreview = (props) => {
     const { userName, message } = { ...props.messageData }; // handling error when undefined data
     const { group, changeCurrentGroup } = props;
@@ -13,6 +14,14 @@ const GroupPreview = (props) => {
     const onChangeGroup = () => {
         changeCurrentGroup(group.id, group.groupName);
     };
+
+    const maxMessageLength = 20;
+    let displayMessage = '';
+
+    displayMessage =
+        message && message.length > maxMessageLength
+            ? message.slice(maxMessageLength) + '...'
+            : message;
 
     return (
         <Link to={`/main/${group.id}`} className={classes.linkWithoutStyles}>
@@ -30,7 +39,7 @@ const GroupPreview = (props) => {
                             className={classes.verticalDivider}
                         ></Divider>
 
-                        <Typography variant="body2">{message}</Typography>
+                        <Typography variant="body2">{displayMessage}</Typography>
                     </Grid>
                 ) : (
                     <Typography variant="body2">{labels.NO_MESSAGES}</Typography>
@@ -41,7 +50,8 @@ const GroupPreview = (props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    changeCurrentGroup: (groupId, groupName) => dispatch(changeCurrentGroup(groupId, groupName)),
+    changeCurrentGroup: (groupId, groupName) =>
+        dispatch(groupActions.changeCurrentGroup(groupId, groupName)),
 });
 
 export default connect(null, mapDispatchToProps)(GroupPreview);

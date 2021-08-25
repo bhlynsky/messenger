@@ -1,19 +1,24 @@
-import actionType from './nasa-constants';
+const nasaActions = {};
 
+nasaActions.actionType = {
+    LOAD_SUCCESS: '[NASA]Success',
+    LOAD_ERROR: '[NASA]Load Error',
+    LOAD: '[NASA]Load',
+};
 //load data
-const loadData = () => ({
-    type: actionType.LOAD,
+nasaActions.loadData = () => ({
+    type: nasaActions.actionType.LOAD,
 });
 // load data success
-const setData = (data) => ({
-    type: actionType.LOAD_SUCCESS,
+nasaActions.setData = (data) => ({
+    type: nasaActions.actionType.LOAD_SUCCESS,
     data,
 });
 
 //load data failed
-const loadError = (error) => ({
-    type: actionType.LOAD_ERROR,
+nasaActions.loadError = (error) => ({
+    type: nasaActions.actionType.LOAD_ERROR,
     error,
 });
 
-export { loadData, setData, loadError };
+export default nasaActions;

@@ -3,9 +3,9 @@ import { TextField, InputAdornment, IconButton } from '@material-ui/core';
 import { useStyles } from './styles';
 import SendIcon from '@material-ui/icons/Send';
 import AttachmentIcon from '@material-ui/icons/Attachment';
-import { sendMessage } from '../../../services/main-actions';
+import { messageActions } from '../services/message-actions';
 import { connect } from 'react-redux';
-import { labels } from '../../../services/main-constants';
+import { labels } from '../services/message-constants';
 import { updateValuesOnSendMessage } from '../services/message-services';
 
 const MessageInput = (props) => {
@@ -70,11 +70,11 @@ const MessageInput = (props) => {
 const mapStateToProps = (state) => ({
     id: state.messageReducer.currentGroup.id,
     messages: state.messageReducer.messages,
-    groups: state.sidebarReducer.groups,
+    groups: state.groupReducer.groups,
 });
 const mapDispatchToProps = (dispatch) => ({
     sendMessage: (newMessages, newGroups, message) =>
-        dispatch(sendMessage(newMessages, newGroups, message)),
+        dispatch(messageActions.sendMessage(newMessages, newGroups, message)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageInput);

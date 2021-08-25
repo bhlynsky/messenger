@@ -1,9 +1,9 @@
 import { initialState } from '../../../services/main-services';
-import { actionType } from '../../../services/main-constants';
+import { messageActions } from '../services/message-actions';
 
 function messageReducer(state = initialState, action) {
     switch (action.type) {
-        case actionType.LOAD_MESSAGES: {
+        case messageActions.actionType.LOAD_MESSAGES: {
             const messages = action.data;
 
             return {
@@ -11,7 +11,7 @@ function messageReducer(state = initialState, action) {
                 messages,
             };
         }
-        case actionType.CHANGE_CURRENT_GROUP: {
+        case messageActions.actionType.CHANGE_CURRENT_GROUP: {
             let { groupId } = action;
             // get messages for current group when changing group
             const index = state.messages.findIndex((msg) => msg.groupId === groupId);
@@ -27,7 +27,7 @@ function messageReducer(state = initialState, action) {
                 currentGroup: { id: groupId, messages: groupMessages },
             };
         }
-        case actionType.SEND_MESSAGE: {
+        case messageActions.actionType.SEND_MESSAGE: {
             const { message, newMessages } = action;
 
             return {

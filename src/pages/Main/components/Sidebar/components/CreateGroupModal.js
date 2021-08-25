@@ -14,12 +14,13 @@ import {
     MenuItem,
 } from '@material-ui/core';
 import { useStyles } from './styles';
-import { createNewGroup } from '../../../services/main-actions';
+import { groupActions } from '../services/group-actions';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
-import { createGroupLabels, actionButtons } from '../../../services/main-constants';
+import { createGroupLabels, actionButtons } from '../services/group-constants';
 import Clear from '@material-ui/icons/Clear';
 import { users } from '../../../services/mockApi';
+
 const CreateGroupModal = (props) => {
     const [newGroup, setNewGroup] = useState({ groupName: '', users: [] });
     const [errors, setErrors] = useState({ groupName: '', users: '' });
@@ -191,7 +192,7 @@ const CreateGroupModal = (props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    createNewGroup: (name) => dispatch(createNewGroup(name)),
+    createNewGroup: (name) => dispatch(groupActions.createNewGroup(name)),
 });
 
 export default connect(null, mapDispatchToProps)(CreateGroupModal);

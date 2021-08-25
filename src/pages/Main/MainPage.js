@@ -4,7 +4,8 @@ import Sidebar from './components/Sidebar/components/Sidebar';
 import { useStyles } from './styles';
 import MessageInput from './components/Messenger/components/MessageInput';
 import { connect } from 'react-redux';
-import { loadMessageData, loadGroupData, changeCurrentGroup } from './services/main-actions';
+import { groupActions } from './components/Sidebar/services/group-actions';
+import { messageActions } from './components/Messenger/services/message-actions';
 import { checkLocalStorage } from './services/main-services';
 import { MessageList } from './components/Messenger/components/MessageList';
 import { SearchBar } from './components/SearchBar';
@@ -72,7 +73,7 @@ function MainPage(props) {
 }
 
 const mapStateToProps = (state) => {
-    const groupName = state.sidebarReducer.currentGroup.groupName;
+    const groupName = state.groupReducer.currentGroup.groupName;
     const messages = state.messageReducer.currentGroup.messages;
 
     return {
@@ -82,9 +83,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    loadMessageData: (data) => dispatch(loadMessageData(data)),
-    loadGroupData: (data) => dispatch(loadGroupData(data)),
-    changeCurrentGroup: (id, name) => dispatch(changeCurrentGroup(id, name)),
+    loadMessageData: (data) => dispatch(messageActions.loadMessageData(data)),
+    loadGroupData: (data) => dispatch(groupActions.loadGroupData(data)),
+    changeCurrentGroup: (id, name) => dispatch(groupActions.changeCurrentGroup(id, name)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
