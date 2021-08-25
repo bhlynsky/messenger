@@ -9,8 +9,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { GroupSearch } from './GroupSearch';
 import { searchGroup } from '../services/group-services';
 import GroupPreviewMinimized from './GroupPreviewMinimized';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import { SidebarToggleButton } from './SidebarToggleButton';
 
 const Sidebar = (props) => {
     const classes = useStyles();
@@ -54,16 +53,7 @@ const Sidebar = (props) => {
                         </IconButton>
                     </Tooltip>
 
-                    <Tooltip title={labels.SIDEBAR_CLOSE}>
-                        <IconButton
-                            onClick={() => {
-                                setSidebarOpen(!sidebarIsOpen);
-                            }}
-                            className={classes.menuIcon}
-                        >
-                            <ChevronLeftIcon color="primary" />
-                        </IconButton>
-                    </Tooltip>
+                    <SidebarToggleButton isOpen={sidebarIsOpen} setState={setSidebarOpen} />
                 </div>
 
                 <GroupSearch onSearch={onGroupSearch} searchValue={groupSearchValue} />
@@ -97,21 +87,15 @@ const Sidebar = (props) => {
     } else {
         return (
             <div className={classes.sidebarMinimized}>
-                <Grid container direction="row">
-                    <Typography align="left">
-                        <i>Your groups</i>
-                    </Typography>
-                    <Tooltip title={labels.SIDEBAR_OPEN}>
-                        <IconButton
-                            onClick={() => {
-                                setSidebarOpen(!sidebarIsOpen);
-                            }}
-                            className={classes.menuIconMinimized}
-                        >
-                            <ChevronRightIcon color="primary" />
-                        </IconButton>
-                    </Tooltip>
-                </Grid>
+                <div className={classes.containerHeader}>
+                    <Grid container direction="row">
+                        <Typography align="left">
+                            <i>{labels.SIDEBAR_HEADER}</i>
+                        </Typography>
+
+                        <SidebarToggleButton isOpen={sidebarIsOpen} setState={setSidebarOpen} />
+                    </Grid>
+                </div>
                 <Divider />
                 <div>
                     {groups.length

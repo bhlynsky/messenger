@@ -94,7 +94,6 @@ export const useStyles = makeStyles((theme) => ({
         flexShrink: 0,
     },
     sidebarMinimized: {
-        background: 'lightgray',
         height: 'calc(100vh - 65px)',
         width: '10vw',
     },
@@ -112,6 +111,7 @@ export const useStyles = makeStyles((theme) => ({
         marginTop: '10px',
         border: `2px ${theme.palette.primary.main} solid`,
         borderRadius: '5px',
+        background: theme.palette.secondary.main,
         padding: '5px 2px 5px 2px',
         '&:hover': {
             background: 'lightgray',
@@ -121,12 +121,18 @@ export const useStyles = makeStyles((theme) => ({
         border: '1px solid black',
         borderRadius: '10px',
         marginTop: '5px',
+        '&:hover': {
+            background: 'lightgray',
+        },
     },
     groupPreviewMinimizedActive: {
         border: `1px ${theme.palette.primary.main} solid`,
         borderRadius: '10px',
         marginTop: '5px',
         background: theme.palette.secondary.main,
+        '&:hover': {
+            background: 'lightgray',
+        },
     },
     groupSearchBar: {
         margin: '20px 0px 0px 20px',

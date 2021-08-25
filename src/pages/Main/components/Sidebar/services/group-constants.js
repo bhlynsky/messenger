@@ -17,7 +17,7 @@ const searchGroupLabels = {
 };
 
 const labels = {
-    SIDEBAR_HEADER: 'Current group',
+    SIDEBAR_HEADER: 'Your groups',
     SIDEBAR_NO_GROUPS: 'No results were found for your search!',
     SIDEBAR_OPEN: 'Open sidebar ',
     SIDEBAR_CLOSE: ' Close sidebar',
