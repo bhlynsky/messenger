@@ -26,6 +26,7 @@ export const useStyles = makeStyles((theme) => ({
     groupList: {
         maxHeight: '500px',
         overflow: 'auto',
+        marginLeft: '5px',
     },
     buttonClose: {
         width: '47.5%',
