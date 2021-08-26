@@ -6,8 +6,7 @@ export const useStyles = makeStyles((theme) => ({
         background: 'black',
     },
     containerHeader: {
-        background: theme.palette.type === 'dark' ? 'black' : 'lightgray',
-        color: theme.palette.text.primary,
+        background: theme.palette.type === 'dark' ? '#121212' : 'lightgray',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -141,8 +140,6 @@ export const useStyles = makeStyles((theme) => ({
     groupSearchBar: {
         margin: '20px 0px 0px 20px',
         width: '90%',
-        color: theme.palette.text.primary,
-        background: theme.palette.background.default,
     },
     modalLabels: {
         color: theme.palette.text.primary,

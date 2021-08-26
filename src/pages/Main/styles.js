@@ -5,8 +5,7 @@ export const useStyles = makeStyles((theme) => ({
         display: 'flex',
     },
     containerHeader: {
-        background: theme.palette.type === 'dark' ? 'black' : 'lightgray',
-        color: theme.palette.text.primary,
+        background: theme.palette.type === 'dark' ? '#121212' : 'lightgray',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -23,8 +22,7 @@ export const useStyles = makeStyles((theme) => ({
 
     searchBar: {
         width: '100%',
-        background: theme.palette.type === 'dark' ? 'black' : 'lightgray',
-        color: theme.palette.text.primary,
+        background: theme.palette.type === 'dark' ? '#121212' : 'lightgray',
         zIndex: '1',
         paddingBottom: '5px',
     },

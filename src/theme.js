@@ -1,6 +1,4 @@
-import { createTheme } from '@material-ui/core';
-
-const baseTheme = createTheme({
+const baseTheme = {
     typography: {
         h1: {
             fontSize: '40px',
@@ -17,9 +15,9 @@ const baseTheme = createTheme({
             root: { marginBottom: '-20px' },
         },
     },
-});
+};
 
-const lightTheme = createTheme({
+const lightTheme = {
     ...baseTheme,
     palette: {
         type: 'light',
@@ -32,10 +30,17 @@ const lightTheme = createTheme({
         error: {
             main: '#B00020',
         },
+        background: {
+            default: '#fafafa',
+            paper: '#fff',
+        },
+        text: {
+            primary: '#000',
+        },
     },
-});
+};
 
-const darkTheme = createTheme({
+const darkTheme = {
     ...baseTheme,
     palette: {
         type: 'dark',
@@ -43,11 +48,18 @@ const darkTheme = createTheme({
             main: '#374785',
         },
         secondary: {
-            main: '#A8D0E6',
+            main: '#7d64ce',
         },
         error: {
             main: '#B00020',
         },
+        background: {
+            default: '#424242',
+            paper: '#303030',
+        },
+        text: {
+            primary: '#fff',
+        },
     },
-});
+};
 export { lightTheme, darkTheme };

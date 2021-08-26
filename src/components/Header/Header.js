@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useStyles } from './styles';
 import { useLocation } from 'react-router-dom';
 import { headerRoutes } from '../../services/headerRoutes';
-import { useThemeContext } from '../../App.js';
+import { useThemeContext } from '../../ThemeHandler';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 
 export default function Header() {

@@ -1,15 +1,14 @@
 import { makeStyles } from '@material-ui/core';
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(() => ({
     message: {
         margin: '20px 25px 20px 25px',
-        color: theme.palette.text.primary,
     },
     messageContainer: {
         width: '100%',
         minHeight: '500px',
         minWidth: '400px',
-        height: 'calc(100vh - 210px)',
+        height: 'calc(100vh - 200px)',
         overflow: 'auto',
     },
     messageInput: {
@@ -17,8 +16,9 @@ export const useStyles = makeStyles((theme) => ({
         paddingTop: '5px',
     },
     input: {
-        height: '30px',
+        height: '50px',
     },
+
     textHighlight: {
         fontWeight: 'bold',
         background: 'pink',

@@ -7,66 +7,52 @@ import UserPage from './pages/User/UserPage';
 import TaskPage from './pages/TaskPage';
 import Stylesheets from './pages/Stylesheets/Stylesheets';
 import NasaPicsPage from './pages/NasaPics/NasaPicsPage';
-
-import { createContext, useContext, useState } from 'react';
-import { ThemeProvider, Paper } from '@material-ui/core';
-import { lightTheme, darkTheme } from './theme';
 import { useStyles } from './styles';
+import { CustomThemeProvider } from './ThemeHandler';
+import { Paper } from '@material-ui/core';
 
-const ThemeContext = createContext({});
-
-function useThemeContext() {
-    return useContext(ThemeContext);
-}
-
-function CustomThemeProvider(props) {
-    const [isDarkMode, setDarkMode] = useState(false);
-
+const Router = () => {
+    const classes = useStyles();
     return (
-        <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-            <ThemeContext.Provider value={{ isDarkMode, setDarkMode }}>
-                {props.children}
-            </ThemeContext.Provider>
-        </ThemeProvider>
+        <Paper square className={classes.paper}>
+            <Header />
+
+            <Switch>
+                <Route exact path="/">
+                    <Redirect to="/main/1" />
+                </Route>
+                <Route path="/main/:groupId">
+                    <MainPage />
+                </Route>
+                <Route path="/user">
+                    <UserPage />
+                </Route>
+                <Route path="/admin">
+                    <AdminPage />
+                </Route>
+                <Route path="/tasks">
+                    <TaskPage />
+                </Route>
+
+                <Route path="/stylesheet">
+                    <Stylesheets />
+                </Route>
+                <Route path="/nasa">
+                    <NasaPicsPage />
+                </Route>
+            </Switch>
+        </Paper>
     );
-}
+};
 
 function App() {
-    const classes = useStyles();
     return (
         <HashRouter>
             <CustomThemeProvider>
-                <Paper square className={classes.paper}>
-                    <Header />
-
-                    <Switch>
-                        <Route exact path="/">
-                            <Redirect to="/main/1" />
-                        </Route>
-                        <Route path="/main/:groupId">
-                            <MainPage />
-                        </Route>
-                        <Route path="/user">
-                            <UserPage />
-                        </Route>
-                        <Route path="/admin">
-                            <AdminPage />
-                        </Route>
-                        <Route path="/tasks">
-                            <TaskPage />
-                        </Route>
-
-                        <Route path="/stylesheet">
-                            <Stylesheets />
-                        </Route>
-                        <Route path="/nasa">
-                            <NasaPicsPage />
-                        </Route>
-                    </Switch>
-                </Paper>
+                <Router />
             </CustomThemeProvider>
         </HashRouter>
     );
 }
 
-export { App, useThemeContext };
+export { App };
