@@ -10,6 +10,7 @@ export const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        paddingLeft: '20px',
     },
     modalForm: {
         position: 'absolute',
