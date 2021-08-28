@@ -5,9 +5,8 @@ const initialState = {
     groups: [],
     messages: [],
 };
-const fileService = {};
 
-fileService.getMessagesFromFile = async () => {
+const getMessagesFromFile = async () => {
     const filePath = 'messageData.txt';
     const response = await fetch(filePath);
     const result = await response.text();
@@ -15,7 +14,7 @@ fileService.getMessagesFromFile = async () => {
     return result;
 };
 
-fileService.getGroupsFromFile = async () => {
+const getGroupsFromFile = async () => {
     const filePath = 'groupData.txt';
     const response = await fetch(filePath);
     const result = await response.text();
@@ -30,19 +29,4 @@ const checkLocalStorage = () => {
     }
 };
 
-const authService = {};
-
-authService.register = async (data) => {
-    return await fetch('http://localhost:8080/api/auth/register', {
-        method: 'POST',
-        body: data,
-    }).then((res) => res.json());
-};
-authService.login = async (data) => {
-    return await fetch('http://localhost:8080/api/auth/login', {
-        method: 'POST',
-        body: data,
-    }).then((res) => res.json());
-};
-
-export { initialState, fileService, authService, checkLocalStorage };
+export { initialState, getGroupsFromFile, getMessagesFromFile, checkLocalStorage };

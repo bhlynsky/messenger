@@ -50,11 +50,6 @@ export default function Header() {
                     Styles examples
                 </Link>
             </Typography>
-            <Typography variant="subtitle1" align="left">
-                <Link className={checkIsLinkActive(headerRoutes.LOGIN)} to={headerRoutes.LOGIN}>
-                    Login
-                </Link>
-            </Typography>
 
             <div className={classes.darkModeToggle}>
                 <Tooltip title="Toggle dark mode">
