@@ -10,6 +10,8 @@ import NasaPicsPage from './pages/NasaPics/NasaPicsPage';
 import { useStyles } from './styles';
 import { CustomThemeProvider } from './ThemeHandler';
 import { Paper } from '@material-ui/core';
+import Login from './pages/Main/components/Login/Login';
+import Register from './pages/Main/components/Register/Register';
 
 const Router = () => {
     const classes = useStyles();
@@ -33,12 +35,17 @@ const Router = () => {
                 <Route path="/tasks">
                     <TaskPage />
                 </Route>
-
                 <Route path="/stylesheet">
                     <Stylesheets />
                 </Route>
                 <Route path="/nasa">
                     <NasaPicsPage />
+                </Route>
+                <Route path="/login">
+                    <Login />
+                </Route>
+                <Route path="/register">
+                    <Register />
                 </Route>
             </Switch>
         </Paper>

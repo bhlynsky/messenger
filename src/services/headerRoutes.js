@@ -4,4 +4,6 @@ export const headerRoutes = {
     ADMIN: '/admin',
     NASA: '/nasa',
     STYLESHEET: '/stylesheet',
+    LOGIN: '/login',
+    REGISTER: '/register',
 };
