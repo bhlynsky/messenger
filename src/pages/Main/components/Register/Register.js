@@ -13,7 +13,6 @@ export default function Register() {
         email: '',
         username: '',
         password: '',
-        passwordConfirm: '',
     });
 
     const handleChange = (e) => {
@@ -25,9 +24,10 @@ export default function Register() {
         }));
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         let response = await authService.register(registerData);
-        console.log(response);
+        console.log(registerData);
         !response.ok && console.error(response.errors);
 
         //use redux here
@@ -60,7 +60,6 @@ export default function Register() {
                         id="username"
                         label="Username"
                         name="username"
-                        autoComplete="username"
                         onChange={handleChange}
                         value={registerData.username}
                     />

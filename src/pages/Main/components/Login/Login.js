@@ -27,8 +27,9 @@ export default function Login() {
         }));
     };
 
-    const handleSubmit = async () => {
-        let response = await authService.login();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        let response = await authService.login(loginData);
         console.log(response);
         !response.ok && setErrors(response.errors);
 
