@@ -70,6 +70,14 @@ const CreateGroupModal = (props) => {
         }
     };
 
+    const InputTitle = (props) => {
+        return (
+            <Typography variant="body1" align="center" className={classes.modalLabels}>
+                <i>{props.text}</i>
+            </Typography>
+        );
+    };
+
     return (
         <div className={classes.modalForm}>
             <div>
@@ -84,9 +92,7 @@ const CreateGroupModal = (props) => {
                 <Divider variant="middle" className={classes.divider} />
 
                 <Grid item>
-                    <Typography variant="body1" align="center" className={classes.modalLabels}>
-                        <i>{createGroupLabels.SUBTITLE_NAME}</i>
-                    </Typography>
+                    <InputTitle text={createGroupLabels.SUBTITLE_NAME} />
                     <FormControl className={classes.input} error={!!errors.groupName}>
                         <InputLabel>{createGroupLabels.NAME_INPUT}</InputLabel>
                         <Input
@@ -103,11 +109,8 @@ const CreateGroupModal = (props) => {
                             ''
                         )}
                     </FormControl>
-
                     <div className={classes.userSelect}>
-                        <Typography variant="body1" align="center" className={classes.modalLabels}>
-                            <i>{createGroupLabels.SUBTITLE_ADD_USERS}</i>
-                        </Typography>
+                        <InputTitle text={createGroupLabels.SUBTITLE_ADD_USERS} />
                         <div>
                             <FormControl error={!!errors.users} className={classes.input}>
                                 <InputLabel>{createGroupLabels.SELECT_PLACEHOLDER}</InputLabel>
@@ -163,7 +166,6 @@ const CreateGroupModal = (props) => {
                             ))}
                         </Grid>
                     </div>
-
                     <Grid
                         container
                         justifyContent="flex-start"
