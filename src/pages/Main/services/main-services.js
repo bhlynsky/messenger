@@ -30,31 +30,4 @@ const checkLocalStorage = () => {
     }
 };
 
-const authService = {};
-
-authService.register = async (data) => {
-    const response = await fetch('http://localhost:8080/api/auth/register', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-    });
-    const user = await response.json();
-    return user;
-};
-authService.login = async (data) => {
-    const response = await fetch('http://localhost:8080/api/auth/login', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-    });
-    const user = response.json();
-    return user;
-};
-
-export { initialState, fileService, authService, checkLocalStorage };
+export { initialState, fileService, checkLocalStorage };

@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { useStyles } from './styles';
-import { authService } from '../../services/main-services';
+import { authService } from '../services/auth-services';
 
 export default function Register() {
     const classes = useStyles();

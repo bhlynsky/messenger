@@ -8,15 +8,17 @@ import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { useStyles } from './styles';
-import { authService } from '../../services/main-services';
+import { authService } from '../services/auth-services';
+import { connect } from 'react-redux';
+import { CircularProgress } from '@material-ui/core';
 
-export default function Login() {
+function Login(props) {
     const classes = useStyles();
+    const { login, isLoading, error } = props;
     const [loginData, setLoginData] = useState({
         email: '',
         password: '',
     });
-    const [errors, setErrors] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -29,21 +31,18 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let response = await authService.login(loginData);
-        console.log(response);
-        !response.ok && setErrors(response.errors);
-
-        //use redux here
+        login(loginData);
     };
 
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
+
             <div className={classes.paper}>
                 <Typography variant="h2">Log in</Typography>
-                {errors && (
+                {error && (
                     <Typography variant="caption" color="error">
-                        Error : {errors}
+                        {error}
                     </Typography>
                 )}
                 <form className={classes.form} noValidate onSubmit={handleSubmit}>
@@ -77,15 +76,28 @@ export default function Login() {
                         control={<Checkbox value="remember" color="primary" />}
                         label="Remember me"
                     />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        Sign In
-                    </Button>
+                    {isLoading ? (
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            disabled
+                            className={classes.submit}
+                        >
+                            <CircularProgress />
+                        </Button>
+                    ) : (
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Sign In
+                        </Button>
+                    )}
 
                     <Link to="/register" variant="body2">
                         {"Don't have an account? Create new."}
@@ -95,3 +107,15 @@ export default function Login() {
         </Container>
     );
 }
+
+const mapStateToProps = (state) => ({
+    user: state.authReducer.user,
+    isLoading: state.authReducer.isLoading,
+    error: state.authReducer.error,
+});
+
+const mapDispatchToProps = () => ({
+    login: (data, dispatch) => authService.login(data, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
