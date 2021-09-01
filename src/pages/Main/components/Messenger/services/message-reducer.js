@@ -19,7 +19,7 @@ function messageReducer(state = initialState, action) {
 
             if (index !== -1) {
                 // findIndex returns -1 if index not found(no messages for this group)
-                groupMessages = state.messages[index].messages;
+                groupMessages = state.messages[index].groupMessages;
             }
 
             return {

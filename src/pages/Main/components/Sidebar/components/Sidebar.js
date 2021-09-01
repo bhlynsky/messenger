@@ -67,7 +67,7 @@ const Sidebar = (props) => {
                         groupList.map((item) => (
                             <div
                                 className={
-                                    currentGroupId === item.id
+                                    currentGroupId === item._id
                                         ? classes.groupPreviewActive
                                         : classes.groupPreview
                                 }
@@ -102,7 +102,7 @@ const Sidebar = (props) => {
                         ? groups.map((item) => (
                               <div
                                   className={
-                                      currentGroupId === item.id
+                                      currentGroupId === item._id
                                           ? classes.groupPreviewMinimizedActive
                                           : classes.groupPreviewMinimized
                                   }

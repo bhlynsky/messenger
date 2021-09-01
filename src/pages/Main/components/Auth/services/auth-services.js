@@ -5,7 +5,7 @@ const authService = {};
 const initialState = {
     user: null,
     isLoading: false,
-    error: false,
+    error: null,
 };
 
 authService.register = async (data) => {
@@ -21,7 +21,7 @@ authService.register = async (data) => {
     return user;
 };
 
-authService.login = async (data) => async (dispatch) => {
+authService.login = (data) => async (dispatch) => {
     dispatch(authActions.loginStart());
 
     try {
@@ -37,7 +37,7 @@ authService.login = async (data) => async (dispatch) => {
         if (!response.ok) throw new Error(response.statusText);
 
         const user = await response.json();
-
+        console.log(user);
         dispatch(authActions.loginSuccess(user));
     } catch (err) {
         dispatch(authActions.loginError(err));

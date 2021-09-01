@@ -6,13 +6,20 @@ import MessageInput from './components/Messenger/components/MessageInput';
 import { connect } from 'react-redux';
 import { groupActions } from './components/Sidebar/services/group-actions';
 import { messageActions } from './components/Messenger/services/message-actions';
-import { checkLocalStorage } from './services/main-services';
 import { MessageList } from './components/Messenger/components/MessageList';
 import { SearchBar } from './components/SearchBar';
+import { getGroups, getMessages } from './services/main-services';
 
 function MainPage(props) {
     const classes = useStyles();
-    const { groupName = '', messages, loadMessageData, loadGroupData, changeCurrentGroup } = props;
+    const {
+        groupName = '',
+        messages,
+        loadMessageData,
+        loadGroupData,
+        changeCurrentGroup,
+        userId,
+    } = props;
 
     const [searchValue, setSearchValue] = useState('');
 
@@ -25,18 +32,14 @@ function MainPage(props) {
     };
 
     // eslint-disable-next-line
-    useEffect(() => {
-        // setting data if ls is empty before dispatching loading actions
-        checkLocalStorage();
-
-        const groupData = JSON.parse(localStorage.getItem('groupData'));
-        const messageData = JSON.parse(localStorage.getItem('messageData'));
-        const indexGroup = groupData.findIndex((gr) => gr.id === 1);
+    useEffect(async () => {
+        const groupData = await getGroups(userId);
+        const messageData = await getMessages(userId);
 
         loadGroupData(groupData);
         loadMessageData(messageData);
 
-        changeCurrentGroup(1, groupData[indexGroup].groupName); //default group is first group in list
+        changeCurrentGroup(groupData[0]._id, groupData[0].groupName); //default group is first group in list
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -75,10 +78,12 @@ function MainPage(props) {
 const mapStateToProps = (state) => {
     const groupName = state.groupReducer.currentGroup.groupName;
     const messages = state.messageReducer.currentGroup.messages;
+    const userId = state.authReducer.user._id;
 
     return {
         messages,
         groupName,
+        userId,
     };
 };
 

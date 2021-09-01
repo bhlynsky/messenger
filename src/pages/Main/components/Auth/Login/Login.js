@@ -4,7 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { useStyles } from './styles';
@@ -14,7 +14,8 @@ import { CircularProgress } from '@material-ui/core';
 
 function Login(props) {
     const classes = useStyles();
-    const { login, isLoading, error } = props;
+    const { login, isLoading, error, user } = props;
+
     const [loginData, setLoginData] = useState({
         email: '',
         password: '',
@@ -31,18 +32,18 @@ function Login(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        login(loginData);
+        await login(loginData);
     };
 
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
-
+            {user && <Redirect to="/main/1" />}
             <div className={classes.paper}>
                 <Typography variant="h2">Log in</Typography>
                 {error && (
                     <Typography variant="caption" color="error">
-                        {error}
+                        Error: {error.message}
                     </Typography>
                 )}
                 <form className={classes.form} noValidate onSubmit={handleSubmit}>
@@ -58,6 +59,7 @@ function Login(props) {
                         autoFocus
                         onChange={handleChange}
                         value={loginData.email}
+                        error={!!error}
                     />
                     <TextField
                         variant="outlined"
@@ -71,33 +73,27 @@ function Login(props) {
                         autoComplete="current-password"
                         onChange={handleChange}
                         value={loginData.password}
+                        error={!!error}
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
                         label="Remember me"
                     />
-                    {isLoading ? (
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            disabled
-                            className={classes.submit}
-                        >
-                            <CircularProgress />
-                        </Button>
-                    ) : (
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
-                            Sign In
-                        </Button>
-                    )}
+
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        disabled={isLoading}
+                        className={classes.submit}
+                    >
+                        {isLoading ? (
+                            <CircularProgress size="30px" />
+                        ) : (
+                            <Typography>Sign In</Typography>
+                        )}
+                    </Button>
 
                     <Link to="/register" variant="body2">
                         {"Don't have an account? Create new."}
@@ -109,13 +105,13 @@ function Login(props) {
 }
 
 const mapStateToProps = (state) => ({
-    user: state.authReducer.user,
     isLoading: state.authReducer.isLoading,
     error: state.authReducer.error,
+    user: state.authReducer.user,
 });
 
-const mapDispatchToProps = () => ({
-    login: (data, dispatch) => authService.login(data, dispatch),
+const mapDispatchToProps = (dispatch) => ({
+    login: (data) => dispatch(authService.login(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

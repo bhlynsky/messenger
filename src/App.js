@@ -21,8 +21,9 @@ const Router = () => {
 
             <Switch>
                 <Route exact path="/">
-                    <Redirect to="/main/1" />
+                    <Redirect to="/login" />
                 </Route>
+
                 <Route path="/main/:groupId">
                     <MainPage />
                 </Route>
