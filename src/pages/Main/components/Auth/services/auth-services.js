@@ -37,7 +37,7 @@ authService.login = (data) => async (dispatch) => {
         if (!response.ok) throw new Error(response.statusText);
 
         const user = await response.json();
-        console.log(user);
+
         dispatch(authActions.loginSuccess(user));
     } catch (err) {
         dispatch(authActions.loginError(err));

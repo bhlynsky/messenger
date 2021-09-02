@@ -3,19 +3,29 @@ import { groupActions } from '../services/group-actions';
 
 function groupReducer(state = initialState, action) {
     switch (action.type) {
-        case groupActions.actionType.LOAD_GROUPS: {
-            // load groups for sidebar and also load message for default group
-            const groups = action.data;
-
+        case groupActions.actionType.LOADING_START: {
             return {
                 ...state,
-                groups,
-                currentGroup: {
-                    id: groups[0].id,
-                    groupName: groups[0].groupName,
-                },
+                isGroupsLoading: true,
             };
         }
+        //load success
+        case groupActions.actionType.LOADING_SUCCESS: {
+            return {
+                ...state,
+                groups: action.groups,
+                isGroupsLoading: false,
+            };
+        }
+        //load error
+        case groupActions.actionType.LOADING_ERROR: {
+            return {
+                ...state,
+                error: action.error,
+                isGroupsLoading: false,
+            };
+        }
+
         case groupActions.actionType.CHANGE_CURRENT_GROUP: {
             // get messages for current group when changing group
 

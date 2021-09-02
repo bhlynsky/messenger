@@ -2,9 +2,9 @@ const messageActions = {};
 
 messageActions.actionType = {
     SEND_MESSAGE: '[MAIN]Send message',
-    LOADING_START: '[MAIN]Loading start',
-    LOADING_SUCCESS: '[MAIN]Loading success',
-    LOADING_ERROR: '[MAIN]Loading Error',
+    LOADING_START: '[MESSAGE]Loading start',
+    LOADING_SUCCESS: '[MESSAGE]Loading success',
+    LOADING_ERROR: '[MESSAGE]Loading Error',
     LOAD_MESSAGES: '[MAIN]Load messages',
     CHANGE_CURRENT_GROUP: '[MAIN]Change active group',
     CREATE_NEW_GROUP: '[MAIN]Create Group',

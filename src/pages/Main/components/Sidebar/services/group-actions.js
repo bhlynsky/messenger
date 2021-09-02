@@ -1,8 +1,10 @@
 const groupActions = {};
 
 groupActions.actionType = {
-    LOADING_ERROR: '[MAIN]Loading Error',
-    LOAD_GROUPS: '[MAIN]Load groups',
+    LOADING_START: '[GROUP]Loading start',
+    LOADING_SUCCESS: '[GROUP]Loading success',
+    LOADING_ERROR: '[GROUP]Loading Error',
+
     CHANGE_CURRENT_GROUP: '[MAIN]Change active group',
     CREATE_NEW_GROUP: '[MAIN]Create Group',
     SEND_MESSAGE: '[MAIN]Send message',
@@ -19,9 +21,18 @@ groupActions.changeCurrentGroup = (groupId, groupName) => ({
     groupName,
 });
 
-groupActions.loadGroupData = (data) => ({
-    type: groupActions.actionType.LOAD_GROUPS,
-    data,
+groupActions.loadGroups = () => ({
+    type: groupActions.actionType.LOADING_START,
+});
+
+groupActions.loadGroupsSuccess = (groups) => ({
+    type: groupActions.actionType.LOADING_SUCCESS,
+    groups,
+});
+
+groupActions.loadGroupError = (error) => ({
+    type: groupActions.actionType.LOADING_ERROR,
+    error,
 });
 
 export { groupActions };

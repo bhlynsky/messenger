@@ -14,11 +14,12 @@ function MainPage(props) {
     const {
         groupName = '',
         messages,
-        loadGroupData,
+        getGroupList,
         getMessagesList,
         changeCurrentGroup,
         userId,
         isMessagesLoading,
+        isGroupLoading,
     } = props;
 
     const [searchValue, setSearchValue] = useState('');
@@ -31,20 +32,16 @@ function MainPage(props) {
         setSearchValue('');
     };
 
-    // eslint-disable-next-line
     useEffect(async () => {
-        const groupData = await getGroups(userId);
-        getMessagesList(userId);
+        const groupData = await getGroupList(userId); // is this approach is ok?
+        await getMessagesList(userId);
 
-        loadGroupData(groupData);
-
-        changeCurrentGroup(groupData[0]._id, groupData[0].groupName); //default group is first group in list
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        changeCurrentGroup(groupData[0]._id, groupData[0].groupName);
     }, []);
 
     return (
         <div className={classes.pageWrapper}>
-            <Sidebar />
+            <Sidebar isLoading={isGroupLoading} />
 
             <div className={classes.container}>
                 <Grid
@@ -83,16 +80,18 @@ const mapStateToProps = (state) => {
     const messages = state.messageReducer.currentGroup.messages;
     const userId = state.authReducer.user._id;
     const isMessagesLoading = state.messageReducer.isMessagesLoading;
+    const isGroupLoading = state.groupReducer.isGroupLoading;
     return {
         messages,
         groupName,
         userId,
         isMessagesLoading,
+        isGroupLoading,
     };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    loadGroupData: (data) => dispatch(groupActions.loadGroupData(data)),
+    getGroupList: (data) => dispatch(getGroups(data)),
     getMessagesList: (userId) => dispatch(getMessages(userId)),
     changeCurrentGroup: (id, name) => dispatch(groupActions.changeCurrentGroup(id, name)),
 });
