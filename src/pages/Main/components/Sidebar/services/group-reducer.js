@@ -41,7 +41,6 @@ function groupReducer(state = initialState, action) {
         }
         case groupActions.actionType.CREATE_NEW_GROUP: {
             const { group } = action;
-            group.id = Math.random() * 100;
 
             return { ...state, groups: [...state.groups, group] };
         }

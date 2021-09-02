@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
 import { groupActions } from './components/Sidebar/services/group-actions';
 import { MessageList } from './components/Messenger/components/MessageList';
 import { SearchBar } from './components/SearchBar';
-import { getGroups, getMessages } from './services/main-services';
+import { getMessages } from './components/Messenger/services/message-services';
+import { getGroups } from './components/Sidebar/services/group-services';
 
 function MainPage(props) {
     const classes = useStyles();

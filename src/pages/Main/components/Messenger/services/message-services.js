@@ -1,3 +1,5 @@
+import { messageActions } from './message-actions';
+
 const updateValuesOnSendMessage = (messages, groups, newMessage, groupId) => {
     const newMessages = JSON.parse(JSON.stringify(messages));
     const newGroups = JSON.parse(JSON.stringify(groups));
@@ -37,11 +39,25 @@ const createNewMessage = async (body) => {
         if (!response.ok) throw new Error(response.statusText);
 
         const message = await response.json();
-        console.log(message);
+
         return message;
     } catch (err) {
         console.error(err);
     }
 };
 
-export { updateValuesOnSendMessage, createNewMessage };
+const getMessages = (userId) => async (dispatch) => {
+    dispatch(messageActions.loadMessages());
+    try {
+        const response = await fetch(`http://localhost:8080/api/message/user/${userId}`);
+
+        if (!response.ok) throw new Error(response.statusText);
+
+        const messages = await response.json();
+        dispatch(messageActions.loadMessagesSuccess(messages));
+    } catch (err) {
+        dispatch(messageActions.loadMessagesError(err));
+    }
+};
+
+export { updateValuesOnSendMessage, createNewMessage, getMessages };
