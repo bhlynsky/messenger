@@ -2,6 +2,8 @@ const messageActions = {};
 
 messageActions.actionType = {
     SEND_MESSAGE: '[MAIN]Send message',
+    LOADING_START: '[MAIN]Loading start',
+    LOADING_SUCCESS: '[MAIN]Loading success',
     LOADING_ERROR: '[MAIN]Loading Error',
     LOAD_MESSAGES: '[MAIN]Load messages',
     CHANGE_CURRENT_GROUP: '[MAIN]Change active group',
@@ -15,9 +17,18 @@ messageActions.sendMessage = (newMessages, newGroups, message) => ({
     message,
 });
 
-messageActions.loadMessageData = (data) => ({
-    type: messageActions.actionType.LOAD_MESSAGES,
-    data,
+messageActions.loadMessages = () => ({
+    type: messageActions.actionType.LOADING_START,
+});
+
+messageActions.loadMessagesSuccess = (messages) => ({
+    type: messageActions.actionType.LOADING_SUCCESS,
+    messages,
+});
+
+messageActions.loadMessagesError = (error) => ({
+    type: messageActions.actionType.LOADING_ERROR,
+    error,
 });
 
 export { messageActions };

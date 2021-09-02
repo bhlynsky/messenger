@@ -5,7 +5,6 @@ import { useStyles } from './styles';
 import MessageInput from './components/Messenger/components/MessageInput';
 import { connect } from 'react-redux';
 import { groupActions } from './components/Sidebar/services/group-actions';
-import { messageActions } from './components/Messenger/services/message-actions';
 import { MessageList } from './components/Messenger/components/MessageList';
 import { SearchBar } from './components/SearchBar';
 import { getGroups, getMessages } from './services/main-services';
@@ -15,10 +14,11 @@ function MainPage(props) {
     const {
         groupName = '',
         messages,
-        loadMessageData,
         loadGroupData,
+        getMessagesList,
         changeCurrentGroup,
         userId,
+        isMessagesLoading,
     } = props;
 
     const [searchValue, setSearchValue] = useState('');
@@ -34,10 +34,9 @@ function MainPage(props) {
     // eslint-disable-next-line
     useEffect(async () => {
         const groupData = await getGroups(userId);
-        const messageData = await getMessages(userId);
+        getMessagesList(userId);
 
         loadGroupData(groupData);
-        loadMessageData(messageData);
 
         changeCurrentGroup(groupData[0]._id, groupData[0].groupName); //default group is first group in list
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,7 +66,11 @@ function MainPage(props) {
 
                 <Divider />
 
-                <MessageList messages={messages} searchValue={searchValue} />
+                <MessageList
+                    messages={messages}
+                    searchValue={searchValue}
+                    isLoading={isMessagesLoading}
+                />
 
                 <MessageInput />
             </div>
@@ -79,17 +82,18 @@ const mapStateToProps = (state) => {
     const groupName = state.groupReducer.currentGroup.groupName;
     const messages = state.messageReducer.currentGroup.messages;
     const userId = state.authReducer.user._id;
-
+    const isMessagesLoading = state.messageReducer.isMessagesLoading;
     return {
         messages,
         groupName,
         userId,
+        isMessagesLoading,
     };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    loadMessageData: (data) => dispatch(messageActions.loadMessageData(data)),
     loadGroupData: (data) => dispatch(groupActions.loadGroupData(data)),
+    getMessagesList: (userId) => dispatch(getMessages(userId)),
     changeCurrentGroup: (id, name) => dispatch(groupActions.changeCurrentGroup(id, name)),
 });
 

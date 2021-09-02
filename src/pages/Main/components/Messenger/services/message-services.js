@@ -1,4 +1,4 @@
-export const updateValuesOnSendMessage = (messages, groups, newMessage, groupId) => {
+const updateValuesOnSendMessage = (messages, groups, newMessage, groupId) => {
     const newMessages = JSON.parse(JSON.stringify(messages));
     const newGroups = JSON.parse(JSON.stringify(groups));
 
@@ -18,3 +18,30 @@ export const updateValuesOnSendMessage = (messages, groups, newMessage, groupId)
 
     return { newMessages, newGroups };
 };
+
+const createNewMessage = async (body) => {
+    try {
+        const response = await fetch(
+            'http://localhost:8080/api/message/new',
+
+            {
+                method: 'POST',
+                body: JSON.stringify(body),
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            },
+        );
+        //hadle errors
+        if (!response.ok) throw new Error(response.statusText);
+
+        const message = await response.json();
+        console.log(message);
+        return message;
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+export { updateValuesOnSendMessage, createNewMessage };

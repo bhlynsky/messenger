@@ -1,10 +1,14 @@
+import { messageActions } from '../components/Messenger/services/message-actions';
 import { mockGroupData, mockMessageData } from './mockApi';
 
 const initialState = {
     currentGroup: {},
     groups: [],
     messages: [],
+    isMessagesLoading: false,
+    isGroupsLoading: false,
 };
+
 const fileService = {};
 
 fileService.getMessagesFromFile = async () => {
@@ -42,16 +46,18 @@ const getGroups = async (userId) => {
         console.error(err);
     }
 };
-const getMessages = async (userId) => {
+
+const getMessages = (userId) => async (dispatch) => {
+    dispatch(messageActions.loadMessages());
     try {
         const response = await fetch(`http://localhost:8080/api/message/user/${userId}`);
 
         if (!response.ok) throw new Error(response.statusText);
 
         const message = await response.json();
-        return message;
+        dispatch(messageActions.loadMessagesSuccess(message));
     } catch (err) {
-        console.error(err);
+        dispatch(messageActions.loadMessagesError(err));
     }
 };
 
