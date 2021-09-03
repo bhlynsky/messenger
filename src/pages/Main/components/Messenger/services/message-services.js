@@ -5,23 +5,20 @@ const updateValuesOnSendMessage = (messages, groups, newMessage, groupId) => {
     const newGroups = JSON.parse(JSON.stringify(groups));
 
     const indexMsg = newMessages.findIndex((msg) => msg.groupId === groupId);
-    const indexGroup = newGroups.findIndex((gr) => gr.id === groupId);
+    const indexGroup = newGroups.findIndex((gr) => gr._id === groupId);
 
     if (indexMsg === -1) {
         newMessages.push({ groupId, messages: [newMessage] });
     } else {
-        newMessages[indexMsg].messages.push(newMessage);
+        newMessages[indexMsg].groupMessages.push(newMessage);
     }
 
     newGroups[indexGroup].lastMessage = newMessage; // update last message
 
-    localStorage.setItem('messageData', JSON.stringify(newMessages)); // update messages
-    localStorage.setItem('groupData', JSON.stringify(newGroups)); //update group
-
     return { newMessages, newGroups };
 };
 
-const createNewMessage = async (body) => {
+const createNewMessage = (newMessages, newGroups, body) => async (dispatch) => {
     try {
         const response = await fetch(
             'http://localhost:8080/api/message/new',
@@ -40,6 +37,7 @@ const createNewMessage = async (body) => {
 
         const message = await response.json();
 
+        dispatch(messageActions.sendMessage(newMessages, newGroups, message));
         return message;
     } catch (err) {
         console.error(err);

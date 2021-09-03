@@ -41,7 +41,12 @@ function messageReducer(state = initialState, action) {
                 currentGroup: { id: groupId, messages: groupMessages },
             };
         }
-        case messageActions.actionType.SEND_MESSAGE: {
+
+        case messageActions.actionType.SEND_MESSAGE_START: {
+            return { ...state, sendMessageLoading: true };
+        }
+
+        case messageActions.actionType.SEND_MESSAGE_SUCCESS: {
             const { message, newMessages } = action;
 
             return {
@@ -51,6 +56,15 @@ function messageReducer(state = initialState, action) {
                     ...state.currentGroup,
                     messages: [...state.currentGroup.messages, message],
                 },
+                sendMessageLoading: false,
+            };
+        }
+
+        case messageActions.actionType.SEND_MESSAGE_ERROR: {
+            return {
+                ...state,
+                error: action.error,
+                sendMessageLoading: false,
             };
         }
 

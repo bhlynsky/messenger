@@ -20,7 +20,6 @@ function MainPage(props) {
         changeCurrentGroup,
         userId,
         isMessagesLoading,
-        isGroupLoading,
     } = props;
 
     const [searchValue, setSearchValue] = useState('');
@@ -42,7 +41,7 @@ function MainPage(props) {
 
     return (
         <div className={classes.pageWrapper}>
-            <Sidebar isLoading={isGroupLoading} />
+            <Sidebar />
 
             <div className={classes.container}>
                 <Grid
@@ -81,13 +80,11 @@ const mapStateToProps = (state) => {
     const messages = state.messageReducer.currentGroup.messages;
     const userId = state.authReducer.user._id;
     const isMessagesLoading = state.messageReducer.isMessagesLoading;
-    const isGroupLoading = state.groupReducer.isGroupLoading;
     return {
         messages,
         groupName,
         userId,
         isMessagesLoading,
-        isGroupLoading,
     };
 };
 

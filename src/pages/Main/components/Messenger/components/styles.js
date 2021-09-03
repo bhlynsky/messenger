@@ -26,4 +26,11 @@ export const useStyles = makeStyles(() => ({
     avatar: {
         margin: '-5px 10px 10px',
     },
+    spinner: {
+        height: '100px',
+        width: '100px',
+        position: 'absolute',
+        left: '50%',
+        top: '50%',
+    },
 }));

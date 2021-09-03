@@ -34,15 +34,32 @@ function groupReducer(state = initialState, action) {
                 currentGroup: { id: action.groupId, groupName: action.groupName },
             };
         }
+
         case groupActions.actionType.SEND_MESSAGE: {
             const { newGroups } = action;
 
             return { ...state, groups: newGroups };
         }
-        case groupActions.actionType.CREATE_NEW_GROUP: {
+
+        case groupActions.actionType.CREATE_GROUP_START: {
+            return {
+                ...state,
+                createGroupLoading: true,
+            };
+        }
+
+        case groupActions.actionType.CREATE_GROUP_SUCCESS: {
             const { group } = action;
 
-            return { ...state, groups: [...state.groups, group] };
+            return { ...state, groups: [...state.groups, group], createGroupLoading: false };
+        }
+
+        case groupActions.actionType.CREATE_GROUP_ERROR: {
+            return {
+                ...state,
+                error: action.error,
+                createGroupLoading: false,
+            };
         }
 
         default:

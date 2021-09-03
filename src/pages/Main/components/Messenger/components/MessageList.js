@@ -16,7 +16,7 @@ export const MessageList = ({ messages, searchValue, isLoading }) => {
 
     return (
         <List className={classes.messageContainer}>
-            {isLoading && <CircularProgress />}
+            {isLoading && <CircularProgress className={classes.spinner} />}
             {messages &&
                 messages.length > 0 &&
                 messages.map((msg) => (

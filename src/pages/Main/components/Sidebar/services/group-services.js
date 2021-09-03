@@ -26,6 +26,8 @@ const getGroups = (userId) => async (dispatch) => {
 };
 
 const createGroup = (body) => async (dispatch) => {
+    dispatch(groupActions.createGroupStart());
+
     try {
         const response = await fetch('http://localhost:8080/api/group/new', {
             method: 'POST',
@@ -38,10 +40,10 @@ const createGroup = (body) => async (dispatch) => {
         if (!response.ok) throw new Error(response.statusText);
 
         const newGroup = await response.json();
-        dispatch(groupActions.createNewGroup(newGroup));
+        dispatch(groupActions.createGroupSuccess(newGroup));
         return newGroup;
     } catch (err) {
-        console.error(err);
+        dispatch(groupActions.createGroupError(err));
     }
 };
 export { searchGroup, getGroups, createGroup };

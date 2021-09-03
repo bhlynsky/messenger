@@ -12,6 +12,7 @@ import {
     IconButton,
     Select,
     MenuItem,
+    CircularProgress,
 } from '@material-ui/core';
 import { useStyles } from './styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -22,21 +23,24 @@ import Clear from '@material-ui/icons/Clear';
 import { users } from '../../../services/mockApi';
 
 const CreateGroupModal = (props) => {
+    const { handleClose, createNewGroup, currentUserId, isLoading } = props;
+
     const [newGroup, setNewGroup] = useState({ groupName: '', members: [] });
     const [errors, setErrors] = useState({ groupName: '', members: '' });
     const [selectedUser, setSelectedUser] = useState('');
 
-    const { handleClose, createNewGroup } = props;
-
     const classes = useStyles();
 
-    const onSave = () => {
+    const onSave = async () => {
         if (newGroup.groupName) {
             if (newGroup.members.length === 0) {
                 setErrors({ ...errors, members: createGroupLabels.ERROR_NO_USERS });
             } else {
-                createNewGroup(newGroup);
-                handleClose();
+                const body = { ...newGroup, members: [...newGroup.members, currentUserId] };
+                // making copy here so there wont be user id in chip list
+
+                await createNewGroup(body);
+                !isLoading && handleClose();
             }
         } else {
             setErrors({ ...errors, groupName: createGroupLabels.ERROR_NO_GROUPNAME });
@@ -169,9 +173,10 @@ const CreateGroupModal = (props) => {
                             variant="contained"
                             color="primary"
                             onClick={onSave}
+                            disabled={isLoading}
                             className={classes.buttonSave}
                         >
-                            {actionButtons.SAVE}
+                            {isLoading ? <CircularProgress size="25px" /> : actionButtons.SAVE}
                         </Button>
 
                         <Button
@@ -193,4 +198,9 @@ const mapDispatchToProps = (dispatch) => ({
     createNewGroup: (group) => dispatch(createGroup(group)),
 });
 
-export default connect(null, mapDispatchToProps)(CreateGroupModal);
+const mapStateToProps = (state) => ({
+    currentUserId: state.authReducer.user._id,
+    isLoading: state.groupReducer.createGroupLoading,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateGroupModal);

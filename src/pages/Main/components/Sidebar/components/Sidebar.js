@@ -72,7 +72,7 @@ const Sidebar = (props) => {
                 </Modal>
 
                 {isLoading ? (
-                    <CircularProgress />
+                    <CircularProgress className={classes.spinner} />
                 ) : (
                     <List className={classes.groupList}>
                         {groupList.length ? (
@@ -135,6 +135,7 @@ const mapStateToProps = (state) => ({
     groups: state.groupReducer.groups,
     currentGroupId: state.groupReducer.currentGroup.id,
     currentUser: state.authReducer.user.username,
+    isLoading: state.groupReducer.isGroupsLoading,
 });
 
 export default connect(mapStateToProps)(Sidebar);
