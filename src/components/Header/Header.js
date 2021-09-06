@@ -4,17 +4,20 @@ import { Link } from 'react-router-dom';
 import { useStyles } from './styles';
 import { useLocation } from 'react-router-dom';
 import { headerRoutes } from '../../services/headerRoutes';
-import { useThemeContext } from '../../ThemeHandler';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
+import { connect } from 'react-redux';
+import rootActions from '../../services/root-actions';
 
-export default function Header() {
+function Header({ changeTheme, isDarkTheme }) {
     const classes = useStyles();
     const location = useLocation().pathname;
 
-    const { isDarkMode, setDarkMode } = useThemeContext();
-
     const checkIsLinkActive = (route) => {
         return route === location ? classes.activeLink : classes.link;
+    };
+
+    const toggleTheme = () => {
+        changeTheme();
     };
 
     return (
@@ -52,11 +55,22 @@ export default function Header() {
             </Typography>
 
             <div className={classes.darkModeToggle}>
-                <Tooltip title="Toggle dark mode">
-                    <Switch checked={isDarkMode} onChange={() => setDarkMode(!isDarkMode)} />
+                <Tooltip title="Toggle dark theme">
+                    <Switch checked={isDarkTheme} onChange={toggleTheme} />
                 </Tooltip>
                 <Brightness4Icon className={classes.darkModeIcon} />
             </div>
         </AppBar>
     );
 }
+const mapDispatchToProps = (dispatch) => ({
+    changeTheme: () => {
+        dispatch(rootActions.changeTheme());
+    },
+});
+
+const mapStateToProps = (state) => ({
+    isDarkTheme: state.rootReducer.isDarkTheme,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
