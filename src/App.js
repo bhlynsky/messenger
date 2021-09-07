@@ -7,19 +7,15 @@ import UserPage from './pages/User/UserPage';
 import TaskPage from './pages/TaskPage';
 import Stylesheets from './pages/Stylesheets/Stylesheets';
 import NasaPicsPage from './pages/NasaPics/NasaPicsPage';
-
-import { useStyles } from './styles';
-import { CustomThemeProvider } from './ThemeHandler';
-import { Paper } from '@material-ui/core';
+import CustomThemeProvider from './CustomThemeProvider';
 import Login from './pages/Main/components/Auth/Login/Login';
 import Register from './pages/Main/components/Auth/Register/Register';
-
 
 const Router = () => {
     return (
         <Switch>
             <Route exact path="/">
-                <Redirect to="/main/1" />
+                <Redirect to="/login" />
             </Route>
             <Route path="/main/:groupId">
                 <MainPage />
@@ -33,13 +29,17 @@ const Router = () => {
             <Route path="/tasks">
                 <TaskPage />
             </Route>
-
-
             <Route path="/stylesheet">
                 <Stylesheets />
             </Route>
             <Route path="/nasa">
                 <NasaPicsPage />
+            </Route>
+            <Route path="/login">
+                <Login />
+            </Route>
+            <Route path="/register">
+                <Register />
             </Route>
         </Switch>
     );

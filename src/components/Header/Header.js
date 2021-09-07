@@ -61,6 +61,11 @@ function Header({ changeTheme, isDarkTheme }) {
                     Styles examples
                 </Link>
             </Typography>
+            <Typography variant="subtitle1">
+                <Link className={checkIsLinkActive(headerRoutes.LOGIN)} to={headerRoutes.LOGIN}>
+                    Login
+                </Link>
+            </Typography>
 
             <div className={classes.darkModeToggle}>
                 <Tooltip title="Toggle dark theme">
