@@ -146,4 +146,9 @@ export const useStyles = makeStyles((theme) => ({
     modalLabels: {
         color: theme.palette.text.primary,
     },
+    spinner: {
+        height: '100px',
+        width: '100px',
+        margin: 'auto',
+    },
 }));
