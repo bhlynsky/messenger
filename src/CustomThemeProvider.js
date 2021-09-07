@@ -4,7 +4,7 @@ import { createTheme } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { lightTheme, darkTheme } from './theme';
 
-function DarkThemeProvider({ isDarkTheme, children }) {
+function CustomThemeProvider({ isDarkTheme, children }) {
     const theme = createTheme(isDarkTheme ? darkTheme : lightTheme);
 
     return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
@@ -14,4 +14,4 @@ const mapStateToProps = (state) => ({
     isDarkTheme: state.rootReducer.isDarkTheme,
 });
 
-export default connect(mapStateToProps)(DarkThemeProvider);
+export default connect(mapStateToProps)(CustomThemeProvider);

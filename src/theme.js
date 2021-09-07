@@ -10,11 +10,6 @@ const baseTheme = {
             fontWeight: 'bold',
         },
     },
-    overrides: {
-        MuiFormHelperText: {
-            root: { marginBottom: '-20px' },
-        },
-    },
 };
 
 const lightTheme = {
