@@ -1,26 +1,18 @@
-import { Typography, Grid, Divider } from '@material-ui/core';
+import { Typography, Grid, Divider, Paper } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import Sidebar from './components/Sidebar/components/Sidebar';
 import { useStyles } from './styles';
 import MessageInput from './components/Messenger/components/MessageInput';
 import { connect } from 'react-redux';
 import { groupActions } from './components/Sidebar/services/group-actions';
+import { messageActions } from './components/Messenger/services/message-actions';
+import { checkLocalStorage } from './services/main-services';
 import { MessageList } from './components/Messenger/components/MessageList';
 import { SearchBar } from './components/SearchBar';
-import { getMessages } from './components/Messenger/services/message-services';
-import { getGroups } from './components/Sidebar/services/group-services';
 
 function MainPage(props) {
     const classes = useStyles();
-    const {
-        groupName = '',
-        messages,
-        getGroupList,
-        getMessagesList,
-        changeCurrentGroup,
-        userId,
-        isMessagesLoading,
-    } = props;
+    const { groupName = '', messages, loadMessageData, loadGroupData, changeCurrentGroup } = props;
 
     const [searchValue, setSearchValue] = useState('');
 
@@ -32,15 +24,24 @@ function MainPage(props) {
         setSearchValue('');
     };
 
-    useEffect(async () => {
-        const groupData = await getGroupList(userId); // is this approach is ok?
-        await getMessagesList(userId);
+    // eslint-disable-next-line
+    useEffect(() => {
+        // setting data if ls is empty before dispatching loading actions
+        checkLocalStorage();
 
-        changeCurrentGroup(groupData[0]._id, groupData[0].groupName);
+        const groupData = JSON.parse(localStorage.getItem('groupData'));
+        const messageData = JSON.parse(localStorage.getItem('messageData'));
+        const indexGroup = groupData.findIndex((gr) => gr.id === 1);
+
+        loadGroupData(groupData);
+        loadMessageData(messageData);
+
+        changeCurrentGroup(1, groupData[indexGroup].groupName); //default group is first group in list
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
-        <div className={classes.pageWrapper}>
+        <Paper square className={classes.pageWrapper}>
             <Sidebar />
 
             <div className={classes.container}>
@@ -63,34 +64,27 @@ function MainPage(props) {
 
                 <Divider />
 
-                <MessageList
-                    messages={messages}
-                    searchValue={searchValue}
-                    isLoading={isMessagesLoading}
-                />
+                <MessageList messages={messages} searchValue={searchValue} />
 
                 <MessageInput />
             </div>
-        </div>
+        </Paper>
     );
 }
 
 const mapStateToProps = (state) => {
     const groupName = state.groupReducer.currentGroup.groupName;
     const messages = state.messageReducer.currentGroup.messages;
-    const userId = state.authReducer.user._id;
-    const isMessagesLoading = state.messageReducer.isMessagesLoading;
+
     return {
         messages,
         groupName,
-        userId,
-        isMessagesLoading,
     };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    getGroupList: (data) => dispatch(getGroups(data)),
-    getMessagesList: (userId) => dispatch(getMessages(userId)),
+    loadMessageData: (data) => dispatch(messageActions.loadMessageData(data)),
+    loadGroupData: (data) => dispatch(groupActions.loadGroupData(data)),
     changeCurrentGroup: (id, name) => dispatch(groupActions.changeCurrentGroup(id, name)),
 });
 

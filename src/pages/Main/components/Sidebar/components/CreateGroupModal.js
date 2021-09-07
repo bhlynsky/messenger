@@ -12,35 +12,31 @@ import {
     IconButton,
     Select,
     MenuItem,
-    CircularProgress,
 } from '@material-ui/core';
 import { useStyles } from './styles';
+import { groupActions } from '../services/group-actions';
 import Avatar from '@material-ui/core/Avatar';
-import { createGroup } from '../services/group-services';
 import Chip from '@material-ui/core/Chip';
 import { createGroupLabels, actionButtons } from '../services/group-constants';
 import Clear from '@material-ui/icons/Clear';
 import { users } from '../../../services/mockApi';
 
 const CreateGroupModal = (props) => {
-    const { handleClose, createNewGroup, currentUserId, isLoading } = props;
-
-    const [newGroup, setNewGroup] = useState({ groupName: '', members: [] });
-    const [errors, setErrors] = useState({ groupName: '', members: '' });
+    const [newGroup, setNewGroup] = useState({ groupName: '', users: [] });
+    const [errors, setErrors] = useState({ groupName: '', users: '' });
     const [selectedUser, setSelectedUser] = useState('');
+
+    const { handleClose, createNewGroup } = props;
 
     const classes = useStyles();
 
-    const onSave = async () => {
+    const onSave = () => {
         if (newGroup.groupName) {
-            if (newGroup.members.length === 0) {
-                setErrors({ ...errors, members: createGroupLabels.ERROR_NO_USERS });
+            if (newGroup.users.length === 0) {
+                setErrors({ ...errors, users: createGroupLabels.ERROR_NO_USERS });
             } else {
-                const body = { ...newGroup, members: [...newGroup.members, currentUserId] };
-                // making copy here so there wont be user id in chip list
-
-                await createNewGroup(body);
-                !isLoading && handleClose();
+                createNewGroup(newGroup);
+                handleClose();
             }
         } else {
             setErrors({ ...errors, groupName: createGroupLabels.ERROR_NO_GROUPNAME });
@@ -62,16 +58,24 @@ const CreateGroupModal = (props) => {
 
     const onDeleteUser = (userToDelete) => () => {
         // delete user from list of chips,
-        const withoutUser = newGroup.members.filter((user) => user !== userToDelete);
+        const withoutUser = newGroup.users.filter((user) => user !== userToDelete);
 
         // update state with values without deleted user
-        setNewGroup({ ...newGroup, members: [...withoutUser] });
+        setNewGroup({ ...newGroup, users: [...withoutUser] });
     };
 
     const addUserToGroup = (user) => () => {
-        if (user && !newGroup.members.includes(user)) {
-            newGroup.members.push(user);
+        if (user && !newGroup.users.includes(user)) {
+            newGroup.users.push(user);
         }
+    };
+
+    const InputTitle = (props) => {
+        return (
+            <Typography variant="body1" align="center" className={classes.modalLabels}>
+                <i>{props.text}</i>
+            </Typography>
+        );
     };
 
     return (
@@ -88,9 +92,7 @@ const CreateGroupModal = (props) => {
                 <Divider variant="middle" className={classes.divider} />
 
                 <Grid item>
-                    <Typography variant="body1" align="center" className={classes.modalLabels}>
-                        <i>{createGroupLabels.SUBTITLE_NAME}</i>
-                    </Typography>
+                    <InputTitle text={createGroupLabels.SUBTITLE_NAME} />
                     <FormControl className={classes.input} error={!!errors.groupName}>
                         <InputLabel>{createGroupLabels.NAME_INPUT}</InputLabel>
                         <Input
@@ -101,15 +103,16 @@ const CreateGroupModal = (props) => {
                             name="groupName"
                             required
                         />
-                        {errors.groupName && <FormHelperText>{errors.groupName}</FormHelperText>}
+                        {errors.groupName ? (
+                            <FormHelperText>{errors.groupName}</FormHelperText>
+                        ) : (
+                            ''
+                        )}
                     </FormControl>
-
                     <div className={classes.userSelect}>
-                        <Typography variant="body1" align="center" className={classes.modalLabels}>
-                            <i>{createGroupLabels.SUBTITLE_ADD_USERS}</i>
-                        </Typography>
+                        <InputTitle text={createGroupLabels.SUBTITLE_ADD_USERS} />
                         <div>
-                            <FormControl error={!!errors.members} className={classes.input}>
+                            <FormControl error={!!errors.users} className={classes.input}>
                                 <InputLabel>{createGroupLabels.SELECT_PLACEHOLDER}</InputLabel>
                                 <Select
                                     labelId="user-select"
@@ -127,8 +130,8 @@ const CreateGroupModal = (props) => {
                                         </MenuItem>
                                     ))}
                                 </Select>
-                                {errors.members ? (
-                                    <FormHelperText>{errors.members}</FormHelperText>
+                                {errors.users ? (
+                                    <FormHelperText>{errors.users}</FormHelperText>
                                 ) : (
                                     ''
                                 )}
@@ -151,7 +154,7 @@ const CreateGroupModal = (props) => {
                                 className={classes.chip}
                             />
 
-                            {newGroup.members.map((user) => (
+                            {newGroup.users.map((user) => (
                                 <Chip
                                     key={Math.random() * 100}
                                     color="secondary"
@@ -163,7 +166,6 @@ const CreateGroupModal = (props) => {
                             ))}
                         </Grid>
                     </div>
-
                     <Grid
                         container
                         justifyContent="flex-start"
@@ -173,10 +175,9 @@ const CreateGroupModal = (props) => {
                             variant="contained"
                             color="primary"
                             onClick={onSave}
-                            disabled={isLoading}
                             className={classes.buttonSave}
                         >
-                            {isLoading ? <CircularProgress size="25px" /> : actionButtons.SAVE}
+                            {actionButtons.SAVE}
                         </Button>
 
                         <Button
@@ -195,12 +196,7 @@ const CreateGroupModal = (props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    createNewGroup: (group) => dispatch(createGroup(group)),
+    createNewGroup: (name) => dispatch(groupActions.createNewGroup(name)),
 });
 
-const mapStateToProps = (state) => ({
-    currentUserId: state.authReducer.user._id,
-    isLoading: state.groupReducer.createGroupLoading,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreateGroupModal);
+export default connect(null, mapDispatchToProps)(CreateGroupModal);

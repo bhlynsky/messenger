@@ -10,11 +10,6 @@ const baseTheme = {
             fontWeight: 'bold',
         },
     },
-    overrides: {
-        MuiFormHelperText: {
-            root: { marginBottom: '-20px' },
-        },
-    },
 };
 
 const lightTheme = {
@@ -45,7 +40,7 @@ const darkTheme = {
     palette: {
         type: 'dark',
         primary: {
-            main: '#374785',
+            main: '#3c3161',
         },
         secondary: {
             main: '#7d64ce',
@@ -62,4 +57,5 @@ const darkTheme = {
         },
     },
 };
+
 export { lightTheme, darkTheme };

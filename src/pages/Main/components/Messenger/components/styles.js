@@ -8,7 +8,7 @@ export const useStyles = makeStyles(() => ({
         width: '100%',
         minHeight: '500px',
         minWidth: '400px',
-        height: 'calc(100vh - 200px)',
+        height: 'calc(100vh - 195px)',
         overflow: 'auto',
     },
     messageInput: {
@@ -25,12 +25,5 @@ export const useStyles = makeStyles(() => ({
     },
     avatar: {
         margin: '-5px 10px 10px',
-    },
-    spinner: {
-        height: '100px',
-        width: '100px',
-        position: 'absolute',
-        left: '50%',
-        top: '50%',
     },
 }));
