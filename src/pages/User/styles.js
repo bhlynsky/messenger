@@ -34,6 +34,10 @@ export const useStyles = makeStyles((theme) => ({
     input: {
         display: 'none',
     },
+    pageWrapper: {
+        height: 'calc(100vh - 52px)',
+        overflow: 'auto',
+    },
 }));
 
 export default useStyles;

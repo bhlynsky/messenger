@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppBar, Typography, Switch, Tooltip } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { useStyles } from './styles';
@@ -17,8 +17,16 @@ function Header({ changeTheme, isDarkTheme }) {
     };
 
     const toggleTheme = () => {
+        localStorage.setItem('darkTheme', !isDarkTheme);
         changeTheme();
     };
+
+    useEffect(() => {
+        const savedTheme = localStorage.getItem('darkTheme');
+        if (savedTheme === 'true') {
+            changeTheme();
+        }
+    }, []);
 
     return (
         <AppBar className={classes.header}>

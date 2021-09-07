@@ -40,7 +40,7 @@ const darkTheme = {
     palette: {
         type: 'dark',
         primary: {
-            main: '#374785',
+            main: '#222831',
         },
         secondary: {
             main: '#7d64ce',
@@ -57,4 +57,5 @@ const darkTheme = {
         },
     },
 };
+
 export { lightTheme, darkTheme };

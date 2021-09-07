@@ -37,7 +37,9 @@ export const useStyles = makeStyles((theme) => ({
     },
     pageWrapper: {
         display: 'flex',
+        height: 'calc(100vh - 52px)', // doing this to remove scroll. 50px height of header, 2px to remove scroll
     },
+
     groupHeaderText: {
         margin: 'auto',
     },

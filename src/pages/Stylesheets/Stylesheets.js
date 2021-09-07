@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Grid, TextField, Typography, Divider, Fab } from '@material-ui/core';
+import { Button, Grid, TextField, Typography, Divider, Fab, Paper } from '@material-ui/core';
 import Add from '@material-ui/icons/Add';
 import useStyles from './styles';
 import {
@@ -14,7 +14,7 @@ const Stylesheets = () => {
     const classes = useStyles();
 
     return (
-        <div>
+        <Paper square className={classes.pageWrapper}>
             <Typography variant="h1" align="center">
                 {stylesheetConstants.PAGE}
             </Typography>
@@ -77,7 +77,7 @@ const Stylesheets = () => {
                     </Typography>
                 </Grid>
             </Grid>
-        </div>
+        </Paper>
     );
 };
 

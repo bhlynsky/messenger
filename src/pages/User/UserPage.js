@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Typography, Divider, Grid, Button, Modal } from '@material-ui/core';
+import { Typography, Divider, Grid, Button, Modal, Paper } from '@material-ui/core';
 import { Card, CardActionArea, CardMedia, CardContent, CardActions } from '@material-ui/core';
 import { useStyles } from './styles';
 import ChangeDataModal from './ChangeDataModal';
@@ -21,7 +21,7 @@ const UserPage = (props) => {
     };
 
     return (
-        <div>
+        <Paper square className={classes.pageWrapper}>
             <Typography variant="h2" align="center" className={classes.margin}>
                 {userConstants.PAGE}
             </Typography>
@@ -60,7 +60,7 @@ const UserPage = (props) => {
                     </Modal>
                 </CardActions>
             </Card>
-        </div>
+        </Paper>
     );
 };
 

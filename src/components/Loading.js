@@ -1,12 +1,14 @@
 import React from 'react';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, Paper } from '@material-ui/core';
 import { useStyles } from './styles.js';
 
 const Loading = ({ isLoading, children }) => {
     const classes = useStyles();
 
     return (
-        <div>{isLoading ? <CircularProgress className={classes.spinner} /> : { ...children }}</div>
+        <Paper square className={classes.pageWrapper}>
+            {isLoading ? <CircularProgress className={classes.spinner} /> : { ...children }}
+        </Paper>
     );
 };
 

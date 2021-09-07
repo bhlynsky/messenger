@@ -1,4 +1,4 @@
-import { Typography, Grid, Divider } from '@material-ui/core';
+import { Typography, Grid, Divider, Paper } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import Sidebar from './components/Sidebar/components/Sidebar';
 import { useStyles } from './styles';
@@ -41,7 +41,7 @@ function MainPage(props) {
     }, []);
 
     return (
-        <div className={classes.pageWrapper}>
+        <Paper square className={classes.pageWrapper}>
             <Sidebar />
 
             <div className={classes.container}>
@@ -68,7 +68,7 @@ function MainPage(props) {
 
                 <MessageInput />
             </div>
-        </div>
+        </Paper>
     );
 }
 
