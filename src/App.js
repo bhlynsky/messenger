@@ -7,7 +7,13 @@ import UserPage from './pages/User/UserPage';
 import TaskPage from './pages/TaskPage';
 import Stylesheets from './pages/Stylesheets/Stylesheets';
 import NasaPicsPage from './pages/NasaPics/NasaPicsPage';
-import CustomThemeProvider from './CustomThemeProvider';
+
+import { useStyles } from './styles';
+import { CustomThemeProvider } from './ThemeHandler';
+import { Paper } from '@material-ui/core';
+import Login from './pages/Main/components/Auth/Login/Login';
+import Register from './pages/Main/components/Auth/Register/Register';
+
 
 const Router = () => {
     return (
@@ -27,6 +33,7 @@ const Router = () => {
             <Route path="/tasks">
                 <TaskPage />
             </Route>
+
 
             <Route path="/stylesheet">
                 <Stylesheets />
