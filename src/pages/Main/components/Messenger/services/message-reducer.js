@@ -3,28 +3,14 @@ import { messageActions } from '../services/message-actions';
 
 function messageReducer(state = initialState, action) {
     switch (action.type) {
-        //load data
-        case messageActions.actionType.LOADING_START:
+        case messageActions.actionType.LOAD_MESSAGES: {
+            const messages = action.data;
+
             return {
                 ...state,
-                isMessagesLoading: true,
-            };
-        //load success
-        case messageActions.actionType.LOADING_SUCCESS:
-            return {
-                ...state,
-                messages: action.messages,
-                isMessagesLoading: false,
-            };
-        //load error
-        case messageActions.actionType.LOADING_ERROR: {
-            return {
-                ...state,
-                error: action.error,
-                isMessagesLoading: false,
+                messages,
             };
         }
-
         case messageActions.actionType.CHANGE_CURRENT_GROUP: {
             let { groupId } = action;
             // get messages for current group when changing group
@@ -33,7 +19,7 @@ function messageReducer(state = initialState, action) {
 
             if (index !== -1) {
                 // findIndex returns -1 if index not found(no messages for this group)
-                groupMessages = state.messages[index].groupMessages;
+                groupMessages = state.messages[index].messages;
             }
 
             return {
@@ -41,12 +27,7 @@ function messageReducer(state = initialState, action) {
                 currentGroup: { id: groupId, messages: groupMessages },
             };
         }
-
-        case messageActions.actionType.SEND_MESSAGE_START: {
-            return { ...state, sendMessageLoading: true };
-        }
-
-        case messageActions.actionType.SEND_MESSAGE_SUCCESS: {
+        case messageActions.actionType.SEND_MESSAGE: {
             const { message, newMessages } = action;
 
             return {
@@ -56,15 +37,6 @@ function messageReducer(state = initialState, action) {
                     ...state.currentGroup,
                     messages: [...state.currentGroup.messages, message],
                 },
-                sendMessageLoading: false,
-            };
-        }
-
-        case messageActions.actionType.SEND_MESSAGE_ERROR: {
-            return {
-                ...state,
-                error: action.error,
-                sendMessageLoading: false,
             };
         }
 

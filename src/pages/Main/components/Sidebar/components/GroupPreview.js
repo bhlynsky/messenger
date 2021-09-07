@@ -12,7 +12,7 @@ const GroupPreview = (props) => {
     const classes = useStyles();
 
     const onChangeGroup = () => {
-        changeCurrentGroup(group._id, group.groupName);
+        changeCurrentGroup(group.id, group.groupName);
     };
 
     const maxMessageLength = 20;
@@ -24,7 +24,7 @@ const GroupPreview = (props) => {
             : message;
 
     return (
-        <Link to={`/main/${group._id}`} className={classes.linkWithoutStyles}>
+        <Link to={`/main/${group.id}`} className={classes.linkWithoutStyles}>
             <div className={classes.messagePreview} onClick={onChangeGroup}>
                 <Typography variant="subtitle1">{group.groupName}</Typography>
 

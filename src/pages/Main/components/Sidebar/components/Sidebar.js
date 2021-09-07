@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-    Typography,
-    Modal,
-    IconButton,
-    Tooltip,
-    List,
-    Divider,
-    Grid,
-    CircularProgress,
-} from '@material-ui/core';
+import { Typography, Modal, IconButton, Tooltip, List, Divider, Grid } from '@material-ui/core';
 import { useStyles } from './styles';
 import { connect } from 'react-redux';
 import GroupPreview from './GroupPreview';
@@ -22,7 +13,7 @@ import { SidebarToggleButton } from './SidebarToggleButton';
 
 const Sidebar = (props) => {
     const classes = useStyles();
-    const { groups, currentGroupId, isLoading, currentUser } = props;
+    const { groups, currentGroupId } = props;
     const [modalIsOpen, setModalOpen] = useState(false);
     const [sidebarIsOpen, setSidebarOpen] = useState(true);
     const [groupSearchValue, setGroupSearchValue] = useState('');
@@ -52,8 +43,8 @@ const Sidebar = (props) => {
         return (
             <div className={classes.sidebar}>
                 <div className={classes.containerHeader}>
-                    <Typography variant="h5" align="left">
-                        {labels.SIDEBAR_HEADER}, {currentUser}
+                    <Typography variant="h2" align="left">
+                        {labels.SIDEBAR_HEADER}
                     </Typography>
 
                     <Tooltip title={createGroupLabels.NEW_GROUP_TOOLTIP}>
@@ -71,30 +62,26 @@ const Sidebar = (props) => {
                     <CreateGroupModal handleClose={handleCloseModal} />
                 </Modal>
 
-                {isLoading ? (
-                    <CircularProgress className={classes.spinner} />
-                ) : (
-                    <List className={classes.groupList}>
-                        {groupList.length ? (
-                            groupList.map((item) => (
-                                <div
-                                    className={
-                                        currentGroupId === item._id
-                                            ? classes.groupPreviewActive
-                                            : classes.groupPreview
-                                    }
-                                    key={item._id}
-                                >
-                                    <GroupPreview group={item} messageData={item.lastMessage} />
-                                </div>
-                            ))
-                        ) : (
-                            <Typography variant="subtitle1" align="center">
-                                {labels.SIDEBAR_NO_GROUPS}
-                            </Typography>
-                        )}
-                    </List>
-                )}
+                <List className={classes.groupList}>
+                    {groupList.length ? (
+                        groupList.map((item) => (
+                            <div
+                                className={
+                                    currentGroupId === item.id
+                                        ? classes.groupPreviewActive
+                                        : classes.groupPreview
+                                }
+                                key={item.id}
+                            >
+                                <GroupPreview group={item} messageData={item.lastMessage} />
+                            </div>
+                        ))
+                    ) : (
+                        <Typography variant="subtitle1" align="center">
+                            {labels.SIDEBAR_NO_GROUPS}
+                        </Typography>
+                    )}
+                </List>
             </div>
         );
     } else {
@@ -115,11 +102,11 @@ const Sidebar = (props) => {
                         ? groups.map((item) => (
                               <div
                                   className={
-                                      currentGroupId === item._id
+                                      currentGroupId === item.id
                                           ? classes.groupPreviewMinimizedActive
                                           : classes.groupPreviewMinimized
                                   }
-                                  key={item._id}
+                                  key={item.id}
                               >
                                   <GroupPreviewMinimized group={item} key={item.id} />
                               </div>
@@ -134,8 +121,6 @@ const Sidebar = (props) => {
 const mapStateToProps = (state) => ({
     groups: state.groupReducer.groups,
     currentGroupId: state.groupReducer.currentGroup.id,
-    currentUser: state.authReducer.user.username,
-    isLoading: state.groupReducer.isGroupsLoading,
 });
 
 export default connect(mapStateToProps)(Sidebar);
