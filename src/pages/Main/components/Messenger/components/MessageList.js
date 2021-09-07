@@ -2,9 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { List, Divider } from '@material-ui/core';
 import { useStyles } from './styles';
 import { Message } from './Message';
-import { CircularProgress } from '@material-ui/core';
 
-export const MessageList = ({ messages, searchValue, isLoading }) => {
+export const MessageList = ({ messages, searchValue }) => {
     const classes = useStyles();
     const bottomScrollRef = useRef(null);
 
@@ -16,7 +15,6 @@ export const MessageList = ({ messages, searchValue, isLoading }) => {
 
     return (
         <List className={classes.messageContainer}>
-            {isLoading && <CircularProgress className={classes.spinner} />}
             {messages &&
                 messages.length > 0 &&
                 messages.map((msg) => (

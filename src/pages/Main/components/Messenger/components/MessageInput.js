@@ -6,31 +6,27 @@ import AttachmentIcon from '@material-ui/icons/Attachment';
 import { messageActions } from '../services/message-actions';
 import { connect } from 'react-redux';
 import { labels } from '../services/message-constants';
-import { updateValuesOnSendMessage, createNewMessage } from '../services/message-services';
+import { updateValuesOnSendMessage } from '../services/message-services';
 
 const MessageInput = (props) => {
     const [newMessage, setNewMessage] = useState('');
     const classes = useStyles();
 
-    const { messages, groups, groupId, userId, username } = props;
+    const { sendMessage, messages, groups, id } = props;
 
     const onSendMessage = () => {
         if (!newMessage) return; // empty message validation
 
+        const userName = 'Boris';
+        const date = new Date();
         const message = {
-            senderId: userId,
-            senderName: username,
-            groupId,
-            content: newMessage,
+            userName,
+            date: date.toDateString(),
+            message: newMessage,
         };
+        const { newMessages, newGroups } = updateValuesOnSendMessage(messages, groups, message, id);
 
-        const { newMessages, newGroups } = updateValuesOnSendMessage(
-            messages,
-            groups,
-            message,
-            groupId,
-        );
-        createNewMessage(newMessages, newGroups, message);
+        sendMessage(newMessages, newGroups, message);
         setNewMessage('');
     };
 
@@ -73,9 +69,7 @@ const MessageInput = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    groupId: state.messageReducer.currentGroup.id,
-    userId: state.authReducer.user._id,
-    username: state.authReducer.user.username,
+    id: state.messageReducer.currentGroup.id,
     messages: state.messageReducer.messages,
     groups: state.groupReducer.groups,
 });

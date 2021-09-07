@@ -9,11 +9,11 @@ const GroupPreviewMinimized = ({ group, changeCurrentGroup }) => {
     const classes = useStyles();
 
     const onChangeGroup = () => {
-        changeCurrentGroup(group._id, group.groupName);
+        changeCurrentGroup(group.id, group.groupName);
     };
 
     return (
-        <Link to={`/main/${group._id}`} key={group._id} className={classes.linkWithoutStyles}>
+        <Link to={`/main/${group.id}`} key={group.id} className={classes.linkWithoutStyles}>
             <div onClick={onChangeGroup}>
                 <Typography align="center">{group.groupName}</Typography>
             </div>

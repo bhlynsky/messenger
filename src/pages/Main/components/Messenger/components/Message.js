@@ -4,7 +4,7 @@ import { useStyles } from './styles';
 
 export const Message = (props) => {
     const { searchValue, messageData } = props;
-    const { senderName, content, createdAt, _id } = messageData;
+    const { userName, message, date } = messageData;
 
     const classes = useStyles();
     const scrollRef = useRef(null);
@@ -28,7 +28,7 @@ export const Message = (props) => {
     };
 
     const messageComponent = (
-        <Typography variant="body1">{getHighlightedText(content, searchValue)}</Typography>
+        <Typography variant="body1">{getHighlightedText(message, searchValue)}</Typography>
     );
 
     useEffect(() => {
@@ -42,18 +42,18 @@ export const Message = (props) => {
     }, [searchValue]);
 
     return (
-        <div key={_id}>
+        <div key={userName}>
             <div className={classes.message}>
                 <Grid container direction="row" alignItems="flex-start">
                     <Avatar className={classes.avatar}>
-                        {senderName ? senderName.charAt(0) : 'U'}
+                        {userName ? userName.charAt(0) : 'U'}
                     </Avatar>
-                    <Typography variant="subtitle1">{senderName}</Typography>
+                    <Typography variant="subtitle1">{userName}</Typography>
                 </Grid>
                 <Grid container direction="row" alignItems="center" justifyContent="space-between">
                     {messageComponent}
                     <Typography variant="body2" align="left">
-                        {createdAt}
+                        {date}
                     </Typography>
                 </Grid>
             </div>
