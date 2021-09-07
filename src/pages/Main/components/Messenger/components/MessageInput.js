@@ -46,7 +46,6 @@ const MessageInput = (props) => {
                 label={labels.MESSAGE_INPUT_PLACEHOLDER}
                 variant="outlined"
                 fullWidth
-                className={classes.input}
                 onChange={onChange}
                 value={newMessage}
                 onKeyDown={handleKeyDown}
@@ -62,16 +61,19 @@ const MessageInput = (props) => {
                         </InputAdornment>
                     ),
                     'data-testid': 'message-input',
+                    className: classes.input,
                 }}
             />
         </div>
     );
 };
+
 const mapStateToProps = (state) => ({
     id: state.messageReducer.currentGroup.id,
     messages: state.messageReducer.messages,
     groups: state.groupReducer.groups,
 });
+
 const mapDispatchToProps = (dispatch) => ({
     sendMessage: (newMessages, newGroups, message) =>
         dispatch(messageActions.sendMessage(newMessages, newGroups, message)),

@@ -1,17 +1,32 @@
-import React from 'react';
-import { AppBar, Typography } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { AppBar, Typography, Switch, Tooltip } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { useStyles } from './styles';
 import { useLocation } from 'react-router-dom';
 import { headerRoutes } from '../../services/headerRoutes';
+import Brightness4Icon from '@material-ui/icons/Brightness4';
+import { connect } from 'react-redux';
+import rootActions from '../../services/root-actions';
 
-export default function Header() {
+function Header({ changeTheme, isDarkTheme }) {
     const classes = useStyles();
     const location = useLocation().pathname;
 
     const checkIsLinkActive = (route) => {
         return route === location ? classes.activeLink : classes.link;
     };
+
+    const toggleTheme = () => {
+        localStorage.setItem('darkTheme', !isDarkTheme);
+        changeTheme();
+    };
+
+    useEffect(() => {
+        const savedTheme = localStorage.getItem('darkTheme');
+        if (savedTheme === 'true') {
+            changeTheme();
+        }
+    }, []);
 
     return (
         <AppBar className={classes.header}>
@@ -46,6 +61,24 @@ export default function Header() {
                     Styles examples
                 </Link>
             </Typography>
+
+            <div className={classes.darkModeToggle}>
+                <Tooltip title="Toggle dark theme">
+                    <Switch checked={isDarkTheme} onChange={toggleTheme} />
+                </Tooltip>
+                <Brightness4Icon className={classes.darkModeIcon} />
+            </div>
         </AppBar>
     );
 }
+const mapDispatchToProps = (dispatch) => ({
+    changeTheme: () => {
+        dispatch(rootActions.changeTheme());
+    },
+});
+
+const mapStateToProps = (state) => ({
+    isDarkTheme: state.rootReducer.isDarkTheme,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -23,7 +23,7 @@ export const SearchBar = (props) => {
                 }
                 endAdornment={
                     <InputAdornment position="end">
-                        <IconButton onClick={onClear}>
+                        <IconButton onClick={onClear} className={classes.clearIcon}>
                             <ClearIcon />
                         </IconButton>
                     </InputAdornment>

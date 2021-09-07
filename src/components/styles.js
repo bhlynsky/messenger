@@ -8,4 +8,8 @@ export const useStyles = makeStyles({
         left: '50%',
         top: '50%',
     },
+    pageWrapper: {
+        height: 'calc(100vh - 52px)',
+        overflow: 'auto',
+    },
 });

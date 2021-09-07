@@ -6,10 +6,11 @@ export const useStyles = makeStyles((theme) => ({
         background: 'black',
     },
     containerHeader: {
-        background: 'lightgray',
+        background: theme.palette.type === 'dark' ? '#121212' : 'lightgray',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        paddingLeft: '20px',
     },
     modalForm: {
         position: 'absolute',
@@ -17,7 +18,7 @@ export const useStyles = makeStyles((theme) => ({
         left: '50%',
         marginLeft: -250,
         width: 400,
-        backgroundColor: 'white',
+        backgroundColor: theme.palette.background.default,
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
@@ -25,6 +26,7 @@ export const useStyles = makeStyles((theme) => ({
     groupList: {
         maxHeight: '500px',
         overflow: 'auto',
+        marginLeft: '5px',
     },
     buttonClose: {
         width: '47.5%',
@@ -70,13 +72,14 @@ export const useStyles = makeStyles((theme) => ({
 
         '&:focus, &:hover, &:visited, &:link, &:active': {
             textDecoration: 'none',
-            color: 'black',
+            color: theme.palette.text.primary,
         },
     },
     openModalIcon: {
         width: '16px',
         height: '16px',
         margin: 'auto 5px auto auto',
+        color: 'gray',
     },
     menuIcon: {
         width: '16px',
@@ -89,10 +92,12 @@ export const useStyles = makeStyles((theme) => ({
         marginRight: '0px',
         marginLeft: 'auto',
     },
+
     sidebar: {
         width: '25%',
         flexShrink: 0,
     },
+
     sidebarMinimized: {
         height: 'calc(100vh - 65px)',
         width: '10vw',
@@ -137,5 +142,8 @@ export const useStyles = makeStyles((theme) => ({
     groupSearchBar: {
         margin: '20px 0px 0px 20px',
         width: '90%',
+    },
+    modalLabels: {
+        color: theme.palette.text.primary,
     },
 }));

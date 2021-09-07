@@ -70,10 +70,18 @@ const CreateGroupModal = (props) => {
         }
     };
 
+    const InputTitle = (props) => {
+        return (
+            <Typography variant="body1" align="center" className={classes.modalLabels}>
+                <i>{props.text}</i>
+            </Typography>
+        );
+    };
+
     return (
         <div className={classes.modalForm}>
             <div>
-                <Typography variant="h2" align="center">
+                <Typography variant="h2" align="center" className={classes.modalLabels}>
                     <b>{createGroupLabels.HEADER}</b>
                 </Typography>
                 <IconButton onClick={handleClose} className={classes.closeModalIcon}>
@@ -84,9 +92,7 @@ const CreateGroupModal = (props) => {
                 <Divider variant="middle" className={classes.divider} />
 
                 <Grid item>
-                    <Typography variant="body1" align="center">
-                        <i>{createGroupLabels.SUBTITLE_NAME}</i>
-                    </Typography>
+                    <InputTitle text={createGroupLabels.SUBTITLE_NAME} />
                     <FormControl className={classes.input} error={!!errors.groupName}>
                         <InputLabel>{createGroupLabels.NAME_INPUT}</InputLabel>
                         <Input
@@ -103,11 +109,8 @@ const CreateGroupModal = (props) => {
                             ''
                         )}
                     </FormControl>
-
                     <div className={classes.userSelect}>
-                        <Typography variant="body1" align="center">
-                            <i>{createGroupLabels.SUBTITLE_ADD_USERS}</i>
-                        </Typography>
+                        <InputTitle text={createGroupLabels.SUBTITLE_ADD_USERS} />
                         <div>
                             <FormControl error={!!errors.users} className={classes.input}>
                                 <InputLabel>{createGroupLabels.SELECT_PLACEHOLDER}</InputLabel>
@@ -140,7 +143,9 @@ const CreateGroupModal = (props) => {
                             alignItems="center"
                             className={classes.participants}
                         >
-                            <Typography>{createGroupLabels.PATRICIPANTS} :</Typography>
+                            <Typography className={classes.modalLabels}>
+                                {createGroupLabels.PATRICIPANTS} :
+                            </Typography>
                             <Chip
                                 key={Math.random() * 100}
                                 color="primary"
@@ -161,7 +166,6 @@ const CreateGroupModal = (props) => {
                             ))}
                         </Grid>
                     </div>
-
                     <Grid
                         container
                         justifyContent="flex-start"

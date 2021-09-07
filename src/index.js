@@ -1,9 +1,8 @@
 import React from 'react';
+import './index.css';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ThemeProvider } from '@material-ui/core/styles';
-import theme from './theme';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import reducer from './reducers';
@@ -13,11 +12,9 @@ const store = createStore(reducer, applyMiddleware(thunk));
 
 ReactDOM.render(
     <React.StrictMode>
-        <ThemeProvider theme={theme}>
-            <Provider store={store}>
-                <App />
-            </Provider>
-        </ThemeProvider>
+        <Provider store={store}>
+            <App />
+        </Provider>
     </React.StrictMode>,
     document.getElementById('root'),
 );
