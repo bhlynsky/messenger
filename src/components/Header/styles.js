@@ -35,4 +35,18 @@ export const useStyles = makeStyles({
         width: '36px',
         height: '36px',
     },
+    logoutButton: {
+        marginTop: '5px',
+        marginRight: '10px',
+        color: 'red',
+        border: '1px solid red',
+    },
+    loginButton: {
+        margin: '5px 10px',
+        border: '1px solid white',
+    },
+    loginLink: {
+        color: 'white',
+        textDecoration: 'none',
+    },
 });

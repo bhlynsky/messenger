@@ -8,17 +8,25 @@ const initialState = {
     error: null,
 };
 
-authService.register = async (data) => {
-    const response = await fetch('http://localhost:8080/api/auth/register', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-    });
-    const user = response.json();
-    return user;
+authService.register = (data) => async (dispatch) => {
+    dispatch(authActions.registerStart());
+    try {
+        const response = await fetch('http://localhost:8080/api/auth/register', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) throw new Error(response.statusText);
+
+        dispatch(authActions.registerSuccess());
+        const user = response.json();
+        return user;
+    } catch (err) {
+        dispatch(authActions.registerError(err));
+    }
 };
 
 authService.login = (data) => async (dispatch) => {

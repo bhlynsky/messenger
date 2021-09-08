@@ -36,7 +36,9 @@ function MainPage(props) {
         const groupData = await getGroupList(userId); // is this approach is ok?
         await getMessagesList(userId);
 
-        changeCurrentGroup(groupData[0]._id, groupData[0].groupName);
+        if (groupData[0]) {
+            changeCurrentGroup(groupData[0]._id, groupData[0].groupName);
+        }
     }, []);
 
     return (

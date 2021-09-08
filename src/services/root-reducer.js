@@ -10,6 +10,7 @@ function rootReducer(state = initialState, action) {
                 isDarkTheme: !state.isDarkTheme,
             };
         }
+
         default: {
             return state;
         }

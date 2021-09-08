@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
+import {
+    CircularProgress,
+    Container,
+    Typography,
+    TextField,
+    CssBaseline,
+    Button,
+} from '@material-ui/core';
+
 import { useStyles } from './styles';
 import { authService } from '../services/auth-services';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 
-export default function Register() {
+function Register({ register, isLoading, error }) {
     const classes = useStyles();
+    const [response, setResponse] = useState();
     const [registerData, setRegisterData] = useState({
         email: '',
         username: '',
@@ -26,18 +33,21 @@ export default function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let response = await authService.register(registerData);
-        console.log(registerData);
-        !response.ok && console.error(response.errors);
-
-        //use redux here
+        const user = await register(registerData);
+        setResponse(user);
     };
 
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
+            {response && <Redirect to="/login" />}
             <div className={classes.paper}>
                 <Typography variant="h2">Create new account</Typography>
+                {error && (
+                    <Typography variant="caption" color="error">
+                        Error: {error.message}
+                    </Typography>
+                )}
                 <form className={classes.form} noValidate onSubmit={handleSubmit}>
                     <TextField
                         variant="outlined"
@@ -96,10 +106,25 @@ export default function Register() {
                         color="primary"
                         className={classes.submit}
                     >
-                        Register
+                        {isLoading ? (
+                            <CircularProgress size="30px" />
+                        ) : (
+                            <Typography>Sign In</Typography>
+                        )}
                     </Button>
                 </form>
             </div>
         </Container>
     );
 }
+
+const mapStateToProps = (state) => ({
+    isLoading: state.authReducer.isLoading,
+    error: state.authReducer.error,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    register: (data) => dispatch(authService.register(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

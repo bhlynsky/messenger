@@ -28,7 +28,7 @@ messageActions.loadMessagesError = (error) => ({
 });
 
 messageActions.sendMessageSuccess = (newMessages, newGroups, message) => ({
-    type: messageActions.actionType.SEND_MESSAGE,
+    type: messageActions.actionType.SEND_MESSAGE_SUCCESS,
     newMessages,
     newGroups,
     message,
