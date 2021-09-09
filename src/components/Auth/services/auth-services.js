@@ -19,7 +19,7 @@ authService.register = (data) => async (dispatch) => {
                 'Content-Type': 'application/json',
             },
         });
-        if (!response.ok) throw new Error(response.statusText);
+        if (!response.ok) throw new Error(response.json());
 
         dispatch(authActions.registerSuccess());
         const user = response.json();
@@ -42,7 +42,7 @@ authService.login = (data) => async (dispatch) => {
             },
         });
         //hadle errors
-        if (!response.ok) throw new Error(response.statusText);
+        if (!response.ok) throw new Error('You are using wrong Email or password');
 
         const user = await response.json();
 

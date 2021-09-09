@@ -8,6 +8,7 @@ authActions.actionType = {
     REGISTER_SUCCESS: '[AUTH] Register successfull',
     REGISTER_ERROR: '[AUTH] Register error',
     LOGOUT: '[AUTH] Logout',
+    REMOVE_ERROR: '[AUTH] Remove error',
 };
 
 authActions.loginStart = () => ({
@@ -39,6 +40,10 @@ authActions.registerError = (error) => ({
 
 authActions.logout = () => ({
     type: authActions.actionType.LOGOUT,
+});
+
+authActions.removeError = () => ({
+    type: authActions.actionType.REMOVE_ERROR,
 });
 
 export { authActions };

@@ -18,4 +18,7 @@ export const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    registerLink: {
+        color: theme.palette.type === 'dark' ? '#bb86fc' : 'purple',
+    },
 }));

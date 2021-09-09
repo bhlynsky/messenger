@@ -33,6 +33,16 @@ const lightTheme = {
             primary: '#000',
         },
     },
+    overrides: {
+        MuiOutlinedInput: {
+            input: {
+                '&:-webkit-autofill': {
+                    '-webkit-box-shadow': '0 0 0 100px #fff inset',
+                    '-webkit-text-fill-color': '#000',
+                },
+            },
+        },
+    },
 };
 
 const darkTheme = {
@@ -54,6 +64,16 @@ const darkTheme = {
         },
         text: {
             primary: '#fff',
+        },
+    },
+    overrides: {
+        MuiOutlinedInput: {
+            input: {
+                '&:-webkit-autofill': {
+                    '-webkit-box-shadow': '0 0 0 100px #7d64ce inset',
+                    '-webkit-text-fill-color': '#fff',
+                },
+            },
         },
     },
 };

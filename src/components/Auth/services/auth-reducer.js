@@ -46,8 +46,8 @@ function authReducer(state = initialState, action) {
                 isLoading: false,
             };
         }
-        case authActions.logout: {
-            return initialState;
+        case authActions.actionType.REMOVE_ERROR: {
+            return { ...state, error: null };
         }
         default:
             return state;

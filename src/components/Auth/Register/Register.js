@@ -1,30 +1,30 @@
 import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import { Link, Redirect } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
+import {
+    CircularProgress,
+    Container,
+    Typography,
+    TextField,
+    CssBaseline,
+    Button,
+} from '@material-ui/core';
 import { useStyles } from './styles';
 import { authService } from '../services/auth-services';
 import { connect } from 'react-redux';
-import { CircularProgress } from '@material-ui/core';
+import { Redirect } from 'react-router';
 
-function Login(props) {
+function Register({ register, isLoading, error }) {
     const classes = useStyles();
-    const { login, isLoading, error, user } = props;
-
-    const [loginData, setLoginData] = useState({
+    const [response, setResponse] = useState();
+    const [registerData, setRegisterData] = useState({
         email: '',
+        username: '',
         password: '',
     });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        setLoginData((prevState) => ({
+        setRegisterData((prevState) => ({
             ...prevState,
             [name]: value,
         }));
@@ -32,15 +32,16 @@ function Login(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await login(loginData);
+        const user = await register(registerData);
+        setResponse(user);
     };
 
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
-            {user && <Redirect to="/main/1" />}
+            {response && <Redirect to="/login" />}
             <div className={classes.paper}>
-                <Typography variant="h2">Log in</Typography>
+                <Typography variant="h2">Create new account</Typography>
                 {error && (
                     <Typography variant="caption" color="error">
                         Error: {error.message}
@@ -58,8 +59,18 @@ function Login(props) {
                         autoComplete="email"
                         autoFocus
                         onChange={handleChange}
-                        value={loginData.email}
-                        error={!!error}
+                        value={registerData.email}
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="username"
+                        label="Username"
+                        name="username"
+                        onChange={handleChange}
+                        value={registerData.username}
                     />
                     <TextField
                         variant="outlined"
@@ -70,22 +81,26 @@ function Login(props) {
                         label="Password"
                         type="password"
                         id="password"
-                        autoComplete="current-password"
                         onChange={handleChange}
-                        value={loginData.password}
-                        error={!!error}
+                        value={registerData.password}
                     />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="passwordConfirm "
+                        label="Password again"
+                        type="password"
+                        id="confirm-password"
+                        onChange={handleChange}
+                        value={registerData.passwordConfirm}
                     />
-
                     <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
-                        disabled={isLoading}
                         className={classes.submit}
                     >
                         {isLoading ? (
@@ -94,10 +109,6 @@ function Login(props) {
                             <Typography>Sign In</Typography>
                         )}
                     </Button>
-
-                    <Link to="/register" variant="body2">
-                        {"Don't have an account? Create new."}
-                    </Link>
                 </form>
             </div>
         </Container>
@@ -107,11 +118,10 @@ function Login(props) {
 const mapStateToProps = (state) => ({
     isLoading: state.authReducer.isLoading,
     error: state.authReducer.error,
-    user: state.authReducer.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    login: (data) => dispatch(authService.login(data)),
+    register: (data) => dispatch(authService.register(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

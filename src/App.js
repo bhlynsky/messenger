@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './components/Header/Header';
-import { Route, Switch, HashRouter } from 'react-router-dom';
+import { Route, Switch, HashRouter, Redirect } from 'react-router-dom';
 import AdminPage from './pages/Admin/AdminPage';
 import MainPage from './pages/Main/MainPage';
 import UserPage from './pages/User/UserPage';
@@ -8,15 +8,15 @@ import TaskPage from './pages/TaskPage';
 import Stylesheets from './pages/Stylesheets/Stylesheets';
 import NasaPicsPage from './pages/NasaPics/NasaPicsPage';
 import CustomThemeProvider from './CustomThemeProvider';
-import Login from './pages/Main/components/Auth/Login/Login';
-import Register from './pages/Main/components/Auth/Register/Register';
+import Login from './components/Auth/Login/Login';
+import Register from './components/Auth/Register/Register';
 import PrivateRoute from './PrivateRoute';
-import StartPage from './pages/Start/StartPage';
+
 const Router = () => {
     return (
         <Switch>
             <Route exact path="/">
-                <StartPage />
+                <Redirect to="/login" />
             </Route>
             <Route path="/login">
                 <Login />

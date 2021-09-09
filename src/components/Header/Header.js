@@ -7,7 +7,7 @@ import { headerRoutes } from '../../services/headerRoutes';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import { connect } from 'react-redux';
 import rootActions from '../../services/root-actions';
-import { authActions } from '../../pages/Main/components/Auth/services/auth-actions';
+import { authActions } from '../Auth/services/auth-actions';
 
 function Header({ changeTheme, isDarkTheme, user, logout }) {
     const classes = useStyles();
@@ -84,7 +84,7 @@ function Header({ changeTheme, isDarkTheme, user, logout }) {
                     {redirectAfterLogout && <Redirect to="/" />}
                 </div>
             ) : (
-                <Button variant="subtitle1" className={classes.loginButton}>
+                <Button className={classes.loginButton}>
                     <Link className={classes.loginLink} to={headerRoutes.LOGIN}>
                         Login
                     </Link>
