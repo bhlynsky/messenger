@@ -49,4 +49,24 @@ export const useStyles = makeStyles({
         color: 'white',
         textDecoration: 'none',
     },
+
+    menuButton: {
+        marginLeft: '15px',
+    },
+    menuLink: {
+        padding: '5px',
+        margin: '5px',
+        textDecoration: 'none',
+        color: '#000',
+        fontWeight: 'lighter',
+        lineHeight: '45px',
+    },
+    menuLinkActive: {
+        padding: '5px',
+        margin: '5px',
+        textDecoration: 'underline',
+        color: '#000',
+        fontWeight: 'bold',
+        lineHeight: '45px',
+    },
 });

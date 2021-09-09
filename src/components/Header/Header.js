@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { AppBar, Typography, Switch, Tooltip, Button } from '@material-ui/core';
+import {
+    AppBar,
+    Typography,
+    Switch,
+    Tooltip,
+    Button,
+    useMediaQuery,
+    IconButton,
+    Menu,
+    MenuItem,
+} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { useStyles } from './styles';
 import { useLocation, Redirect } from 'react-router-dom';
@@ -8,36 +18,18 @@ import Brightness4Icon from '@material-ui/icons/Brightness4';
 import { connect } from 'react-redux';
 import rootActions from '../../services/root-actions';
 import { authActions } from '../Auth/services/auth-actions';
+import MenuIcon from '@material-ui/icons/Menu';
 
-function Header({ changeTheme, isDarkTheme, user, logout }) {
+const HeaderLinks = () => {
     const classes = useStyles();
     const location = useLocation().pathname;
-
-    const [redirectAfterLogout, setRedirect] = useState(false);
 
     const checkIsLinkActive = (route) => {
         return route === location ? classes.activeLink : classes.link;
     };
 
-    const toggleTheme = () => {
-        localStorage.setItem('darkTheme', !isDarkTheme);
-        changeTheme();
-    };
-
-    const onLogout = () => {
-        logout();
-        setRedirect(true);
-    };
-
-    useEffect(() => {
-        const savedTheme = localStorage.getItem('darkTheme');
-        if (savedTheme === 'true') {
-            changeTheme();
-        }
-    }, []);
-
     return (
-        <AppBar className={classes.header}>
+        <div className={classes.header}>
             <Typography variant="subtitle1">
                 <Link
                     className={location.includes('/main') ? classes.activeLink : classes.link}
@@ -69,6 +61,109 @@ function Header({ changeTheme, isDarkTheme, user, logout }) {
                     Styles examples
                 </Link>
             </Typography>
+        </div>
+    );
+};
+
+const HeaderLinksMenu = () => {
+    const classes = useStyles();
+    const [anchor, setAnchor] = useState(null);
+    const open = Boolean(anchor);
+    const location = useLocation().pathname;
+
+    const handleMenu = (event) => {
+        setAnchor(event.currentTarget);
+    };
+
+    const checkIsLinkActive = (route) => {
+        return route === location ? classes.menuLinkActive : classes.menuLink;
+    };
+
+    return (
+        <div>
+            <IconButton
+                color="textPrimary"
+                className={classes.menuButton}
+                edge="start"
+                aria-label="menu"
+                onClick={handleMenu}
+            >
+                <MenuIcon color="secondary" />
+            </IconButton>
+            <Menu id="menu-appbar" anchorEl={anchor} open={open} className={classes.menu}>
+                <MenuItem
+                    onClick={() => setAnchor(null)}
+                    component={Link}
+                    className={
+                        location.includes('/main') ? classes.menuLinkActive : classes.menuLink
+                    }
+                    to="/main/1"
+                >
+                    Main Page
+                </MenuItem>
+                <MenuItem
+                    onClick={() => setAnchor(null)}
+                    component={Link}
+                    className={checkIsLinkActive(headerRoutes.USER)}
+                    to={headerRoutes.USER}
+                >
+                    User Page
+                </MenuItem>
+                <MenuItem
+                    onClick={() => setAnchor(null)}
+                    component={Link}
+                    className={checkIsLinkActive(headerRoutes.ADMIN)}
+                    to={headerRoutes.ADMIN}
+                >
+                    Admin Page
+                </MenuItem>
+                <MenuItem
+                    onClick={() => setAnchor(null)}
+                    component={Link}
+                    className={checkIsLinkActive(headerRoutes.NASA)}
+                    to={headerRoutes.NASA}
+                >
+                    Nasa
+                </MenuItem>
+                <MenuItem
+                    onClick={() => setAnchor(null)}
+                    component={Link}
+                    className={checkIsLinkActive(headerRoutes.STYLESHEET)}
+                    to={headerRoutes.STYLESHEET}
+                >
+                    Styles Examples
+                </MenuItem>
+            </Menu>
+        </div>
+    );
+};
+function Header({ changeTheme, isDarkTheme, user, logout }) {
+    const classes = useStyles();
+
+    const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+
+    const [redirectAfterLogout, setRedirect] = useState(false);
+
+    const toggleTheme = () => {
+        localStorage.setItem('darkTheme', !isDarkTheme);
+        changeTheme();
+    };
+
+    const onLogout = () => {
+        logout();
+        setRedirect(true);
+    };
+
+    useEffect(() => {
+        const savedTheme = localStorage.getItem('darkTheme');
+        if (savedTheme === 'true') {
+            changeTheme();
+        }
+    }, []);
+
+    return (
+        <AppBar className={classes.header}>
+            {isSmallScreen ? <HeaderLinksMenu /> : <HeaderLinks />}
 
             <div className={classes.darkModeToggle}>
                 <Tooltip title="Toggle dark theme">
