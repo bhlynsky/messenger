@@ -8,11 +8,14 @@ import {
     Button,
 } from '@material-ui/core';
 import { useStyles } from './styles';
-import { authService } from '../services/auth-services';
+import { authService, validateEmail } from '../services/auth-services';
+import { authActions } from '../services/auth-actions';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
+import { authErrors } from '../services/auth-constants';
 
-function Register({ register, isLoading, error }) {
+function Register(props) {
+    const { register, isLoading, error, removeError, setRegisterError } = props;
     const classes = useStyles();
     const [response, setResponse] = useState();
     const [registerData, setRegisterData] = useState({
@@ -21,6 +24,36 @@ function Register({ register, isLoading, error }) {
         password: '',
     });
 
+    const [confirmPassword, setConfirmPassword] = useState('');
+
+    const validateForm = async () => {
+        const { password, email, username } = registerData;
+
+        if (password && email && username) {
+            if (!validateEmail(email)) {
+                setRegisterError(authErrors.INVALID_EMAIL);
+                return;
+            }
+            if (username.length < 6) {
+                setRegisterError(authErrors.NAME_TOO_SHORT);
+                return;
+            }
+            if (password.length < 6 && confirmPassword.length < 6) {
+                setRegisterError(authErrors.PASSWORD_TOO_SHORT);
+                return;
+            }
+            if (password !== confirmPassword) {
+                setRegisterError(authErrors.PASSWORDS_NOT_MATCHING);
+                return;
+            }
+
+            const user = await register(registerData); // when check passed we can finnaly execute register
+            setResponse(user); // waiting for response then redirect
+        } else {
+            setRegisterError(authErrors.EMPTY_FIELDS);
+        }
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
 
@@ -28,12 +61,17 @@ function Register({ register, isLoading, error }) {
             ...prevState,
             [name]: value,
         }));
+        if (error) removeError();
+    };
+
+    const handleChangeConfirmPassword = (e) => {
+        setConfirmPassword(e.target.value);
+        if (error) removeError();
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const user = await register(registerData);
-        setResponse(user);
+        await validateForm();
     };
 
     return (
@@ -44,7 +82,7 @@ function Register({ register, isLoading, error }) {
                 <Typography variant="h2">Create new account</Typography>
                 {error && (
                     <Typography variant="caption" color="error">
-                        Error: {error.message}
+                        Error: {error}
                     </Typography>
                 )}
                 <form className={classes.form} noValidate onSubmit={handleSubmit}>
@@ -60,6 +98,8 @@ function Register({ register, isLoading, error }) {
                         autoFocus
                         onChange={handleChange}
                         value={registerData.email}
+                        error={!!error}
+                        inputProps={{ maxLength: 50 }}
                     />
                     <TextField
                         variant="outlined"
@@ -71,6 +111,8 @@ function Register({ register, isLoading, error }) {
                         name="username"
                         onChange={handleChange}
                         value={registerData.username}
+                        error={!!error}
+                        inputProps={{ maxLength: 20 }}
                     />
                     <TextField
                         variant="outlined"
@@ -83,6 +125,7 @@ function Register({ register, isLoading, error }) {
                         id="password"
                         onChange={handleChange}
                         value={registerData.password}
+                        error={!!error}
                     />
                     <TextField
                         variant="outlined"
@@ -93,8 +136,9 @@ function Register({ register, isLoading, error }) {
                         label="Password again"
                         type="password"
                         id="confirm-password"
-                        onChange={handleChange}
-                        value={registerData.passwordConfirm}
+                        onChange={handleChangeConfirmPassword}
+                        value={confirmPassword}
+                        error={!!error}
                     />
                     <Button
                         type="submit"
@@ -122,6 +166,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     register: (data) => dispatch(authService.register(data)),
+    removeError: () => dispatch(authActions.removeError()),
+    setRegisterError: (err) => dispatch(authActions.registerError(err)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

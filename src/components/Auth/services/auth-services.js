@@ -25,7 +25,7 @@ authService.register = (data) => async (dispatch) => {
         const user = response.json();
         return user;
     } catch (err) {
-        dispatch(authActions.registerError(err));
+        dispatch(authActions.registerError(err.message));
     }
 };
 
@@ -48,8 +48,14 @@ authService.login = (data) => async (dispatch) => {
 
         dispatch(authActions.loginSuccess(user));
     } catch (err) {
-        dispatch(authActions.loginError(err));
+        dispatch(authActions.loginError(err.message));
     }
 };
 
-export { authService, initialState };
+const validateEmail = (email) => {
+    const re =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+};
+
+export { authService, initialState, validateEmail };

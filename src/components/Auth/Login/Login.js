@@ -10,19 +10,38 @@ import {
 } from '@material-ui/core';
 import { Link, Redirect } from 'react-router-dom';
 import { useStyles } from './styles';
-import { authService } from '../services/auth-services';
+import { authService, validateEmail } from '../services/auth-services';
 import { connect } from 'react-redux';
 import { CircularProgress } from '@material-ui/core';
 import { authActions } from '../services/auth-actions';
+import { authErrors } from '../services/auth-constants';
 
 function Login(props) {
     const classes = useStyles();
-    const { login, isLoading, error, user, removeError } = props;
+    const { login, isLoading, error, user, removeError, setLoginError } = props;
 
     const [loginData, setLoginData] = useState({
         email: '',
         password: '',
     });
+
+    const validateForm = async () => {
+        const { password, email } = loginData;
+
+        if (password && email) {
+            if (password.length < 6) {
+                setLoginError(authErrors.PASSWORD_TOO_SHORT);
+                return;
+            }
+            if (!validateEmail(email)) {
+                setLoginError(authErrors.INVALID_EMAIL);
+                return;
+            }
+            await login(loginData); // when check passed we can finnaly execute login
+        } else {
+            setLoginError(authErrors.EMPTY_FIELDS);
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -37,7 +56,7 @@ function Login(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await login(loginData);
+        await validateForm();
     };
 
     return (
@@ -48,10 +67,7 @@ function Login(props) {
                     <Typography variant="h2">Log in</Typography>
                     {error && (
                         <Typography variant="caption" color="error">
-                            Error:{' '}
-                            {error.message.includes('Failed to fetch')
-                                ? 'Cant establish connection. Looks like server is offline'
-                                : error.message}
+                            Error: {error}
                         </Typography>
                     )}
                     <form className={classes.form} noValidate onSubmit={handleSubmit}>
@@ -63,11 +79,13 @@ function Login(props) {
                             id="email"
                             label="Email Address"
                             name="email"
+                            type="email"
                             autoComplete="email"
                             autoFocus
                             onChange={handleChange}
                             value={loginData.email}
                             error={!!error}
+                            inputProps={{ maxLength: 50 }}
                         />
                         <TextField
                             variant="outlined"
@@ -82,6 +100,7 @@ function Login(props) {
                             onChange={handleChange}
                             value={loginData.password}
                             error={!!error}
+                            inputProps={{ maxLength: 25 }}
                         />
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
@@ -121,6 +140,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     login: (data) => dispatch(authService.login(data)),
+    setLoginError: (err) => dispatch(authActions.loginError(err)),
     removeError: () => dispatch(authActions.removeError()),
 });
 
