@@ -8,48 +8,45 @@ const initialState = {
     error: null,
 };
 
+const handleResponse = (response) => {
+    return response.json().then((json) => {
+        if (!response.ok) {
+            const error = { ...json, status: response.status, statusText: response.statusText };
+            return Promise.reject(error.message);
+        }
+        return json;
+    });
+};
+
 authService.register = (data) => async (dispatch) => {
     dispatch(authActions.registerStart());
-    try {
-        const response = await fetch('http://localhost:8080/api/auth/register', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-        });
-        if (!response.ok) throw new Error(response.json());
 
-        dispatch(authActions.registerSuccess());
-        const user = response.json();
-        return user;
-    } catch (err) {
-        dispatch(authActions.registerError(err.message));
-    }
+    await fetch('http://localhost:8080/api/auth/register', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((res) => handleResponse(res))
+        .then((user) => dispatch(authActions.registerSuccess(user)))
+        .catch((err) => dispatch(authActions.registerError(err)));
 };
 
 authService.login = (data) => async (dispatch) => {
     dispatch(authActions.loginStart());
-
-    try {
-        const response = await fetch('http://localhost:8080/api/auth/login', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-        });
-        //hadle errors
-        if (!response.ok) throw new Error('You are using wrong Email or password');
-
-        const user = await response.json();
-
-        dispatch(authActions.loginSuccess(user));
-    } catch (err) {
-        dispatch(authActions.loginError(err.message));
-    }
+    await fetch('http://localhost:8080/api/auth/login', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((res) => handleResponse(res))
+        .then((user) => dispatch(authActions.loginSuccess(user)))
+        .catch((err) => dispatch(authActions.loginError(err)));
 };
 
 const validateEmail = (email) => {

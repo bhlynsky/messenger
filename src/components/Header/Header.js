@@ -82,7 +82,6 @@ const HeaderLinksMenu = () => {
     return (
         <div>
             <IconButton
-                color="textPrimary"
                 className={classes.menuButton}
                 edge="start"
                 aria-label="menu"

@@ -18,9 +18,10 @@ function authReducer(state = initialState, action) {
             };
         //load error
         case authActions.actionType.LOGIN_ERROR: {
+            const { error } = action;
             return {
                 ...state,
-                error: action.error,
+                error: error.message || error, // fetch returns error object, when server offline. Easiest fix imo.
                 isLoading: false,
             };
         }
