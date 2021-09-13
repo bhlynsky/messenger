@@ -1,21 +1,15 @@
 import React, { useState } from 'react';
-import {
-    CircularProgress,
-    Container,
-    Typography,
-    TextField,
-    CssBaseline,
-    Button,
-} from '@material-ui/core';
+import { Container, Typography, TextField, CssBaseline, Button } from '@material-ui/core';
 import { useStyles } from './styles';
 import { authService, validateEmail } from '../services/auth-services';
 import { authActions } from '../services/auth-actions';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { authErrors } from '../services/auth-constants';
+import { authErrors, labels } from '../services/auth-constants';
+import { withLoading } from '../../../services/root-service';
 
 function Register(props) {
-    const { register, isLoading, error, removeError, registerSuccess } = props;
+    const { register, error, resetError, registerSuccess } = props;
     const classes = useStyles();
 
     const [registerData, setRegisterData] = useState({
@@ -39,8 +33,7 @@ function Register(props) {
         }));
     };
 
-    //FIXME Why async ?
-    const validateForm = async () => {
+    const validateForm = () => {
         const { password, email, username } = registerData;
 
         //FIXME same, move checking to service
@@ -63,7 +56,7 @@ function Register(props) {
                 return;
             }
 
-            await register(registerData); // when check passed we can finnaly execute register
+            register(registerData); // when check passed we can finnaly execute register
         } else {
             if (!registerData.email) {
                 changeErrorValue('emailError', authErrors.EMPTY_FIELDS);
@@ -83,7 +76,7 @@ function Register(props) {
     const resetFormErrors = () => {
         setValidationErrors({ emailError: '', usernameError: '', passwordError: '' });
 
-        if (error) removeError();
+        if (error) resetError();
     };
 
     const handleChange = (e) => {
@@ -103,19 +96,17 @@ function Register(props) {
         resetFormErrors();
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        await validateForm();
+        validateForm();
     };
 
-    //FIXME all labels and text, please move to constants
-    //FIXME better make loading for all page, not for button, because, while you load response you still can change something in the form
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             {registerSuccess && <Redirect to="/login" />}
             <div className={classes.paper}>
-                <Typography variant="h2">Create new account</Typography>
+                <Typography variant="h2">{labels.REGISTER}</Typography>
                 {error && (
                     <Typography variant="caption" color="error">
                         Error: {error}
@@ -128,7 +119,7 @@ function Register(props) {
                         required
                         fullWidth
                         id="email"
-                        label="Email Address"
+                        label={labels.EMAIL}
                         name="email"
                         autoComplete="email"
                         autoFocus
@@ -144,7 +135,7 @@ function Register(props) {
                         required
                         fullWidth
                         id="username"
-                        label="Username"
+                        label={labels.USERNAME}
                         name="username"
                         onChange={handleChange}
                         value={registerData.username}
@@ -158,7 +149,7 @@ function Register(props) {
                         required
                         fullWidth
                         name="password"
-                        label="Password"
+                        label={labels.PASSWORD}
                         type="password"
                         id="password"
                         onChange={handleChange}
@@ -172,7 +163,7 @@ function Register(props) {
                         required
                         fullWidth
                         name="passwordConfirm "
-                        label="Password again"
+                        label={labels.PASSWORD_CONFIRM}
                         type="password"
                         id="confirm-password"
                         onChange={handleChangeConfirmPassword}
@@ -187,11 +178,7 @@ function Register(props) {
                         color="primary"
                         className={classes.submit}
                     >
-                        {isLoading ? (
-                            <CircularProgress size="30px" />
-                        ) : (
-                            <Typography>Sign In</Typography>
-                        )}
+                        <Typography>{labels.REGISTER_SUBMIT_BUTTON}</Typography>
                     </Button>
                 </form>
             </div>
@@ -200,15 +187,15 @@ function Register(props) {
 }
 
 const mapStateToProps = (state) => ({
-    isLoading: state.authReducer.isLoading,
     error: state.authReducer.error,
+    isLoading: state.authReducer.isLoading,
     registerSuccess: state.authReducer.registerSuccess,
 });
 
 const mapDispatchToProps = (dispatch) => ({
     register: (data) => dispatch(authService.register(data)),
-    removeError: () => dispatch(authActions.removeError()),
+    resetError: () => dispatch(authActions.resetError()),
     setRegisterError: (err) => dispatch(authActions.registerError(err)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(withLoading(Register));

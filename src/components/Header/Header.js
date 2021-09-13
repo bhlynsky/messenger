@@ -17,7 +17,7 @@ import { headerRoutes } from '../../services/headerRoutes';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import { connect } from 'react-redux';
 import rootActions from '../../services/root-actions';
-import { authActions } from '../Auth/services/auth-actions';
+import { authActions } from '../../pages/Auth/services/auth-actions';
 import MenuIcon from '@material-ui/icons/Menu';
 
 const HeaderLinks = () => {
@@ -160,7 +160,6 @@ function Header({ changeTheme, isDarkTheme, user, logout }) {
 
     return (
         <AppBar className={classes.header}>
-            
             {user && (isSmallScreen ? <HeaderLinksMenu /> : <HeaderLinks />)}
             {user && <Redirect to="/" />}
 

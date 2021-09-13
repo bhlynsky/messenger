@@ -8,8 +8,8 @@ import TaskPage from './pages/TaskPage';
 import Stylesheets from './pages/Stylesheets/Stylesheets';
 import NasaPicsPage from './pages/NasaPics/NasaPicsPage';
 import CustomThemeProvider from './CustomThemeProvider';
-import Login from './components/Auth/Login/Login';
-import Register from './components/Auth/Register/Register';
+import Login from './pages/Auth/Login/Login';
+import Register from './pages/Auth/Register/Register';
 import { connect } from 'react-redux';
 
 const PrivateRouter = () => {

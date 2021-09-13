@@ -19,10 +19,10 @@ const handleResponse = (response) => {
     });
 };
 
-authService.register = (data) => async (dispatch) => {
+authService.register = (data) => (dispatch) => {
     dispatch(authActions.registerStart());
 
-    await fetch('http://localhost:8080/api/auth/register', {
+    fetch('http://localhost:8080/api/auth/register', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -35,10 +35,10 @@ authService.register = (data) => async (dispatch) => {
         .catch((err) => dispatch(authActions.registerError(err)));
 };
 
-authService.login = (data) => async (dispatch) => {
+authService.login = (data) => (dispatch) => {
     dispatch(authActions.loginStart());
 
-    await fetch('http://localhost:8080/api/auth/login', {
+    fetch('http://localhost:8080/api/auth/login', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

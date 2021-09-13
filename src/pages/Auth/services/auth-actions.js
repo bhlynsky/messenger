@@ -42,7 +42,7 @@ authActions.logout = () => ({
     type: authActions.actionType.LOGOUT,
 });
 
-authActions.removeError = () => ({
+authActions.resetError = () => ({
     type: authActions.actionType.REMOVE_ERROR,
 });
 

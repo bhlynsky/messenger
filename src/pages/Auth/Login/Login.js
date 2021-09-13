@@ -1,24 +1,16 @@
 import React, { useState } from 'react';
-import {
-    Checkbox,
-    FormControlLabel,
-    TextField,
-    CssBaseline,
-    Button,
-    Container,
-    Typography,
-} from '@material-ui/core';
+import { TextField, CssBaseline, Button, Container, Typography } from '@material-ui/core';
 import { Link, Redirect } from 'react-router-dom';
 import { useStyles } from './styles';
 import { authService, validateEmail } from '../services/auth-services';
 import { connect } from 'react-redux';
-import { CircularProgress } from '@material-ui/core';
 import { authActions } from '../services/auth-actions';
-import { authErrors } from '../services/auth-constants';
+import { authErrors, labels } from '../services/auth-constants';
+import { withLoading } from '../../../services/root-service';
 
 function Login(props) {
     const classes = useStyles();
-    const { login, isLoading, error, user, removeError } = props;
+    const { login, error, user, resetError } = props;
 
     const [loginData, setLoginData] = useState({
         email: '',
@@ -28,11 +20,11 @@ function Login(props) {
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
 
-    //FIXME Why async ?
-    const validateForm = async () => {
+    const validateForm = () => {
         const { password, email } = loginData;
 
         //FIXME maybe make sense move checking to service
+        // I slightly changed cheking,and I dont think it needs moving now
         if (password && email) {
             if (password.length < 6) {
                 setPasswordError(authErrors.PASSWORD_TOO_SHORT);
@@ -42,7 +34,7 @@ function Login(props) {
                 setEmailError(authErrors.INVALID_EMAIL);
                 return;
             }
-            await login(loginData); // when check passed we can finnaly execute login
+            login(loginData); // when check passed we can finnaly execute login
         } else {
             if (!loginData.email) {
                 setEmailError(authErrors.EMPTY_FIELDS);
@@ -54,7 +46,7 @@ function Login(props) {
     };
 
     const resetFormErrors = () => {
-        if (error) removeError();
+        if (error) resetError();
         setPasswordError('');
         setEmailError('');
     };
@@ -70,21 +62,17 @@ function Login(props) {
         resetFormErrors();
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        await validateForm();
+        validateForm();
     };
 
-    //FIXME all labels and text, please move to constants
-    //FIXME why <Redirect to="/main/1" /> ????? you can use id of user
-    //FIXME not see that you use that <Checkbox value="remember" color="primary" />
-    //FIXME better make loading for all page, not for button, because, while you load response you still can change something in the form
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline>
-                {user && <Redirect to="/main/1" />}
+                {user && <Redirect to={`/main/${user._id}`} />}
                 <div className={classes.paper}>
-                    <Typography variant="h2">Log in</Typography>
+                    <Typography variant="h2">{labels.LOGIN}</Typography>
                     {error && (
                         <Typography variant="caption" color="error">
                             Error: {error}
@@ -97,7 +85,7 @@ function Login(props) {
                             required
                             fullWidth
                             id="email"
-                            label="Email Address"
+                            label={labels.EMAIL}
                             name="email"
                             type="email"
                             autoComplete="email"
@@ -114,7 +102,7 @@ function Login(props) {
                             required
                             fullWidth
                             name="password"
-                            label="Password"
+                            label={labels.PASSWORD}
                             type="password"
                             id="password"
                             autoComplete="current-password"
@@ -124,28 +112,19 @@ function Login(props) {
                             helperText={passwordError}
                             inputProps={{ maxLength: 25 }}
                         />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
 
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             color="primary"
-                            disabled={isLoading}
                             className={classes.submit}
                         >
-                            {isLoading ? (
-                                <CircularProgress size="30px" />
-                            ) : (
-                                <Typography>Sign In</Typography>
-                            )}
+                            <Typography>{labels.SIGN_IN_BUTTON}</Typography>
                         </Button>
 
                         <Link to="/register" variant="body2" className={classes.registerLink}>
-                            {"Don't have an account? Create new."}
+                            {labels.REGISTER_LINK_TEXT}
                         </Link>
                     </form>
                 </div>
@@ -155,14 +134,14 @@ function Login(props) {
 }
 
 const mapStateToProps = (state) => ({
-    isLoading: state.authReducer.isLoading,
     error: state.authReducer.error,
+    isLoading: state.authReducer.isLoading,
     user: state.authReducer.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
     login: (data) => dispatch(authService.login(data)),
-    removeError: () => dispatch(authActions.removeError()),
+    resetError: () => dispatch(authActions.resetError()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(withLoading(Login));
