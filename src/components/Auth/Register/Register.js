@@ -39,9 +39,12 @@ function Register(props) {
         }));
     };
 
+    //FIXME Why async ?
     const validateForm = async () => {
         const { password, email, username } = registerData;
 
+        //FIXME same, move checking to service
+        // you can just return error, from service method, and here make setRegisterError
         if (password && email && username) {
             if (!validateEmail(email)) {
                 changeErrorValue('emailError', authErrors.INVALID_EMAIL);
@@ -105,6 +108,8 @@ function Register(props) {
         await validateForm();
     };
 
+    //FIXME all labels and text, please move to constants
+    //FIXME better make loading for all page, not for button, because, while you load response you still can change something in the form
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
