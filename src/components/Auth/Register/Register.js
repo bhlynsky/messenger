@@ -15,7 +15,7 @@ import { Redirect } from 'react-router';
 import { authErrors } from '../services/auth-constants';
 
 function Register(props) {
-    const { register, isLoading, error, removeError, setRegisterError, registerSuccess } = props;
+    const { register, isLoading, error, removeError, registerSuccess } = props;
     const classes = useStyles();
 
     const [registerData, setRegisterData] = useState({
@@ -25,65 +25,62 @@ function Register(props) {
     });
 
     const [validationErrors, setValidationErrors] = useState({
-        emailError: false,
-        usernameError: false,
-        passwordError: false,
+        emailError: '',
+        usernameError: '',
+        passwordError: '',
     });
 
-    const [passwordErrorText, setPasswordErrorText] = useState('');
-
     const [confirmPassword, setConfirmPassword] = useState('');
+
+    const changeErrorValue = (name, value) => {
+        setValidationErrors((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
 
     const validateForm = async () => {
         const { password, email, username } = registerData;
 
         if (password && email && username) {
             if (!validateEmail(email)) {
-                // setRegisterError(authErrors.INVALID_EMAIL);
-                setValidationErrors((prevState) => ({
-                    ...prevState,
-                    emailError: true,
-                }));
+                changeErrorValue('emailError', authErrors.INVALID_EMAIL);
                 return;
             }
             if (username.length < 6) {
-                //setRegisterError(authErrors.NAME_TOO_SHORT);
-                setValidationErrors((prevState) => ({
-                    ...prevState,
-                    usernameError: true,
-                }));
+                changeErrorValue('usernameError', authErrors.NAME_TOO_SHORT);
                 return;
             }
             if (password.length < 6 && confirmPassword.length < 6) {
-                setPasswordErrorText(authErrors.PASSWORD_TOO_SHORT);
-                setValidationErrors((prevState) => ({
-                    ...prevState,
-                    passwordError: true,
-                }));
-
+                changeErrorValue('passwordError', authErrors.PASSWORD_TOO_SHORT);
                 return;
             }
             if (password !== confirmPassword) {
-                setPasswordErrorText(authErrors.PASSWORDS_NOT_MATCHING);
-                setValidationErrors((prevState) => ({
-                    ...prevState,
-                    passwordError: true,
-                }));
-
+                changeErrorValue('passwordError', authErrors.PASSWORDS_NOT_MATCHING);
                 return;
             }
 
             await register(registerData); // when check passed we can finnaly execute register
         } else {
-            setRegisterError(authErrors.EMPTY_FIELDS);
+            if (!registerData.email) {
+                changeErrorValue('emailError', authErrors.EMPTY_FIELDS);
+            }
+            if (!registerData.username) {
+                changeErrorValue('usernameError', authErrors.EMPTY_FIELDS);
+            }
+            if (!registerData.password) {
+                changeErrorValue('passwordError', authErrors.EMPTY_FIELDS);
+            }
+            if (!confirmPassword) {
+                changeErrorValue('passwordError', authErrors.EMPTY_FIELDS);
+            }
         }
     };
 
     const resetFormErrors = () => {
-        setValidationErrors({ emailError: false, usernameError: false, passwordError: false });
+        setValidationErrors({ emailError: '', usernameError: '', passwordError: '' });
 
         if (error) removeError();
-        setPasswordErrorText('');
     };
 
     const handleChange = (e) => {
@@ -133,7 +130,7 @@ function Register(props) {
                         onChange={handleChange}
                         value={registerData.email}
                         error={validationErrors.emailError || error}
-                        helperText={validationErrors.emailError && authErrors.INVALID_EMAIL}
+                        helperText={validationErrors.emailError}
                         inputProps={{ maxLength: 50 }}
                     />
                     <TextField
@@ -147,7 +144,7 @@ function Register(props) {
                         onChange={handleChange}
                         value={registerData.username}
                         error={validationErrors.usernameError || error}
-                        helperText={validationErrors.usernameError && authErrors.NAME_TOO_SHORT}
+                        helperText={validationErrors.usernameError}
                         inputProps={{ maxLength: 20, minLength: 6 }}
                     />
                     <TextField
@@ -162,7 +159,7 @@ function Register(props) {
                         onChange={handleChange}
                         value={registerData.password}
                         error={validationErrors.passwordError || error}
-                        helperText={passwordErrorText}
+                        helperText={validationErrors.passwordError}
                     />
                     <TextField
                         variant="outlined"
@@ -176,7 +173,7 @@ function Register(props) {
                         onChange={handleChangeConfirmPassword}
                         value={confirmPassword}
                         error={validationErrors.passwordError || error}
-                        helperText={passwordErrorText}
+                        helperText={validationErrors.passwordError}
                     />
                     <Button
                         type="submit"
