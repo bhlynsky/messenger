@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
     CircularProgress,
     Container,
@@ -7,15 +7,15 @@ import {
     CssBaseline,
     Button,
 } from '@material-ui/core';
-import { useStyles } from './styles';
-import { authService, validateEmail } from '../services/auth-services';
-import { authActions } from '../services/auth-actions';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
-import { authErrors } from '../services/auth-constants';
+import {useStyles} from './styles';
+import {authService, validateEmail} from '../services/auth-services';
+import {authActions} from '../services/auth-actions';
+import {connect} from 'react-redux';
+import {Redirect} from 'react-router';
+import {authErrors} from '../services/auth-constants';
 
 function Register(props) {
-    const { register, isLoading, error, removeError, setRegisterError } = props;
+    const {register, isLoading, error, removeError, setRegisterError} = props;
     const classes = useStyles();
     const [response, setResponse] = useState();
     const [registerData, setRegisterData] = useState({
@@ -26,9 +26,12 @@ function Register(props) {
 
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    //FIXME Why async ?
     const validateForm = async () => {
-        const { password, email, username } = registerData;
+        const {password, email, username} = registerData;
 
+        //FIXME same, move checking to service
+        // you can just return error, from service method, and here make setRegisterError
         if (password && email && username) {
             if (!validateEmail(email)) {
                 setRegisterError(authErrors.INVALID_EMAIL);
@@ -55,12 +58,13 @@ function Register(props) {
     };
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
 
         setRegisterData((prevState) => ({
             ...prevState,
             [name]: value,
         }));
+
         if (error) removeError();
     };
 
@@ -74,10 +78,12 @@ function Register(props) {
         await validateForm();
     };
 
+    //FIXME all labels and text, please move to constants
+    //FIXME better make loading for all page, not for button, because, while you load response you still can change something in the form
     return (
         <Container component="main" maxWidth="xs">
-            <CssBaseline />
-            {response && <Redirect to="/login" />}
+            <CssBaseline/>
+            {response && <Redirect to="/login"/>}
             <div className={classes.paper}>
                 <Typography variant="h2">Create new account</Typography>
                 {error && (
@@ -99,7 +105,7 @@ function Register(props) {
                         onChange={handleChange}
                         value={registerData.email}
                         error={!!error}
-                        inputProps={{ maxLength: 50 }}
+                        inputProps={{maxLength: 50}}
                     />
                     <TextField
                         variant="outlined"
@@ -112,7 +118,7 @@ function Register(props) {
                         onChange={handleChange}
                         value={registerData.username}
                         error={!!error}
-                        inputProps={{ maxLength: 20 }}
+                        inputProps={{maxLength: 20}}
                     />
                     <TextField
                         variant="outlined"
@@ -148,7 +154,7 @@ function Register(props) {
                         className={classes.submit}
                     >
                         {isLoading ? (
-                            <CircularProgress size="30px" />
+                            <CircularProgress size="30px"/>
                         ) : (
                             <Typography>Sign In</Typography>
                         )}

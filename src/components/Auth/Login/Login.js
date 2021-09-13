@@ -25,9 +25,11 @@ function Login(props) {
         password: '',
     });
 
+    //FIXME Why async ?
     const validateForm = async () => {
         const { password, email } = loginData;
 
+        //FIXME maybe make sense move checking to service
         if (password && email) {
             if (password.length < 6) {
                 setLoginError(authErrors.PASSWORD_TOO_SHORT);
@@ -51,6 +53,7 @@ function Login(props) {
             [name]: value,
         }));
 
+        //FIXME minor, better call like 'reset error'
         if (error) removeError();
     };
 
@@ -59,6 +62,10 @@ function Login(props) {
         await validateForm();
     };
 
+    //FIXME all labels and text, please move to constants
+    //FIXME why <Redirect to="/main/1" /> ????? you can use id of user
+    //FIXME not see that you use that <Checkbox value="remember" color="primary" />
+    //FIXME better make loading for all page, not for button, because, while you load response you still can change something in the form
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline>
