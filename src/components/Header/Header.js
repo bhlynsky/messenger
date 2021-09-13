@@ -136,12 +136,11 @@ const HeaderLinksMenu = () => {
         </div>
     );
 };
+
 function Header({ changeTheme, isDarkTheme, user, logout }) {
     const classes = useStyles();
 
     const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-
-    const [redirectAfterLogout, setRedirect] = useState(false);
 
     const toggleTheme = () => {
         localStorage.setItem('darkTheme', !isDarkTheme);
@@ -150,7 +149,6 @@ function Header({ changeTheme, isDarkTheme, user, logout }) {
 
     const onLogout = () => {
         logout();
-        setRedirect(true);
     };
 
     useEffect(() => {
@@ -162,7 +160,9 @@ function Header({ changeTheme, isDarkTheme, user, logout }) {
 
     return (
         <AppBar className={classes.header}>
-            {isSmallScreen ? <HeaderLinksMenu /> : <HeaderLinks />}
+            
+            {user && (isSmallScreen ? <HeaderLinksMenu /> : <HeaderLinks />)}
+            {user && <Redirect to="/" />}
 
             <div className={classes.darkModeToggle}>
                 <Tooltip title="Toggle dark theme">
@@ -170,20 +170,12 @@ function Header({ changeTheme, isDarkTheme, user, logout }) {
                 </Tooltip>
                 <Brightness4Icon className={classes.darkModeIcon} />
             </div>
-            {user ? (
-                <div>
-                    <Button color="secondary" onClick={onLogout} className={classes.logoutButton}>
-                        Logout
-                    </Button>
-                    {redirectAfterLogout && <Redirect to="/" />}
-                </div>
-            ) : (
-                <Button className={classes.loginButton}>
-                    <Link className={classes.loginLink} to={headerRoutes.LOGIN}>
-                        Login
-                    </Link>
-                </Button>
-            )}
+
+            <Button onClick={user && onLogout} className={classes.loginButton}>
+                <Link className={classes.loginLink} to={headerRoutes.LOGIN}>
+                    {user ? 'Logout' : 'Login'}
+                </Link>
+            </Button>
         </AppBar>
     );
 }

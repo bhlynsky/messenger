@@ -18,29 +18,43 @@ import { authErrors } from '../services/auth-constants';
 
 function Login(props) {
     const classes = useStyles();
-    const { login, isLoading, error, user, removeError, setLoginError } = props;
+    const { login, isLoading, error, user, removeError } = props;
 
     const [loginData, setLoginData] = useState({
         email: '',
         password: '',
     });
 
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+
     const validateForm = async () => {
         const { password, email } = loginData;
 
         if (password && email) {
             if (password.length < 6) {
-                setLoginError(authErrors.PASSWORD_TOO_SHORT);
+                setPasswordError(authErrors.PASSWORD_TOO_SHORT);
                 return;
             }
             if (!validateEmail(email)) {
-                setLoginError(authErrors.INVALID_EMAIL);
+                setEmailError(authErrors.INVALID_EMAIL);
                 return;
             }
             await login(loginData); // when check passed we can finnaly execute login
         } else {
-            setLoginError(authErrors.EMPTY_FIELDS);
+            if (!loginData.email) {
+                setEmailError(authErrors.EMPTY_FIELDS);
+            }
+            if (!loginData.password) {
+                setPasswordError(authErrors.EMPTY_FIELDS);
+            }
         }
+    };
+
+    const resetFormErrors = () => {
+        if (error) removeError();
+        setPasswordError('');
+        setEmailError('');
     };
 
     const handleChange = (e) => {
@@ -51,7 +65,7 @@ function Login(props) {
             [name]: value,
         }));
 
-        if (error) removeError();
+        resetFormErrors();
     };
 
     const handleSubmit = async (e) => {
@@ -84,7 +98,8 @@ function Login(props) {
                             autoFocus
                             onChange={handleChange}
                             value={loginData.email}
-                            error={!!error}
+                            helperText={emailError}
+                            error={!!error || emailError}
                             inputProps={{ maxLength: 50 }}
                         />
                         <TextField
@@ -99,7 +114,8 @@ function Login(props) {
                             autoComplete="current-password"
                             onChange={handleChange}
                             value={loginData.password}
-                            error={!!error}
+                            error={!!error || passwordError}
+                            helperText={passwordError}
                             inputProps={{ maxLength: 25 }}
                         />
                         <FormControlLabel
@@ -140,7 +156,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     login: (data) => dispatch(authService.login(data)),
-    setLoginError: (err) => dispatch(authActions.loginError(err)),
     removeError: () => dispatch(authActions.removeError()),
 });
 

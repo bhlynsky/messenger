@@ -36,14 +36,16 @@ function authReducer(state = initialState, action) {
         case authActions.actionType.REGISTER_SUCCESS:
             return {
                 ...state,
-                /// only difference here
+                registerSuccess: true,
                 isLoading: false,
             };
         //load error
         case authActions.actionType.REGISTER_ERROR: {
+            const { error } = action;
+
             return {
                 ...state,
-                error: action.error,
+                error: error.message || error,
                 isLoading: false,
             };
         }

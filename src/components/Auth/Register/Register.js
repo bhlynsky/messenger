@@ -15,14 +15,22 @@ import { Redirect } from 'react-router';
 import { authErrors } from '../services/auth-constants';
 
 function Register(props) {
-    const { register, isLoading, error, removeError, setRegisterError } = props;
+    const { register, isLoading, error, removeError, setRegisterError, registerSuccess } = props;
     const classes = useStyles();
-    const [response, setResponse] = useState();
+
     const [registerData, setRegisterData] = useState({
         email: '',
         username: '',
         password: '',
     });
+
+    const [validationErrors, setValidationErrors] = useState({
+        emailError: false,
+        usernameError: false,
+        passwordError: false,
+    });
+
+    const [passwordErrorText, setPasswordErrorText] = useState('');
 
     const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -31,27 +39,51 @@ function Register(props) {
 
         if (password && email && username) {
             if (!validateEmail(email)) {
-                setRegisterError(authErrors.INVALID_EMAIL);
+                // setRegisterError(authErrors.INVALID_EMAIL);
+                setValidationErrors((prevState) => ({
+                    ...prevState,
+                    emailError: true,
+                }));
                 return;
             }
             if (username.length < 6) {
-                setRegisterError(authErrors.NAME_TOO_SHORT);
+                //setRegisterError(authErrors.NAME_TOO_SHORT);
+                setValidationErrors((prevState) => ({
+                    ...prevState,
+                    usernameError: true,
+                }));
                 return;
             }
             if (password.length < 6 && confirmPassword.length < 6) {
-                setRegisterError(authErrors.PASSWORD_TOO_SHORT);
+                setPasswordErrorText(authErrors.PASSWORD_TOO_SHORT);
+                setValidationErrors((prevState) => ({
+                    ...prevState,
+                    passwordError: true,
+                }));
+
                 return;
             }
             if (password !== confirmPassword) {
-                setRegisterError(authErrors.PASSWORDS_NOT_MATCHING);
+                setPasswordErrorText(authErrors.PASSWORDS_NOT_MATCHING);
+                setValidationErrors((prevState) => ({
+                    ...prevState,
+                    passwordError: true,
+                }));
+
                 return;
             }
 
-            const user = await register(registerData); // when check passed we can finnaly execute register
-            setResponse(user); // waiting for response then redirect
+            await register(registerData); // when check passed we can finnaly execute register
         } else {
             setRegisterError(authErrors.EMPTY_FIELDS);
         }
+    };
+
+    const resetFormErrors = () => {
+        setValidationErrors({ emailError: false, usernameError: false, passwordError: false });
+
+        if (error) removeError();
+        setPasswordErrorText('');
     };
 
     const handleChange = (e) => {
@@ -61,12 +93,14 @@ function Register(props) {
             ...prevState,
             [name]: value,
         }));
-        if (error) removeError();
+
+        resetFormErrors();
     };
 
     const handleChangeConfirmPassword = (e) => {
         setConfirmPassword(e.target.value);
-        if (error) removeError();
+
+        resetFormErrors();
     };
 
     const handleSubmit = async (e) => {
@@ -77,7 +111,7 @@ function Register(props) {
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
-            {response && <Redirect to="/login" />}
+            {registerSuccess && <Redirect to="/login" />}
             <div className={classes.paper}>
                 <Typography variant="h2">Create new account</Typography>
                 {error && (
@@ -98,7 +132,8 @@ function Register(props) {
                         autoFocus
                         onChange={handleChange}
                         value={registerData.email}
-                        error={!!error}
+                        error={validationErrors.emailError || error}
+                        helperText={validationErrors.emailError && authErrors.INVALID_EMAIL}
                         inputProps={{ maxLength: 50 }}
                     />
                     <TextField
@@ -111,8 +146,9 @@ function Register(props) {
                         name="username"
                         onChange={handleChange}
                         value={registerData.username}
-                        error={!!error}
-                        inputProps={{ maxLength: 20 }}
+                        error={validationErrors.usernameError || error}
+                        helperText={validationErrors.usernameError && authErrors.NAME_TOO_SHORT}
+                        inputProps={{ maxLength: 20, minLength: 6 }}
                     />
                     <TextField
                         variant="outlined"
@@ -125,7 +161,8 @@ function Register(props) {
                         id="password"
                         onChange={handleChange}
                         value={registerData.password}
-                        error={!!error}
+                        error={validationErrors.passwordError || error}
+                        helperText={passwordErrorText}
                     />
                     <TextField
                         variant="outlined"
@@ -138,7 +175,8 @@ function Register(props) {
                         id="confirm-password"
                         onChange={handleChangeConfirmPassword}
                         value={confirmPassword}
-                        error={!!error}
+                        error={validationErrors.passwordError || error}
+                        helperText={passwordErrorText}
                     />
                     <Button
                         type="submit"
@@ -162,6 +200,7 @@ function Register(props) {
 const mapStateToProps = (state) => ({
     isLoading: state.authReducer.isLoading,
     error: state.authReducer.error,
+    registerSuccess: state.authReducer.registerSuccess,
 });
 
 const mapDispatchToProps = (dispatch) => ({

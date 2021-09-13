@@ -10,9 +10,36 @@ import NasaPicsPage from './pages/NasaPics/NasaPicsPage';
 import CustomThemeProvider from './CustomThemeProvider';
 import Login from './components/Auth/Login/Login';
 import Register from './components/Auth/Register/Register';
-import PrivateRoute from './PrivateRoute';
+import { connect } from 'react-redux';
 
-const Router = () => {
+const PrivateRouter = () => {
+    return (
+        <Switch>
+            <Route exact path="/">
+                <Redirect to="/main/1" />
+            </Route>
+            <Route path="/main/:groupId">
+                <MainPage />
+            </Route>
+            <Route path="/user">
+                <UserPage />
+            </Route>
+            <Route path="/admin">
+                <AdminPage />
+            </Route>
+            <Route path="/tasks">
+                <TaskPage />
+            </Route>
+            <Route path="/stylesheet">
+                <Stylesheets />
+            </Route>
+            <Route path="/nasa">
+                <NasaPicsPage />
+            </Route>
+        </Switch>
+    );
+};
+const PublicRouter = () => {
     return (
         <Switch>
             <Route exact path="/">
@@ -24,37 +51,22 @@ const Router = () => {
             <Route path="/register">
                 <Register />
             </Route>
-            <PrivateRoute path="/main/:groupId">
-                <MainPage />
-            </PrivateRoute>
-            <PrivateRoute path="/user">
-                <UserPage />
-            </PrivateRoute>
-            <PrivateRoute path="/admin">
-                <AdminPage />
-            </PrivateRoute>
-            <PrivateRoute path="/tasks">
-                <TaskPage />
-            </PrivateRoute>
-            <PrivateRoute path="/stylesheet">
-                <Stylesheets />
-            </PrivateRoute>
-            <PrivateRoute path="/nasa">
-                <NasaPicsPage />
-            </PrivateRoute>
+            )
         </Switch>
     );
 };
 
-function App() {
+function App({ user }) {
     return (
         <HashRouter>
             <CustomThemeProvider>
                 <Header />
-                <Router />
+                {user ? <PrivateRouter /> : <PublicRouter />}
             </CustomThemeProvider>
         </HashRouter>
     );
 }
-
-export default App;
+const mapDispatchToProps = (state) => ({
+    user: state.authReducer.user,
+});
+export default connect(mapDispatchToProps)(App);

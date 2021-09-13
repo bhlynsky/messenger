@@ -5,6 +5,7 @@ const authService = {};
 const initialState = {
     user: null,
     isLoading: false,
+    registerSuccess: false,
     error: null,
 };
 
@@ -30,12 +31,13 @@ authService.register = (data) => async (dispatch) => {
         },
     })
         .then((res) => handleResponse(res))
-        .then((user) => dispatch(authActions.registerSuccess(user)))
+        .then(() => dispatch(authActions.registerSuccess()))
         .catch((err) => dispatch(authActions.registerError(err)));
 };
 
 authService.login = (data) => async (dispatch) => {
     dispatch(authActions.loginStart());
+
     await fetch('http://localhost:8080/api/auth/login', {
         method: 'POST',
         body: JSON.stringify(data),

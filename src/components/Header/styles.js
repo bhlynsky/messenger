@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles((theme) => ({
     header: {
         fontSize: '20px',
         display: 'flex',
@@ -38,8 +38,8 @@ export const useStyles = makeStyles({
     logoutButton: {
         marginTop: '5px',
         marginRight: '10px',
-        color: 'red',
-        border: '1px solid red',
+        color: 'white',
+        border: '1px solid white',
     },
     loginButton: {
         margin: '5px 10px',
@@ -57,7 +57,7 @@ export const useStyles = makeStyles({
         padding: '5px',
         margin: '5px',
         textDecoration: 'none',
-        color: '#000',
+        color: theme.palette.type === 'dark' ? '#fff' : '#000',
         fontWeight: 'lighter',
         lineHeight: '45px',
     },
@@ -65,8 +65,8 @@ export const useStyles = makeStyles({
         padding: '5px',
         margin: '5px',
         textDecoration: 'underline',
-        color: '#000',
+        color: theme.palette.type === 'dark' ? '#fff' : '#000',
         fontWeight: 'bold',
         lineHeight: '45px',
     },
-});
+}));

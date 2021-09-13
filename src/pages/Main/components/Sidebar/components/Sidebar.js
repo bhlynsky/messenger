@@ -22,7 +22,7 @@ import { SidebarToggleButton } from './SidebarToggleButton';
 
 const Sidebar = (props) => {
     const classes = useStyles();
-    const { groups, currentGroupId, isLoading, currentUser } = props;
+    const { groups, currentGroupId, isLoading } = props;
     const [modalIsOpen, setModalOpen] = useState(false);
     const [sidebarIsOpen, setSidebarOpen] = useState(true);
     const [groupSearchValue, setGroupSearchValue] = useState('');
@@ -52,8 +52,8 @@ const Sidebar = (props) => {
         return (
             <div className={classes.sidebar}>
                 <div className={classes.containerHeader}>
-                    <Typography variant="h5" align="left">
-                        {labels.SIDEBAR_HEADER}, {currentUser}
+                    <Typography variant="h6" align="left">
+                        {labels.SIDEBAR_HEADER}
                     </Typography>
 
                     <Tooltip title={createGroupLabels.NEW_GROUP_TOOLTIP}>
@@ -134,7 +134,6 @@ const Sidebar = (props) => {
 const mapStateToProps = (state) => ({
     groups: state.groupReducer.groups,
     currentGroupId: state.groupReducer.currentGroup.id,
-    currentUser: state.authReducer.user.username,
     isLoading: state.groupReducer.isGroupsLoading,
 });
 
