@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { TextField, CssBaseline, Button, Container, Typography } from '@material-ui/core';
 import { Link, Redirect } from 'react-router-dom';
 import { useStyles } from './styles';
-import { authService, validateEmail } from '../services/auth-services';
+import { authService, validateLoginForm } from '../services/auth-services';
 import { connect } from 'react-redux';
 import { authActions } from '../services/auth-actions';
-import { authErrors, labels } from '../services/auth-constants';
+import { labels } from '../services/auth-constants';
 import { withLoading } from '../../../services/root-service';
 
 function Login(props) {
@@ -19,31 +19,6 @@ function Login(props) {
 
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-
-    const validateForm = () => {
-        const { password, email } = loginData;
-
-        //FIXME maybe make sense move checking to service
-        // I slightly changed cheking,and I dont think it needs moving now
-        if (password && email) {
-            if (password.length < 6) {
-                setPasswordError(authErrors.PASSWORD_TOO_SHORT);
-                return;
-            }
-            if (!validateEmail(email)) {
-                setEmailError(authErrors.INVALID_EMAIL);
-                return;
-            }
-            login(loginData); // when check passed we can finnaly execute login
-        } else {
-            if (!loginData.email) {
-                setEmailError(authErrors.EMPTY_FIELDS);
-            }
-            if (!loginData.password) {
-                setPasswordError(authErrors.EMPTY_FIELDS);
-            }
-        }
-    };
 
     const resetFormErrors = () => {
         if (error) resetError();
@@ -64,7 +39,7 @@ function Login(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        validateForm();
+        validateLoginForm(loginData, setEmailError, setPasswordError, login);
     };
 
     return (

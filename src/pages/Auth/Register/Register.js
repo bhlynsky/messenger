@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Container, Typography, TextField, CssBaseline, Button } from '@material-ui/core';
 import { useStyles } from './styles';
-import { authService, validateEmail } from '../services/auth-services';
+import { authService } from '../services/auth-services';
 import { authActions } from '../services/auth-actions';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { authErrors, labels } from '../services/auth-constants';
+import { labels } from '../services/auth-constants';
 import { withLoading } from '../../../services/root-service';
+import { validateRegisterForm } from '../services/auth-services';
 
 function Register(props) {
     const { register, error, resetError, registerSuccess } = props;
@@ -31,46 +32,6 @@ function Register(props) {
             ...prevState,
             [name]: value,
         }));
-    };
-
-    const validateForm = () => {
-        const { password, email, username } = registerData;
-
-        //FIXME same, move checking to service
-        // you can just return error, from service method, and here make setRegisterError
-        if (password && email && username) {
-            if (!validateEmail(email)) {
-                changeErrorValue('emailError', authErrors.INVALID_EMAIL);
-                return;
-            }
-            if (username.length < 6) {
-                changeErrorValue('usernameError', authErrors.NAME_TOO_SHORT);
-                return;
-            }
-            if (password.length < 6 && confirmPassword.length < 6) {
-                changeErrorValue('passwordError', authErrors.PASSWORD_TOO_SHORT);
-                return;
-            }
-            if (password !== confirmPassword) {
-                changeErrorValue('passwordError', authErrors.PASSWORDS_NOT_MATCHING);
-                return;
-            }
-
-            register(registerData); // when check passed we can finnaly execute register
-        } else {
-            if (!registerData.email) {
-                changeErrorValue('emailError', authErrors.EMPTY_FIELDS);
-            }
-            if (!registerData.username) {
-                changeErrorValue('usernameError', authErrors.EMPTY_FIELDS);
-            }
-            if (!registerData.password) {
-                changeErrorValue('passwordError', authErrors.EMPTY_FIELDS);
-            }
-            if (!confirmPassword) {
-                changeErrorValue('passwordError', authErrors.EMPTY_FIELDS);
-            }
-        }
     };
 
     const resetFormErrors = () => {
@@ -98,7 +59,7 @@ function Register(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        validateForm();
+        validateRegisterForm(registerData, confirmPassword, changeErrorValue, register);
     };
 
     return (
