@@ -86,7 +86,7 @@ function Register(props) {
                         autoFocus
                         onChange={handleChange}
                         value={registerData.email}
-                        error={validationErrors.emailError || error}
+                        error={!!validationErrors.emailError || !!error}
                         helperText={validationErrors.emailError}
                         inputProps={{ maxLength: 50 }}
                     />
@@ -100,7 +100,7 @@ function Register(props) {
                         name="username"
                         onChange={handleChange}
                         value={registerData.username}
-                        error={validationErrors.usernameError || error}
+                        error={!!validationErrors.usernameError || !!error}
                         helperText={validationErrors.usernameError}
                         inputProps={{ maxLength: 20, minLength: 6 }}
                     />
@@ -115,7 +115,7 @@ function Register(props) {
                         id="password"
                         onChange={handleChange}
                         value={registerData.password}
-                        error={validationErrors.passwordError || error}
+                        error={!!validationErrors.passwordError || !!error}
                         helperText={validationErrors.passwordError}
                     />
                     <TextField
@@ -129,7 +129,7 @@ function Register(props) {
                         id="confirm-password"
                         onChange={handleChangeConfirmPassword}
                         value={confirmPassword}
-                        error={validationErrors.passwordError || error}
+                        error={!!validationErrors.passwordError || !!error}
                         helperText={validationErrors.passwordError}
                     />
                     <Button

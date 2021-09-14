@@ -68,7 +68,7 @@ function Login(props) {
                             onChange={handleChange}
                             value={loginData.email}
                             helperText={emailError}
-                            error={!!error || emailError}
+                            error={!!error || !!emailError}
                             inputProps={{ maxLength: 50 }}
                         />
                         <TextField
@@ -83,7 +83,7 @@ function Login(props) {
                             autoComplete="current-password"
                             onChange={handleChange}
                             value={loginData.password}
-                            error={!!error || passwordError}
+                            error={!!error || !!passwordError}
                             helperText={passwordError}
                             inputProps={{ maxLength: 25 }}
                         />
