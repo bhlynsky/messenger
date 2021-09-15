@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { groupActions } from './components/Sidebar/services/group-actions';
 import { MessageList } from './components/Messenger/components/MessageList';
 import { SearchBar } from './components/SearchBar';
-import { getMessages } from './components/Messenger/services/message-services';
+import { messageService } from './components/Messenger/services/message-services';
 import { getGroups } from './components/Sidebar/services/group-services';
 
 function MainPage(props) {
@@ -92,7 +92,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     getGroupList: (data) => dispatch(getGroups(data)),
-    getMessagesList: (userId) => dispatch(getMessages(userId)),
+    getMessagesList: (userId) => dispatch(messageService.getMessages(userId)),
     changeCurrentGroup: (id, name) => dispatch(groupActions.changeCurrentGroup(id, name)),
 });
 

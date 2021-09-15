@@ -35,11 +35,11 @@ messageActions.sendMessageSuccess = (newMessages, newGroups, message) => ({
 });
 
 messageActions.sendMessageStart = () => ({
-    type: messageActions.SEND_MESSAGE_START,
+    type: messageActions.actionType.SEND_MESSAGE_START,
 });
 
 messageActions.sendMessageError = (error) => ({
-    type: messageActions.SEND_MESSAGE_ERROR,
+    type: messageActions.actionType.SEND_MESSAGE_ERROR,
     error,
 });
 

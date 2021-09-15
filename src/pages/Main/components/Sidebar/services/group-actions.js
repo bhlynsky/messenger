@@ -12,6 +12,10 @@ groupActions.actionType = {
     CREATE_GROUP_ERROR: '[MAIN]Create Group error',
 
     SEND_MESSAGE: '[MAIN]Send message',
+
+    LOAD_LAST_MESSAGE: '[MAIN] Load last message',
+    LOAD_LAST_MESSAGE_SUCCESS: '[MAIN] Load last message success',
+    LOAD_LAST_MESSAGE_ERROR: '[MAIN] Load last message error',
 };
 
 groupActions.createGroupStart = () => ({
@@ -45,6 +49,20 @@ groupActions.loadGroupsSuccess = (groups) => ({
 
 groupActions.loadGroupsError = (error) => ({
     type: groupActions.actionType.LOADING_ERROR,
+    error,
+});
+
+groupActions.loadLastMessage = () => ({
+    type: groupActions.actionType.LOAD_LAST_MESSAGE,
+});
+
+groupActions.loadLastMessageSuccess = (message) => ({
+    type: groupActions.actionType.LOAD_LAST_MESSAGE_SUCCESS,
+    message,
+});
+
+groupActions.loadLastMessageError = (error) => ({
+    type: groupActions.actionType.LOAD_LAST_MESSAGE_ERROR,
     error,
 });
 

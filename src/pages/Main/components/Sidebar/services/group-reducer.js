@@ -62,6 +62,28 @@ function groupReducer(state = initialState, action) {
             };
         }
 
+        case groupActions.actionType.LOAD_LAST_MESSAGE: {
+            return {
+                ...state,
+            };
+        }
+        //load success
+        case groupActions.actionType.LOAD_LAST_MESSAGE_SUCCESS: {
+            return {
+                ...state,
+                groups: action.groups,
+                isGroupsLoading: false,
+            };
+        }
+        //load error
+        case groupActions.actionType.LOAD_LAST_MESSAGE_ERROR: {
+            return {
+                ...state,
+                error: action.error,
+                isGroupsLoading: false,
+            };
+        }
+
         default:
             return { ...state };
     }

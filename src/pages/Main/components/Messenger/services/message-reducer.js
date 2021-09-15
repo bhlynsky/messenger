@@ -47,15 +47,10 @@ function messageReducer(state = initialState, action) {
         }
 
         case messageActions.actionType.SEND_MESSAGE_SUCCESS: {
-            const { message, newMessages } = action;
+            //const { message } = action;
 
             return {
                 ...state,
-                messages: newMessages,
-                currentGroup: {
-                    ...state.currentGroup,
-                    messages: [...state.currentGroup.messages, message],
-                },
                 sendMessageLoading: false,
             };
         }

@@ -46,4 +46,5 @@ const createGroup = (body) => async (dispatch) => {
         dispatch(groupActions.createGroupError(err));
     }
 };
+
 export { searchGroup, getGroups, createGroup };

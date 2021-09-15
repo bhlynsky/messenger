@@ -85,7 +85,7 @@ const Sidebar = (props) => {
                                     }
                                     key={item._id}
                                 >
-                                    <GroupPreview group={item} messageData={item.lastMessage} />
+                                    <GroupPreview group={item} messageId={item.lastMessage} />
                                 </div>
                             ))
                         ) : (

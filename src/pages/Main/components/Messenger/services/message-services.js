@@ -1,50 +1,36 @@
 import { messageActions } from './message-actions';
 
-const updateValuesOnSendMessage = (messages, groups, newMessage, groupId) => {
-    const newMessages = JSON.parse(JSON.stringify(messages));
-    const newGroups = JSON.parse(JSON.stringify(groups));
+const messageService = {};
 
-    const indexMsg = newMessages.findIndex((msg) => msg.groupId === groupId);
-    const indexGroup = newGroups.findIndex((gr) => gr._id === groupId);
+const handleResponse = (response) => {
+    return response.json().then((json) => {
+        console.log(response);
+        if (!response.ok) {
+            const error = { ...json, status: response.status, statusText: response.statusText };
 
-    if (indexMsg === -1) {
-        newMessages.push({ groupId, messages: [newMessage] });
-    } else {
-        newMessages[indexMsg].groupMessages.push(newMessage);
-    }
-
-    newGroups[indexGroup].lastMessage = newMessage; // update last message
-
-    return { newMessages, newGroups };
+            return Promise.reject(error.message);
+        }
+        return json;
+    });
 };
 
-const createNewMessage = (newMessages, newGroups, body) => async (dispatch) => {
-    try {
-        const response = await fetch(
-            'http://localhost:8080/api/message/new',
+messageService.sendNewMessage = (body) => (dispatch) => {
+    dispatch(messageActions.sendMessageStart());
 
-            {
-                method: 'POST',
-                body: JSON.stringify(body),
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-            },
-        );
-        //hadle errors
-        if (!response.ok) throw new Error(response.statusText);
-
-        const message = await response.json();
-
-        dispatch(messageActions.sendMessage(newMessages, newGroups, message));
-        return message;
-    } catch (err) {
-        console.error(err);
-    }
+    fetch('http://localhost:8080/api/message/new', {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((res) => handleResponse(res))
+        .then((message) => dispatch(messageActions.sendMessageSuccess(message)))
+        .catch((err) => dispatch(messageActions.sendMessageError(err)));
 };
 
-const getMessages = (userId) => async (dispatch) => {
+messageService.getMessages = (userId) => async (dispatch) => {
     dispatch(messageActions.loadMessages());
     try {
         const response = await fetch(`http://localhost:8080/api/message/user/${userId}`);
@@ -58,4 +44,4 @@ const getMessages = (userId) => async (dispatch) => {
     }
 };
 
-export { updateValuesOnSendMessage, createNewMessage, getMessages };
+export { messageService };
