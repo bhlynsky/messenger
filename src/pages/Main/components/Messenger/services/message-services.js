@@ -4,7 +4,6 @@ const messageService = {};
 
 const handleResponse = (response) => {
     return response.json().then((json) => {
-        console.log(response);
         if (!response.ok) {
             const error = { ...json, status: response.status, statusText: response.statusText };
 

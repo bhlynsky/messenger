@@ -9,6 +9,8 @@ messageActions.actionType = {
     SEND_MESSAGE_SUCCESS: '[MESSAGE] Send message success',
     SEND_MESSAGE_ERROR: '[MESSAGE] Send message error',
 
+    UPDATE_MESSAGES: '[MESSAGE] Update messages', // on new message received
+
     CHANGE_CURRENT_GROUP: '[MAIN]Change active group',
     CREATE_NEW_GROUP: '[MAIN]Create Group',
 };
@@ -27,10 +29,8 @@ messageActions.loadMessagesError = (error) => ({
     error,
 });
 
-messageActions.sendMessageSuccess = (newMessages, newGroups, message) => ({
+messageActions.sendMessageSuccess = (message) => ({
     type: messageActions.actionType.SEND_MESSAGE_SUCCESS,
-    newMessages,
-    newGroups,
     message,
 });
 
@@ -41,6 +41,11 @@ messageActions.sendMessageStart = () => ({
 messageActions.sendMessageError = (error) => ({
     type: messageActions.actionType.SEND_MESSAGE_ERROR,
     error,
+});
+
+messageActions.updateMessages = (message) => ({
+    type: messageActions.actionType.UPDATE_MESSAGES,
+    message,
 });
 
 export { messageActions };

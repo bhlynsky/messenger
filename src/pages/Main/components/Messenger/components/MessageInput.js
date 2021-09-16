@@ -11,7 +11,7 @@ const MessageInput = (props) => {
     const [newMessage, setNewMessage] = useState('');
     const classes = useStyles();
 
-    const { groupId, userId, username, sendMessage, isLoading } = props;
+    const { groupId, userId, username, sendMessage, isLoading, sendMessageWebSocket } = props;
 
     const onSendMessage = () => {
         if (!newMessage) return; // empty message validation
@@ -23,7 +23,8 @@ const MessageInput = (props) => {
             content: newMessage,
         };
 
-        sendMessage(message);
+        sendMessage(message); // store message in db through server
+        sendMessageWebSocket(message); // send to web socket server,then retrieve to all clients
         setNewMessage('');
     };
 

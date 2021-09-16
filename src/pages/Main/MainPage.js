@@ -9,9 +9,23 @@ import { MessageList } from './components/Messenger/components/MessageList';
 import { SearchBar } from './components/SearchBar';
 import { messageService } from './components/Messenger/services/message-services';
 import { getGroups } from './components/Sidebar/services/group-services';
+import { messageActions } from './components/Messenger/services/message-actions';
+
+const conn = new WebSocket('ws://localhost:9000/');
+
+conn.onopen = () => {
+    alert('websocket connected');
+};
+
+conn.onclose = () => {
+    alert('websocket closed');
+};
 
 function MainPage(props) {
     const classes = useStyles();
+
+    //const [messageList, setMessageList] = useState();
+
     const {
         groupName = '',
         messages,
@@ -20,6 +34,7 @@ function MainPage(props) {
         changeCurrentGroup,
         userId,
         isMessagesLoading,
+        updateMessages,
     } = props;
 
     const [searchValue, setSearchValue] = useState('');
@@ -32,9 +47,24 @@ function MainPage(props) {
         setSearchValue('');
     };
 
+    const addMessage = (message) => {
+        updateMessages(message);
+    };
+
+    conn.onmessage = (e) => {
+        const message = JSON.parse(e.data);
+        console.log(message);
+        addMessage(message);
+    };
+
+    const sendMessage = (message) =>
+        conn.send(JSON.stringify({ event: 'chat-message', payload: { message } }));
+
     useEffect(async () => {
-        const groupData = await getGroupList(userId); // is this approach is ok?
+        const groupData = await getGroupList(userId);
         await getMessagesList(userId);
+
+        //if (messages) setMessageList(messages);
 
         if (groupData[0]) {
             changeCurrentGroup(groupData[0]._id, groupData[0].groupName);
@@ -71,7 +101,7 @@ function MainPage(props) {
                     isLoading={isMessagesLoading}
                 />
 
-                <MessageInput />
+                <MessageInput sendMessageWebSocket={sendMessage} />
             </div>
         </Paper>
     );
@@ -94,6 +124,7 @@ const mapDispatchToProps = (dispatch) => ({
     getGroupList: (data) => dispatch(getGroups(data)),
     getMessagesList: (userId) => dispatch(messageService.getMessages(userId)),
     changeCurrentGroup: (id, name) => dispatch(groupActions.changeCurrentGroup(id, name)),
+    updateMessages: (message) => dispatch(messageActions.updateMessages(message)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

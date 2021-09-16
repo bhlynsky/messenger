@@ -63,6 +63,29 @@ function messageReducer(state = initialState, action) {
             };
         }
 
+        case messageActions.actionType.UPDATE_MESSAGES: {
+            const { message } = action;
+            //1 - update current group messages array currentgroup:{...state.currentGroup,messages:[currentGroup.messages,newMessage]}
+            //2 - get id , then update messages : messages[someid?].groupMessages[]
+            let newMessages = state.messages.map((msg) => {
+                if (msg.groupId === message.groupId)
+                    msg.groupMessages = [...msg.groupMessages, message];
+            });
+
+            return {
+                ...state,
+
+                //1
+                currentGroup: {
+                    ...state.currentGroup,
+                    messages: [...state.currentGroup.messages, message],
+                },
+
+                //2
+                messages: [...state.messages, newMessages],
+            };
+        }
+
         default:
             return { ...state };
     }
