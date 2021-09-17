@@ -66,7 +66,7 @@ function messageReducer(state = initialState, action) {
         case messageActions.actionType.UPDATE_MESSAGES: {
             const { message } = action;
             //1 - update current group messages array currentgroup:{...state.currentGroup,messages:[currentGroup.messages,newMessage]}
-            //2 - get id , then update messages : messages[someid?].groupMessages[]
+            //2 - get id , then update messages
             let newMessages = state.messages.map((msg) => {
                 if (msg.groupId === message.groupId)
                     msg.groupMessages = [...msg.groupMessages, message];

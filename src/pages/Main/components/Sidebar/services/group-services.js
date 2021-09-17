@@ -47,4 +47,16 @@ const createGroup = (body) => async (dispatch) => {
     }
 };
 
-export { searchGroup, getGroups, createGroup };
+const getUsers = (setUsers) => {
+    fetch('http://localhost:8080/api/auth/userlist', {
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((res) => res.json())
+        .then((res) => setUsers(res))
+        .catch((err) => console.log(err));
+};
+
+export { searchGroup, getGroups, createGroup, getUsers };

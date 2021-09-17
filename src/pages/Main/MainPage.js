@@ -24,8 +24,6 @@ conn.onclose = () => {
 function MainPage(props) {
     const classes = useStyles();
 
-    //const [messageList, setMessageList] = useState();
-
     const {
         groupName = '',
         messages,
@@ -47,24 +45,20 @@ function MainPage(props) {
         setSearchValue('');
     };
 
-    const addMessage = (message) => {
-        updateMessages(message);
-    };
-
     conn.onmessage = (e) => {
-        const message = JSON.parse(e.data);
-        console.log(message);
-        addMessage(message);
+        try {
+            const message = JSON.parse(e.data);
+            updateMessages(message);
+        } catch (err) {
+            console.log(err);
+        }
     };
 
-    const sendMessage = (message) =>
-        conn.send(JSON.stringify({ event: 'chat-message', payload: { message } }));
+    const sendMessage = (message) => conn.send(JSON.stringify({ event: 'chat-message', message }));
 
     useEffect(async () => {
         const groupData = await getGroupList(userId);
         await getMessagesList(userId);
-
-        //if (messages) setMessageList(messages);
 
         if (groupData[0]) {
             changeCurrentGroup(groupData[0]._id, groupData[0].groupName);

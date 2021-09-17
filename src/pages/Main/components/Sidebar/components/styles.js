@@ -151,4 +151,7 @@ export const useStyles = makeStyles((theme) => ({
         width: '100px',
         margin: 'auto',
     },
+    menuPaper: {
+        maxHeight: '200px',
+    },
 }));

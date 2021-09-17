@@ -1,5 +1,6 @@
 import { initialState } from '../../../services/main-services';
 import { groupActions } from '../services/group-actions';
+import { messageActions } from '../../Messenger/services/message-actions';
 
 function groupReducer(state = initialState, action) {
     switch (action.type) {
@@ -82,6 +83,18 @@ function groupReducer(state = initialState, action) {
                 error: action.error,
                 isGroupsLoading: false,
             };
+        }
+
+        case messageActions.actionType.UPDATE_MESSAGES: {
+            const { message } = action;
+
+            const newGroups = state.groups.map((gr) => {
+                if (gr._id === message.groupId) {
+                    gr.lastMessage = message._id;
+                } //server return msg without id,need it to update last message
+            });
+
+            return { ...state, groups: [...state.groups, newGroups] };
         }
 
         default:
