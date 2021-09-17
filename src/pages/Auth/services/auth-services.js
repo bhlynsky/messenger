@@ -64,72 +64,67 @@ const validateEmail = (email) => {
     return re.test(String(email).toLowerCase());
 };
 
-const checkEmptyFields = (registerData, confirmPassword) => {
-    // returns key in string format
-    if (!registerData.email) {
-        return 'emailError';
-    }
-    if (!registerData.username) {
-        return 'usernameError';
-    }
-    if (!registerData.password) {
-        return 'passwordError';
-    }
-    if (!confirmPassword) {
-        return 'passwordError';
-    }
-};
-
-const validateRegisterForm = (registerData, confirmPassword, changeErrorValue, register) => {
+const validateRegisterForm = (registerData, confirmPassword) => {
     const { password, email, username } = registerData;
+
+    const minPasswordLength = 6;
+    const minUserNameLength = 6;
+
+    const errors = {
+        email: '',
+        password: '',
+        username: '',
+    };
 
     if (password && email && username) {
         if (!validateEmail(email)) {
-            changeErrorValue('emailError', authErrors.INVALID_EMAIL);
-            return;
+            errors.email = authErrors.INVALID_EMAIL;
         }
-        if (username.length < 6) {
-            changeErrorValue('usernameError', authErrors.NAME_TOO_SHORT);
-            return;
+        if (username.length < minUserNameLength) {
+            errors.username = authErrors.NAME_TOO_SHORT;
         }
-        if (password.length < 6 && confirmPassword.length < 6) {
-            changeErrorValue('passwordError', authErrors.PASSWORD_TOO_SHORT);
-            return;
+        if (password.length < minPasswordLength && confirmPassword.length < minPasswordLength) {
+            errors.password = authErrors.PASSWORD_TOO_SHORT;
         }
         if (password !== confirmPassword) {
-            changeErrorValue('passwordError', authErrors.PASSWORDS_NOT_MATCHING);
-            return;
+            errors.password = authErrors.PASSWORDS_NOT_MATCHING;
         }
-
-        register(registerData); // when check passed we can finnaly execute register
     } else {
-        const emptyField = checkEmptyFields(registerData, confirmPassword);
-        changeErrorValue(emptyField, authErrors.EMPTY_FIELDS);
+        Object.keys(registerData).forEach((key) => {
+            if (!registerData[key]) {
+                errors[key] = authErrors.EMPTY_FIELDS;
+            }
+        });
+        if (!confirmPassword) errors.password = authErrors.EMPTY_FIELDS;
     }
+
+    return errors;
 };
 
-const validateLoginForm = (loginData, setEmailError, setPasswordError, login) => {
+const validateLoginForm = (loginData) => {
     const { password, email } = loginData;
+
+    const errors = {
+        email: '',
+        password: '',
+    };
 
     if (password && email) {
         if (!validateEmail(email)) {
-            setEmailError(authErrors.INVALID_EMAIL);
-            return;
+            errors.email = authErrors.INVALID_EMAIL;
         }
         if (password.length < 6) {
-            setPasswordError(authErrors.PASSWORD_TOO_SHORT);
-            return;
+            errors.password = authErrors.PASSWORD_TOO_SHORT;
         }
-
-        login(loginData); // when check passed we can finnaly execute login
     } else {
-        if (!loginData.email) {
-            setEmailError(authErrors.EMPTY_FIELDS);
-        }
-        if (!loginData.password) {
-            setPasswordError(authErrors.EMPTY_FIELDS);
-        }
+        Object.keys(loginData).forEach((key) => {
+            if (!loginData[key]) {
+                errors[key] = authErrors.EMPTY_FIELDS;
+            }
+        });
     }
+
+    return errors;
 };
 
 export { authService, initialState, validateEmail, validateRegisterForm, validateLoginForm };

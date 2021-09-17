@@ -5,28 +5,23 @@ import { useStyles } from './styles';
 import { authService, validateLoginForm } from '../services/auth-services';
 import { connect } from 'react-redux';
 import { authActions } from '../services/auth-actions';
-import { labels } from '../services/auth-constants';
+import { labels, initialLoginState } from '../services/auth-constants';
 import { withLoading } from '../../../services/root-service';
 
 function Login(props) {
     const classes = useStyles();
     const { login, error, user, resetError } = props;
 
-    //FIXME move initatial state to constants
-    const [loginData, setLoginData] = useState({
-        email: '',
-        password: '',
-    });
+    const [loginData, setLoginData] = useState(initialLoginState);
 
-    const [emailError, setEmailError] = useState('');
-    const [passwordError, setPasswordError] = useState('');
+    const [errors, setErrors] = useState(initialLoginState);
 
     const resetFormErrors = () => {
-        //FIXME not forget insert empty line between functional blocks
-        //FIXME and actually not clear here what should be after if, one function or 3
-        if (error) resetError();
-        setPasswordError('');
-        setEmailError('');
+        if (error) {
+            resetError();
+        }
+
+        setErrors(initialLoginState);
     };
 
     const handleChange = (e) => {
@@ -42,7 +37,13 @@ function Login(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        validateLoginForm(loginData, setEmailError, setPasswordError, login);
+        const validationErrors = validateLoginForm(loginData);
+
+        if (!validationErrors.email && !validationErrors.password) {
+            login(loginData);
+        } else {
+            setErrors(validationErrors);
+        }
     };
 
     return (
@@ -70,8 +71,8 @@ function Login(props) {
                             autoFocus
                             onChange={handleChange}
                             value={loginData.email}
-                            helperText={emailError}
-                            error={!!error || !!emailError}
+                            error={!!error || !!errors.email}
+                            helperText={errors.email}
                             inputProps={{ maxLength: 50 }}
                         />
                         <TextField
@@ -86,8 +87,8 @@ function Login(props) {
                             autoComplete="current-password"
                             onChange={handleChange}
                             value={loginData.password}
-                            error={!!error || !!passwordError}
-                            helperText={passwordError}
+                            error={!!error || !!errors.password}
+                            helperText={errors.password}
                             inputProps={{ maxLength: 25 }}
                         />
 

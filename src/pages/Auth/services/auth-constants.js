@@ -18,4 +18,15 @@ const labels = {
     REGISTER: 'Create new account',
     REGISTER_SUBMIT_BUTTON: 'Create new account',
 };
-export { authErrors, labels };
+
+const initialLoginState = {
+    email: '',
+    password: '',
+};
+
+const initialRegisterState = {
+    email: '',
+    password: '',
+    username: '',
+};
+export { authErrors, labels, initialLoginState, initialRegisterState };

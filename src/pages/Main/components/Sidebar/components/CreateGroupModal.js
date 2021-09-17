@@ -20,7 +20,6 @@ import { createGroup, getUsers } from '../services/group-services';
 import Chip from '@material-ui/core/Chip';
 import { createGroupLabels, actionButtons } from '../services/group-constants';
 import Clear from '@material-ui/icons/Clear';
-//import { withLoading } from '../../../../../services/root-service';
 
 const CreateGroupModal = (props) => {
     const { handleClose, createNewGroup, currentUserId, isLoading } = props;
@@ -40,8 +39,8 @@ const CreateGroupModal = (props) => {
             } else {
                 const membersId = newGroup.members.map((user) => {
                     return user.userId;
-                }); //newGroup.member : [{username,userId}...] => membersId :[userId...]
-                console.log(membersId);
+                }); //newGroup.member : [{username,userId}...] ===> membersId :[userId,...]
+
                 const body = { ...newGroup, members: [...membersId, currentUserId] };
                 // making copy here so there wont be user id in chip list
 

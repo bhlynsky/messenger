@@ -5,7 +5,7 @@ import { authService } from '../services/auth-services';
 import { authActions } from '../services/auth-actions';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { labels } from '../services/auth-constants';
+import { labels, initialRegisterState } from '../services/auth-constants';
 import { withLoading } from '../../../services/root-service';
 import { validateRegisterForm } from '../services/auth-services';
 
@@ -13,31 +13,18 @@ function Register(props) {
     const { register, error, resetError, registerSuccess } = props;
     const classes = useStyles();
 
-    const [registerData, setRegisterData] = useState({
-        email: '',
-        username: '',
-        password: '',
-    });
+    const [registerData, setRegisterData] = useState(initialRegisterState);
 
-    const [validationErrors, setValidationErrors] = useState({
-        emailError: '',
-        usernameError: '',
-        passwordError: '',
-    });
+    const [errors, setErrors] = useState(initialRegisterState);
 
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    const changeErrorValue = (name, value) => {
-        setValidationErrors((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
-
     const resetFormErrors = () => {
-        setValidationErrors({ emailError: '', usernameError: '', passwordError: '' });
+        if (error) {
+            resetError();
+        }
 
-        if (error) resetError();
+        setErrors(initialRegisterState);
     };
 
     const handleChange = (e) => {
@@ -59,7 +46,13 @@ function Register(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        validateRegisterForm(registerData, confirmPassword, changeErrorValue, register);
+        const validationErrors = validateRegisterForm(registerData, confirmPassword);
+
+        if (!validationErrors.email && !validationErrors.password && !validationErrors.username) {
+            register(registerData);
+        } else {
+            setErrors(validationErrors);
+        }
     };
 
     return (
@@ -86,8 +79,8 @@ function Register(props) {
                         autoFocus
                         onChange={handleChange}
                         value={registerData.email}
-                        error={!!validationErrors.emailError || !!error}
-                        helperText={validationErrors.emailError}
+                        error={!!errors.email || !!error}
+                        helperText={errors.email}
                         inputProps={{ maxLength: 50 }}
                     />
                     <TextField
@@ -100,8 +93,8 @@ function Register(props) {
                         name="username"
                         onChange={handleChange}
                         value={registerData.username}
-                        error={!!validationErrors.usernameError || !!error}
-                        helperText={validationErrors.usernameError}
+                        error={!!errors.username || !!error}
+                        helperText={errors.username}
                         inputProps={{ maxLength: 20, minLength: 6 }}
                     />
                     <TextField
@@ -115,8 +108,8 @@ function Register(props) {
                         id="password"
                         onChange={handleChange}
                         value={registerData.password}
-                        error={!!validationErrors.passwordError || !!error}
-                        helperText={validationErrors.passwordError}
+                        error={!!errors.password || !!error}
+                        helperText={errors.password}
                     />
                     <TextField
                         variant="outlined"
@@ -129,8 +122,8 @@ function Register(props) {
                         id="confirm-password"
                         onChange={handleChangeConfirmPassword}
                         value={confirmPassword}
-                        error={!!validationErrors.passwordError || !!error}
-                        helperText={validationErrors.passwordError}
+                        error={!!errors.password || !!error}
+                        helperText={errors.password}
                     />
                     <Button
                         type="submit"
