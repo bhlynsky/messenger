@@ -12,6 +12,7 @@ function Login(props) {
     const classes = useStyles();
     const { login, error, user, resetError } = props;
 
+    //FIXME move initatial state to constants
     const [loginData, setLoginData] = useState({
         email: '',
         password: '',
@@ -21,6 +22,8 @@ function Login(props) {
     const [passwordError, setPasswordError] = useState('');
 
     const resetFormErrors = () => {
+        //FIXME not forget insert empty line between functional blocks
+        //FIXME and actually not clear here what should be after if, one function or 3
         if (error) resetError();
         setPasswordError('');
         setEmailError('');
