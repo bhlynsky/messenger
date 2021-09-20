@@ -95,7 +95,7 @@ function MainPage(props) {
                     isLoading={isMessagesLoading}
                 />
 
-                <MessageInput sendMessageWebSocket={sendMessage} />
+                <MessageInput sendMessage={sendMessage} />
             </div>
         </Paper>
     );

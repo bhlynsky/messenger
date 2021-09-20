@@ -10,8 +10,8 @@ import {
     FormHelperText,
     Divider,
     IconButton,
-    Select,
     MenuItem,
+    Select,
     CircularProgress,
 } from '@material-ui/core';
 import { useStyles } from './styles';

@@ -5,13 +5,12 @@ import SendIcon from '@material-ui/icons/Send';
 import AttachmentIcon from '@material-ui/icons/Attachment';
 import { connect } from 'react-redux';
 import { labels } from '../services/message-constants';
-import { messageService } from '../services/message-services';
 
 const MessageInput = (props) => {
     const [newMessage, setNewMessage] = useState('');
     const classes = useStyles();
 
-    const { groupId, userId, username, sendMessage, isLoading, sendMessageWebSocket } = props;
+    const { groupId, userId, username, isLoading, sendMessage } = props;
 
     const onSendMessage = () => {
         if (!newMessage) return; // empty message validation
@@ -23,8 +22,7 @@ const MessageInput = (props) => {
             content: newMessage,
         };
 
-        sendMessage(message); // store message in db through server
-        sendMessageWebSocket(message); // send to web socket server,then retrieve to all clients
+        sendMessage(message); // send to web socket server,then retrieve to all clients
         setNewMessage('');
     };
 
@@ -78,8 +76,4 @@ const mapStateToProps = (state) => ({
     isLoading: state.messageReducer.sendMessageLoading,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    sendMessage: (body) => dispatch(messageService.sendNewMessage(body)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MessageInput);
+export default connect(mapStateToProps)(MessageInput);
