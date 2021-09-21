@@ -1,6 +1,6 @@
 import { authActions } from './auth-actions';
 import { authErrors } from './auth-constants';
-
+import { handleFetchResponse, fetchWithTimeout } from '../../../services/root-service';
 const authService = {};
 
 const initialState = {
@@ -12,28 +12,21 @@ const initialState = {
 
 ///             HTTP authorization/authentication requests
 
-const handleResponse = (response) => {
-    return response.json().then((json) => {
-        if (!response.ok) {
-            const error = { ...json, status: response.status, statusText: response.statusText };
-            return Promise.reject(error.message);
-        }
-        return json;
-    });
-};
-
 authService.register = (data) => (dispatch) => {
     dispatch(authActions.registerStart());
 
-    fetch('http://localhost:8080/api/auth/register', {
+    const url = 'http://localhost:8080/api/auth/register';
+    const options = {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
-    })
-        .then((res) => handleResponse(res))
+    };
+
+    fetchWithTimeout(url, options)
+        .then((res) => handleFetchResponse(res))
         .then(() => dispatch(authActions.registerSuccess()))
         .catch((err) => dispatch(authActions.registerError(err)));
 };
@@ -41,15 +34,18 @@ authService.register = (data) => (dispatch) => {
 authService.login = (data) => (dispatch) => {
     dispatch(authActions.loginStart());
 
-    fetch('http://localhost:8080/api/auth/login', {
+    const url = 'http://localhost:8080/api/auth/login';
+    const options = {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
-    })
-        .then((res) => handleResponse(res))
+    };
+
+    fetchWithTimeout(url, options)
+        .then((res) => handleFetchResponse(res))
         .then((user) => dispatch(authActions.loginSuccess(user)))
         .catch((err) => dispatch(authActions.loginError(err)));
 };

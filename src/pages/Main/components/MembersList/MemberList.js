@@ -3,6 +3,7 @@ import React from 'react';
 import { Avatar, Divider, Typography, Grid, List } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { labels } from './services/members-constants';
+
 const MemberList = ({ members }) => {
     const classes = useStyles();
     const maxUsernameLength = 10;

@@ -1,4 +1,5 @@
 import { groupActions } from './group-actions';
+import { fetchWithTimeout } from '../../../../../services/root-service';
 
 const searchGroup = (target, groups) => {
     if (target) {
@@ -12,8 +13,10 @@ const searchGroup = (target, groups) => {
 const getGroups = (userId) => async (dispatch) => {
     dispatch(groupActions.loadGroups());
 
+    const url = `http://localhost:8080/api/group/${userId}`;
+
     try {
-        const response = await fetch(`http://localhost:8080/api/group/${userId}`);
+        const response = await fetchWithTimeout(url);
 
         if (!response.ok) throw new Error(response.statusText);
 
@@ -28,15 +31,18 @@ const getGroups = (userId) => async (dispatch) => {
 const createGroup = (body) => async (dispatch) => {
     dispatch(groupActions.createGroupStart());
 
+    const url = 'http://localhost:8080/api/group/new';
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    };
+
     try {
-        const response = await fetch('http://localhost:8080/api/group/new', {
-            method: 'POST',
-            body: JSON.stringify(body),
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-        });
+        const response = await fetchWithTimeout(url, options);
         if (!response.ok) throw new Error(response.statusText);
 
         const newGroup = await response.json();
@@ -48,12 +54,15 @@ const createGroup = (body) => async (dispatch) => {
 };
 
 const getUsers = (setUsers) => {
-    fetch('http://localhost:8080/api/auth/userlist', {
+    const url = 'http://localhost:8080/api/auth/userlist';
+    const options = {
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
-    })
+    };
+
+    fetchWithTimeout(url, options)
         .then((res) => res.json())
         .then((res) => setUsers(res))
         .catch((err) => console.log(err));
