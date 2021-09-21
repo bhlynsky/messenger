@@ -14,7 +14,7 @@ const GroupPreview = (props) => {
     const [lastMessage, setLastMessage] = useState();
 
     const onChangeGroup = () => {
-        changeCurrentGroup(group._id, group.groupName);
+        changeCurrentGroup(group);
     };
 
     const maxMessageLength = 20;
@@ -69,8 +69,7 @@ const GroupPreview = (props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    changeCurrentGroup: (groupId, groupName) =>
-        dispatch(groupActions.changeCurrentGroup(groupId, groupName)),
+    changeCurrentGroup: (group) => dispatch(groupActions.changeCurrentGroup(group)),
 });
 
 export default connect(null, mapDispatchToProps)(GroupPreview);

@@ -26,9 +26,9 @@ function messageReducer(state = initialState, action) {
         }
 
         case messageActions.actionType.CHANGE_CURRENT_GROUP: {
-            let { groupId } = action;
+            let { group } = action;
             // get messages for current group when changing group
-            const index = state.messages.findIndex((msg) => msg.groupId === groupId);
+            const index = state.messages.findIndex((msg) => msg.groupId === group._id);
             let groupMessages = [];
 
             if (index !== -1) {
@@ -38,7 +38,7 @@ function messageReducer(state = initialState, action) {
 
             return {
                 ...state,
-                currentGroup: { id: groupId, messages: groupMessages },
+                currentGroup: { group, messages: groupMessages },
             };
         }
 
@@ -65,8 +65,8 @@ function messageReducer(state = initialState, action) {
 
         case messageActions.actionType.UPDATE_MESSAGES: {
             const { message } = action;
-            //1 - update current group messages array currentgroup:{...state.currentGroup,messages:[currentGroup.messages,newMessage]}
-            //2 - get id , then update messages
+            //1 - update current group messages array => state.currentgroup:{...state.currentGroup,messages:[currentGroup.messages,newMessage]}
+            //2 - get id , then update state.messages
             let newMessages = state.messages.map((msg) => {
                 if (msg.groupId === message.groupId)
                     msg.groupMessages = [...msg.groupMessages, message];

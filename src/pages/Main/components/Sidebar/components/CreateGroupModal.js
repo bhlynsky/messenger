@@ -22,7 +22,7 @@ import { createGroupLabels, actionButtons } from '../services/group-constants';
 import Clear from '@material-ui/icons/Clear';
 
 const CreateGroupModal = (props) => {
-    const { handleClose, createNewGroup, currentUserId, isLoading } = props;
+    const { handleClose, createNewGroup, currentUserId, currentUserName, isLoading } = props;
 
     const [newGroup, setNewGroup] = useState({ groupName: '', members: [] }); // members : [ {username:'',userId:''},{},{}]
     const [errors, setErrors] = useState({ groupName: '', members: '' });
@@ -37,11 +37,13 @@ const CreateGroupModal = (props) => {
             if (newGroup.members.length === 0) {
                 setErrors({ ...errors, members: createGroupLabels.ERROR_NO_USERS });
             } else {
-                const membersId = newGroup.members.map((user) => {
-                    return user.userId;
-                }); //newGroup.member : [{username,userId}...] ===> membersId :[userId,...]
-
-                const body = { ...newGroup, members: [...membersId, currentUserId] };
+                const body = {
+                    ...newGroup,
+                    members: [
+                        ...newGroup.members,
+                        { userId: currentUserId, username: currentUserName },
+                    ],
+                };
                 // making copy here so there wont be user id in chip list
 
                 await createNewGroup(body);
@@ -216,6 +218,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
     currentUserId: state.authReducer.user._id,
+    currentUserName: state.authReducer.user.username,
     isLoading: state.groupReducer.createGroupLoading,
 });
 

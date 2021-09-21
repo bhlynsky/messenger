@@ -18,7 +18,7 @@ const searchGroupLabels = {
 
 const labels = {
     SIDEBAR_HEADER: 'Your groups',
-    SIDEBAR_NO_GROUPS: 'No results were found for your search!',
+    SIDEBAR_NO_GROUPS: 'No groups!',
     SIDEBAR_OPEN: 'Open sidebar ',
     SIDEBAR_CLOSE: ' Close sidebar',
     NO_MESSAGES: 'No messages in this group yet',

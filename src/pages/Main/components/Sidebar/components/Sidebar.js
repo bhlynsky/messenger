@@ -133,7 +133,7 @@ const Sidebar = (props) => {
 
 const mapStateToProps = (state) => ({
     groups: state.groupReducer.groups,
-    currentGroupId: state.groupReducer.currentGroup.id,
+    currentGroupId: state.groupReducer.currentGroup._id,
     isLoading: state.groupReducer.isGroupsLoading,
 });
 

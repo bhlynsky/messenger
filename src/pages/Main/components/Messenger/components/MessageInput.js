@@ -70,7 +70,7 @@ const MessageInput = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    groupId: state.messageReducer.currentGroup.id,
+    groupId: state.groupReducer.currentGroup._id,
     userId: state.authReducer.user._id,
     username: state.authReducer.user.username,
     isLoading: state.messageReducer.sendMessageLoading,

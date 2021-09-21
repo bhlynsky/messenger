@@ -9,7 +9,7 @@ const GroupPreviewMinimized = ({ group, changeCurrentGroup }) => {
     const classes = useStyles();
 
     const onChangeGroup = () => {
-        changeCurrentGroup(group._id, group.groupName);
+        changeCurrentGroup(group);
     };
 
     return (
@@ -22,8 +22,7 @@ const GroupPreviewMinimized = ({ group, changeCurrentGroup }) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    changeCurrentGroup: (groupId, groupName) =>
-        dispatch(groupActions.changeCurrentGroup(groupId, groupName)),
+    changeCurrentGroup: (group) => dispatch(groupActions.changeCurrentGroup(group)),
 });
 
 export default connect(null, mapDispatchToProps)(GroupPreviewMinimized);

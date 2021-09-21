@@ -28,18 +28,10 @@ function groupReducer(state = initialState, action) {
         }
 
         case groupActions.actionType.CHANGE_CURRENT_GROUP: {
-            // get messages for current group when changing group
-
             return {
                 ...state,
-                currentGroup: { id: action.groupId, groupName: action.groupName },
+                currentGroup: action.group,
             };
-        }
-
-        case groupActions.actionType.SEND_MESSAGE: {
-            const { newGroups } = action;
-
-            return { ...state, groups: newGroups };
         }
 
         case groupActions.actionType.CREATE_GROUP_START: {
@@ -91,14 +83,15 @@ function groupReducer(state = initialState, action) {
             const newGroups = state.groups.map((gr) => {
                 if (gr._id === message.groupId) {
                     gr.lastMessage = message._id;
-                } //server return msg without id,need it to update last message
+                }
+                return gr;
             });
 
-            return { ...state, groups: [...state.groups, newGroups] };
+            return { ...state, groups: newGroups };
         }
 
         default:
-            return { ...state };
+            return state;
     }
 }
 export default groupReducer;

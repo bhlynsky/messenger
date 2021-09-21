@@ -32,10 +32,9 @@ groupActions.createGroupError = (error) => ({
     error,
 });
 
-groupActions.changeCurrentGroup = (groupId, groupName) => ({
+groupActions.changeCurrentGroup = (group) => ({
     type: groupActions.actionType.CHANGE_CURRENT_GROUP,
-    groupId,
-    groupName,
+    group,
 });
 
 groupActions.loadGroups = () => ({

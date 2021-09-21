@@ -10,15 +10,16 @@ import { SearchBar } from './components/SearchBar';
 import { messageService } from './components/Messenger/services/message-services';
 import { getGroups } from './components/Sidebar/services/group-services';
 import { messageActions } from './components/Messenger/services/message-actions';
+import MemberList from './components/MembersList/MemberList';
 
 const conn = new WebSocket('ws://localhost:9000/');
 
 conn.onopen = () => {
-    alert('websocket connected');
+    console.log('websocket connected');
 };
 
 conn.onclose = () => {
-    alert('websocket closed');
+    console.log('websocket closed');
 };
 
 function MainPage(props) {
@@ -61,7 +62,7 @@ function MainPage(props) {
         await getMessagesList(userId);
 
         if (groupData[0]) {
-            changeCurrentGroup(groupData[0]._id, groupData[0].groupName);
+            changeCurrentGroup(groupData[0]);
         }
     }, []);
 
@@ -97,22 +98,17 @@ function MainPage(props) {
 
                 <MessageInput sendMessage={sendMessage} />
             </div>
+            <MemberList />
         </Paper>
     );
 }
 
-const mapStateToProps = (state) => {
-    const groupName = state.groupReducer.currentGroup.groupName;
-    const messages = state.messageReducer.currentGroup.messages;
-    const userId = state.authReducer.user._id;
-    const isMessagesLoading = state.messageReducer.isMessagesLoading;
-    return {
-        messages,
-        groupName,
-        userId,
-        isMessagesLoading,
-    };
-};
+const mapStateToProps = (state) => ({
+    groupName: state.groupReducer.currentGroup.groupName,
+    messages: state.messageReducer.currentGroup.messages,
+    userId: state.authReducer.user._id,
+    isMessagesLoading: state.messageReducer.isMessagesLoading,
+});
 
 const mapDispatchToProps = (dispatch) => ({
     getGroupList: (data) => dispatch(getGroups(data)),

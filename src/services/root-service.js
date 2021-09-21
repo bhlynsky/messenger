@@ -35,4 +35,15 @@ const renderWithRedux = (
     };
 };
 
-export { withLoading, renderWithRedux };
+const handleFetchResponse = (response) => {
+    return response.json().then((json) => {
+        if (!response.ok) {
+            const error = { ...json, status: response.status, statusText: response.statusText };
+
+            return Promise.reject(error.message);
+        }
+        return json;
+    });
+};
+
+export { withLoading, renderWithRedux, handleFetchResponse };
