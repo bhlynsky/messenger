@@ -31,6 +31,11 @@ export const Message = (props) => {
         <Typography variant="body1">{getHighlightedText(content, searchValue)}</Typography>
     );
 
+    const formatDate = (date) => {
+        const formatedDate = new Date(date);
+        return formatedDate.toDateString();
+    };
+
     useEffect(() => {
         if (scrollRef.current) {
             scrollRef.current.scrollIntoView({
@@ -53,7 +58,7 @@ export const Message = (props) => {
                 <Grid container direction="row" alignItems="center" justifyContent="space-between">
                     {messageComponent}
                     <Typography variant="body2" align="left">
-                        {createdAt}
+                        {formatDate(createdAt)}
                     </Typography>
                 </Grid>
             </div>

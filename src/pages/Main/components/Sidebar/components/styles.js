@@ -16,7 +16,7 @@ export const useStyles = makeStyles((theme) => ({
         position: 'absolute',
         top: '20%',
         left: '50%',
-        marginLeft: -250,
+        marginLeft: '-150px',
         width: 400,
         backgroundColor: theme.palette.background.default,
         border: '2px solid #000',

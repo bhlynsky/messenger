@@ -82,7 +82,8 @@ const CreateGroupModal = (props) => {
     };
 
     useEffect(() => {
-        getUsers(setUsers);
+        const users = getUsers();
+        setUsers(users);
     }, []);
 
     const InputTitle = (props) => {

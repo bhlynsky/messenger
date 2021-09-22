@@ -1,12 +1,24 @@
 import { useStyles } from './styles';
-import React from 'react';
-import { Avatar, Divider, Typography, Grid, List } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Avatar, Divider, Typography, Grid, List, Button, Modal } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { labels } from './services/members-constants';
+import AddUserModal from './AddUserModal';
 
 const MemberList = ({ members }) => {
     const classes = useStyles();
     const maxUsernameLength = 10;
+
+    const [modalIsOpen, setModalOpen] = useState(false);
+
+    const handleOpenModal = () => {
+        setModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setModalOpen(false);
+    };
+
     return (
         <div className={classes.container}>
             <div>
@@ -33,6 +45,13 @@ const MemberList = ({ members }) => {
                         </Grid>
                     ))}
             </List>
+
+            <Modal open={modalIsOpen} onClose={handleCloseModal}>
+                <AddUserModal handleClose={handleCloseModal} />
+            </Modal>
+            <Button onClick={handleOpenModal} variant="contained" color="primary">
+                Add user
+            </Button>
         </div>
     );
 };

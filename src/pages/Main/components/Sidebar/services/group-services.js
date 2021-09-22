@@ -53,7 +53,7 @@ const createGroup = (body) => async (dispatch) => {
     }
 };
 
-const getUsers = (setUsers) => {
+const getUsers = async () => {
     const url = 'http://localhost:8080/api/auth/userlist';
     const options = {
         headers: {
@@ -61,11 +61,14 @@ const getUsers = (setUsers) => {
             'Content-Type': 'application/json',
         },
     };
+    let users = [];
 
-    fetchWithTimeout(url, options)
+    await fetchWithTimeout(url, options)
         .then((res) => res.json())
-        .then((res) => setUsers(res))
+        .then((res) => (users = res))
         .catch((err) => console.log(err));
+
+    return users;
 };
 
 export { searchGroup, getGroups, createGroup, getUsers };
