@@ -19,7 +19,7 @@ import { getUsers } from '../Sidebar/services/group-services';
 import { updateMembers } from './services/members-services';
 import { connect } from 'react-redux';
 
-const AddUserModal = ({ handleClose, groupId, members }) => {
+const AddUserModal = ({ handleClose, groupId, members, updateGroupMembers }) => {
     const classes = useStyles();
 
     const [error, setError] = useState('');
@@ -50,7 +50,8 @@ const AddUserModal = ({ handleClose, groupId, members }) => {
         if (newMembers.length === 0) {
             setError(labels.ERROR_NO_USERS);
         } else {
-            updateMembers(groupId, newMembers);
+            // send request to server
+            updateGroupMembers(groupId, newMembers);
 
             handleClose();
         }
@@ -58,6 +59,7 @@ const AddUserModal = ({ handleClose, groupId, members }) => {
 
     useEffect(async () => {
         const users = await getUsers();
+        // exclude current members
 
         const withoutMembers = users.filter((user) => {
             return (
@@ -69,6 +71,8 @@ const AddUserModal = ({ handleClose, groupId, members }) => {
 
         setUsers(withoutMembers);
     }, []);
+
+    console.log(groupId);
 
     return (
         <div className={classes.modalForm}>
@@ -142,4 +146,8 @@ const mapStateToProps = (state) => ({
     members: state.groupReducer.currentGroup.members,
 });
 
-export default connect(mapStateToProps)(AddUserModal);
+const mapDispatchToProps = (dispatch) => ({
+    updateGroupMembers: (groupId, newMembers) => dispatch(updateMembers(groupId, newMembers)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddUserModal);

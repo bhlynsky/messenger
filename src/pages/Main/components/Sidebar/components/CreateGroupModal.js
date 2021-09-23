@@ -81,8 +81,9 @@ const CreateGroupModal = (props) => {
         }
     };
 
-    useEffect(() => {
-        const users = getUsers();
+    useEffect(async () => {
+        const users = await getUsers();
+
         setUsers(users);
     }, []);
 

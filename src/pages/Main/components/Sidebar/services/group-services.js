@@ -54,7 +54,7 @@ const createGroup = (body) => async (dispatch) => {
 };
 
 const getUsers = async () => {
-    const url = 'http://localhost:8080/api/auth/userlist';
+    const url = 'http://localhost:8080/api/user/userlist';
     const options = {
         headers: {
             Accept: 'application/json',

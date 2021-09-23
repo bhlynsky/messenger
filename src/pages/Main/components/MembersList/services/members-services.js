@@ -1,6 +1,7 @@
-import { fetchWithTimeout } from '../../../../../services/root-service';
+import { fetchWithTimeout, handleFetchResponse } from '../../../../../services/root-service';
+import { groupActions } from '../../Sidebar/services/group-actions';
 
-const updateMembers = (groupId, newMembers) => {
+const updateMembers = (groupId, newMembers) => (dispatch) => {
     const url = `http://localhost:8080/api/group/addusers/${groupId}`;
     const options = {
         method: 'PUT',
@@ -12,8 +13,8 @@ const updateMembers = (groupId, newMembers) => {
     };
 
     fetchWithTimeout(url, options)
-        .then((res) => res.json())
-        .then((res) => console.log(res))
+        .then((res) => handleFetchResponse(res))
+        .then((res) => dispatch(groupActions.updateGroupMembers(res)))
         .catch((err) => console.log(err));
 };
 

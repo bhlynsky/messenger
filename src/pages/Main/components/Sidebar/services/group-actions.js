@@ -16,6 +16,8 @@ groupActions.actionType = {
     LOAD_LAST_MESSAGE: '[MAIN] Load last message',
     LOAD_LAST_MESSAGE_SUCCESS: '[MAIN] Load last message success',
     LOAD_LAST_MESSAGE_ERROR: '[MAIN] Load last message error',
+
+    UPDATE_MEMBERS: '[GROUP]Update group members',
 };
 
 groupActions.createGroupStart = () => ({
@@ -63,6 +65,11 @@ groupActions.loadLastMessageSuccess = (message) => ({
 groupActions.loadLastMessageError = (error) => ({
     type: groupActions.actionType.LOAD_LAST_MESSAGE_ERROR,
     error,
+});
+
+groupActions.updateGroupMembers = (newMembers) => ({
+    type: groupActions.actionType.UPDATE_MEMBERS,
+    newMembers,
 });
 
 export { groupActions };

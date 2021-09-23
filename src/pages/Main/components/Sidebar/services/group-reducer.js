@@ -90,6 +90,28 @@ function groupReducer(state = initialState, action) {
             return { ...state, groups: newGroups };
         }
 
+        case groupActions.actionType.UPDATE_MEMBERS: {
+            const { newMembers } = action;
+
+            //update current group members
+
+            const newCurrentGroup = {
+                ...state.currentGroup,
+                members: newMembers,
+            };
+
+            //update members in all group list
+
+            const newGroups = state.groups.map((gr) => {
+                if (gr._id === state.currentGroup._id) {
+                    gr.members = newMembers;
+                }
+                return gr;
+            });
+
+            return { ...state, currentGroup: newCurrentGroup, groups: newGroups };
+        }
+
         default:
             return state;
     }
