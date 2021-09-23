@@ -72,8 +72,6 @@ const AddUserModal = ({ handleClose, groupId, members, updateGroupMembers }) => 
         setUsers(withoutMembers);
     }, []);
 
-    console.log(groupId);
-
     return (
         <div className={classes.modalForm}>
             <Typography className={classes.modalLabels}>
