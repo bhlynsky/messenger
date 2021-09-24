@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { TextField, CssBaseline, Button, Container, Typography } from '@material-ui/core';
+import {
+    TextField,
+    CssBaseline,
+    Button,
+    Container,
+    Typography,
+    InputAdornment,
+    IconButton,
+} from '@material-ui/core';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { Link, Redirect } from 'react-router-dom';
 import { useStyles } from './styles';
 import { authService, validateLoginForm } from '../services/auth-services';
@@ -14,6 +23,8 @@ function Login(props) {
 
     const [loginData, setLoginData] = useState(initialLoginState);
     const [errors, setErrors] = useState(initialLoginState);
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const resetFormErrors = () => {
         if (error) {
@@ -43,6 +54,10 @@ function Login(props) {
         } else {
             setErrors(validationErrors);
         }
+    };
+
+    const handleTogglePassword = () => {
+        setShowPassword(!showPassword);
     };
 
     return (
@@ -80,8 +95,8 @@ function Login(props) {
                             required
                             fullWidth
                             name="password"
+                            type={showPassword ? 'text' : 'password'}
                             label={labels.PASSWORD}
-                            type="password"
                             id="password"
                             autoComplete="current-password"
                             onChange={handleChange}
@@ -89,6 +104,18 @@ function Login(props) {
                             error={!!error || !!errors.password}
                             helperText={errors.password}
                             inputProps={{ maxLength: 25 }}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleTogglePassword}
+                                        >
+                                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
                         />
 
                         <Button

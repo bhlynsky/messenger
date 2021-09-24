@@ -19,11 +19,9 @@ const PrivateRouter = () => {
     return (
         <Switch>
             <Route exact path="/">
-                <Redirect to="/main/1" />
+                <Redirect from="/" to="/main/1" />
             </Route>
-            <Route path="/main/:groupId">
-                <MainPage />
-            </Route>
+            <Route path="/main/:groupId" component={(props) => <MainPage {...props} />} />
             <Route path="/user">
                 <UserPage />
             </Route>

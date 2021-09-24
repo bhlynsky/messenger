@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
-import { Container, Typography, TextField, CssBaseline, Button } from '@material-ui/core';
+import {
+    Container,
+    Typography,
+    TextField,
+    CssBaseline,
+    Button,
+    InputAdornment,
+    IconButton,
+} from '@material-ui/core';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { useStyles } from './styles';
 import { authService } from '../services/auth-services';
 import { authActions } from '../services/auth-actions';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
 import { labels, initialRegisterState } from '../services/auth-constants';
 import { withLoading } from '../../../services/root-service';
 import { validateRegisterForm } from '../services/auth-services';
@@ -16,6 +24,11 @@ function Register(props) {
     const [registerData, setRegisterData] = useState(initialRegisterState);
     const [errors, setErrors] = useState(initialRegisterState);
     const [confirmPassword, setConfirmPassword] = useState('');
+
+    const [showPassword, setShowPassword] = useState({
+        password: false,
+        confirmPassword: false,
+    });
 
     const resetFormErrors = () => {
         if (error) {
@@ -42,12 +55,30 @@ function Register(props) {
         resetFormErrors();
     };
 
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevState) => ({
+            ...prevState,
+            password: !showPassword.password,
+        }));
+    };
+
+    const toggleConfirmPasswordVisibility = () => {
+        setShowPassword((prevState) => ({
+            ...prevState,
+            confirmPassword: !showPassword.confirmPassword,
+        }));
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const validationErrors = validateRegisterForm(registerData, confirmPassword);
 
         if (!validationErrors.email && !validationErrors.password && !validationErrors.username) {
             register(registerData);
+
+            if (registerSuccess) {
+                window.location.href = '/#/login';
+            }
         } else {
             setErrors(validationErrors);
         }
@@ -56,7 +87,7 @@ function Register(props) {
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
-            {registerSuccess && <Redirect to="/login" />}
+
             <div className={classes.paper}>
                 <Typography variant="h2">{labels.REGISTER}</Typography>
                 {error && (
@@ -93,7 +124,7 @@ function Register(props) {
                         value={registerData.username}
                         error={!!errors.username || !!error}
                         helperText={errors.username}
-                        inputProps={{ maxLength: 20, minLength: 6 }}
+                        inputProps={{ maxLength: 20 }}
                     />
                     <TextField
                         variant="outlined"
@@ -102,12 +133,24 @@ function Register(props) {
                         fullWidth
                         name="password"
                         label={labels.PASSWORD}
-                        type="password"
+                        type={showPassword.password ? 'text' : 'password'}
                         id="password"
                         onChange={handleChange}
                         value={registerData.password}
                         error={!!errors.password || !!error}
                         helperText={errors.password}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={togglePasswordVisibility}
+                                    >
+                                        {showPassword.password ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
                     />
                     <TextField
                         variant="outlined"
@@ -116,12 +159,29 @@ function Register(props) {
                         fullWidth
                         name="passwordConfirm"
                         label={labels.PASSWORD_CONFIRM}
-                        type="password"
+                        type={showPassword.confirmPassword ? 'text' : 'password'}
                         id="confirm-password"
                         onChange={handleChangeConfirmPassword}
                         value={confirmPassword}
                         error={!!errors.password || !!error}
                         helperText={errors.password}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={toggleConfirmPasswordVisibility}
+                                        name="confirmPassword"
+                                    >
+                                        {showPassword.confirmPassword ? (
+                                            <Visibility />
+                                        ) : (
+                                            <VisibilityOff />
+                                        )}
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
                     />
                     <Button
                         type="submit"
