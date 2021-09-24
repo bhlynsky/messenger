@@ -83,8 +83,12 @@ const CreateGroupModal = (props) => {
 
     useEffect(async () => {
         const users = await getUsers();
-
-        setUsers(users);
+        const withoutUser = users.filter((us) => {
+            if (us.userId !== currentUserId) {
+                return us;
+            }
+        });
+        setUsers(withoutUser);
     }, []);
 
     const InputTitle = (props) => {

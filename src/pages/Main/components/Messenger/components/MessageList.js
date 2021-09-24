@@ -14,13 +14,12 @@ export const MessageList = ({ messages, searchValue, isLoading }) => {
         }
     }, [messages]);
 
+    const messagesNotEmpty = messages && messages.length > 0;
+
     return (
         <List className={classes.messageContainer}>
             {isLoading && <CircularProgress className={classes.spinner} />}
-            {
-                //FIXME - better make such kind of calculation before render and move to constant messages && messages.length > 0
-                messages &&
-                messages.length > 0 &&
+            {messagesNotEmpty &&
                 messages.map((msg) => (
                     <Message
                         messageData={msg}

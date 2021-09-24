@@ -6,4 +6,5 @@ export const labels = {
     CLOSE_BUTTON: 'Close',
     ERROR_NO_USERS: 'Select someone before saving',
     HEADER: 'Pick people and add them to this group',
+    SUBMIT_BUTTON_TEXT: 'Add user',
 };

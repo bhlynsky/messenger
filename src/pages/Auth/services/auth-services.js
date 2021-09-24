@@ -64,7 +64,7 @@ const validateRegisterForm = (registerData, confirmPassword) => {
     const { password, email, username } = registerData;
 
     const minPasswordLength = 6;
-    const minUserNameLength = 6;
+    const minUserNameLength = 3;
 
     const errors = {
         email: '',
@@ -72,19 +72,19 @@ const validateRegisterForm = (registerData, confirmPassword) => {
         username: '',
     };
 
-    //FIXME empty lines between blocks
     if (password && email && username) {
         if (!validateEmail(email)) {
             errors.email = authErrors.INVALID_EMAIL;
         }
+
         if (username.length < minUserNameLength) {
             errors.username = authErrors.NAME_TOO_SHORT;
         }
 
-        //FIXME you can check here only password
-        if (password.length < minPasswordLength && confirmPassword.length < minPasswordLength) {
+        if (password.length < minPasswordLength) {
             errors.password = authErrors.PASSWORD_TOO_SHORT;
         }
+
         if (password !== confirmPassword) {
             errors.password = authErrors.PASSWORDS_NOT_MATCHING;
         }
@@ -94,6 +94,7 @@ const validateRegisterForm = (registerData, confirmPassword) => {
                 errors[key] = authErrors.EMPTY_FIELDS;
             }
         });
+
         if (!confirmPassword) errors.password = authErrors.EMPTY_FIELDS;
     }
 

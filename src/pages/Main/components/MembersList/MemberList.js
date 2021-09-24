@@ -19,7 +19,14 @@ const MemberList = ({ members }) => {
         setModalOpen(false);
     };
 
-    //FIXME - Add user - move to constant
+    const checkUsernameLength = (username) => {
+        return username.length > maxUsernameLength
+            ? username.slice(0, maxUsernameLength) + '...'
+            : username;
+    };
+
+    const membersNotEmpty = members && members.length > 0;
+
     return (
         <div className={classes.container}>
             <div>
@@ -27,9 +34,7 @@ const MemberList = ({ members }) => {
             </div>
             <Divider />
             <List>
-                {//FIXME - better make such kind of calculation before render and move to constant members && members.length > 0
-                    members &&
-                    members.length > 0 &&
+                {membersNotEmpty &&
                     members.map((user) => (
                         <Grid
                             container
@@ -40,10 +45,11 @@ const MemberList = ({ members }) => {
                         >
                             <Avatar className={classes.avatar} />
                             <Typography variant="subtitle1">
-                                {      //FIXME - better make such kind of calculation before render and move to constant
-                                    user.username.length > maxUsernameLength
-                                    ? user.username.slice(0, maxUsernameLength) + '...'
-                                    : user.username}
+                                {
+                                    //FIXME - better make such kind of calculation before render and move to constant
+                                    //only way i see to accomplish this is to modify members array before redndering is it ok?
+                                    checkUsernameLength(user.username)
+                                }
                             </Typography>
                         </Grid>
                     ))}
@@ -53,7 +59,7 @@ const MemberList = ({ members }) => {
                 <AddUserModal handleClose={handleCloseModal} />
             </Modal>
             <Button onClick={handleOpenModal} variant="contained" color="primary">
-                Add user
+                {labels.SUBMIT_BUTTON_TEXT}
             </Button>
         </div>
     );

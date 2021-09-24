@@ -75,14 +75,14 @@ function Register(props) {
 
         if (!validationErrors.email && !validationErrors.password && !validationErrors.username) {
             register(registerData);
-
-            if (registerSuccess) {
-                window.location.href = '/#/login';
-            }
         } else {
             setErrors(validationErrors);
         }
     };
+
+    if (registerSuccess) {
+        window.location.href = '/#/login';
+    }
 
     return (
         <Container component="main" maxWidth="xs">
