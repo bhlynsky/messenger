@@ -13,7 +13,6 @@ function Login(props) {
     const { login, error, user, resetError } = props;
 
     const [loginData, setLoginData] = useState(initialLoginState);
-
     const [errors, setErrors] = useState(initialLoginState);
 
     const resetFormErrors = () => {

@@ -14,9 +14,7 @@ function Register(props) {
     const classes = useStyles();
 
     const [registerData, setRegisterData] = useState(initialRegisterState);
-
     const [errors, setErrors] = useState(initialRegisterState);
-
     const [confirmPassword, setConfirmPassword] = useState('');
 
     const resetFormErrors = () => {
@@ -116,7 +114,7 @@ function Register(props) {
                         margin="normal"
                         required
                         fullWidth
-                        name="passwordConfirm "
+                        name="passwordConfirm"
                         label={labels.PASSWORD_CONFIRM}
                         type="password"
                         id="confirm-password"

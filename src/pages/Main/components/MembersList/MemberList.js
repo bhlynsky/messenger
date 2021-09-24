@@ -19,6 +19,7 @@ const MemberList = ({ members }) => {
         setModalOpen(false);
     };
 
+    //FIXME - Add user - move to constant
     return (
         <div className={classes.container}>
             <div>
@@ -26,7 +27,8 @@ const MemberList = ({ members }) => {
             </div>
             <Divider />
             <List>
-                {members &&
+                {//FIXME - better make such kind of calculation before render and move to constant members && members.length > 0
+                    members &&
                     members.length > 0 &&
                     members.map((user) => (
                         <Grid
@@ -38,7 +40,8 @@ const MemberList = ({ members }) => {
                         >
                             <Avatar className={classes.avatar} />
                             <Typography variant="subtitle1">
-                                {user.username.length > maxUsernameLength
+                                {      //FIXME - better make such kind of calculation before render and move to constant
+                                    user.username.length > maxUsernameLength
                                     ? user.username.slice(0, maxUsernameLength) + '...'
                                     : user.username}
                             </Typography>

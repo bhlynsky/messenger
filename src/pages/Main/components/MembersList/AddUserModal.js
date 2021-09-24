@@ -72,8 +72,10 @@ const AddUserModal = ({ handleClose, groupId, members, updateGroupMembers }) => 
         setUsers(withoutMembers);
     }, []);
 
+    //FIXME - remove
     console.log(groupId);
 
+    //FIXME - onClick={addUserToGroup(users[key])} / onDelete={onDeleteUser(user)} - bad approach for functions
     return (
         <div className={classes.modalForm}>
             <Typography className={classes.modalLabels}>

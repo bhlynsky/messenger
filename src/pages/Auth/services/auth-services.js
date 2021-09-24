@@ -72,6 +72,7 @@ const validateRegisterForm = (registerData, confirmPassword) => {
         username: '',
     };
 
+    //FIXME empty lines between blocks
     if (password && email && username) {
         if (!validateEmail(email)) {
             errors.email = authErrors.INVALID_EMAIL;
@@ -79,6 +80,8 @@ const validateRegisterForm = (registerData, confirmPassword) => {
         if (username.length < minUserNameLength) {
             errors.username = authErrors.NAME_TOO_SHORT;
         }
+
+        //FIXME you can check here only password
         if (password.length < minPasswordLength && confirmPassword.length < minPasswordLength) {
             errors.password = authErrors.PASSWORD_TOO_SHORT;
         }
@@ -109,6 +112,7 @@ const validateLoginForm = (loginData) => {
         if (!validateEmail(email)) {
             errors.email = authErrors.INVALID_EMAIL;
         }
+
         if (password.length < 6) {
             errors.password = authErrors.PASSWORD_TOO_SHORT;
         }

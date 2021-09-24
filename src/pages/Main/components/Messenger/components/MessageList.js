@@ -17,7 +17,9 @@ export const MessageList = ({ messages, searchValue, isLoading }) => {
     return (
         <List className={classes.messageContainer}>
             {isLoading && <CircularProgress className={classes.spinner} />}
-            {messages &&
+            {
+                //FIXME - better make such kind of calculation before render and move to constant messages && messages.length > 0
+                messages &&
                 messages.length > 0 &&
                 messages.map((msg) => (
                     <Message
