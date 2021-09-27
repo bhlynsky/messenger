@@ -52,7 +52,6 @@ authService.login = (data) => (dispatch) => {
 
 //              Form validation & helper functions
 
-//FIXME What actually do this regular expression ?
 //it checks for email correctness. I found it on stackoverflow, seems like it works fine.
 const validateEmail = (email) => {
     const re =

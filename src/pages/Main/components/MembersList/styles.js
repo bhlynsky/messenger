@@ -42,9 +42,7 @@ export const useStyles = makeStyles((theme) => ({
     menuPaper: {
         maxHeight: '200px',
     },
-    chip: {
-        margin: '2px',
-    },
+
     closeButton: {
         marginLeft: '20px',
     },

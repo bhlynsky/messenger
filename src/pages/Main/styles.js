@@ -46,4 +46,7 @@ export const useStyles = makeStyles((theme) => ({
     clearIcon: {
         color: 'gray',
     },
+    chip: {
+        margin: '2px',
+    },
 }));

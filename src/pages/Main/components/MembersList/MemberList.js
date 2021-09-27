@@ -45,11 +45,7 @@ const MemberList = ({ members }) => {
                         >
                             <Avatar className={classes.avatar} />
                             <Typography variant="subtitle1">
-                                {
-                                    //FIXME - better make such kind of calculation before render and move to constant
-                                    //only way i see to accomplish this is to modify members array before redndering is it ok?
-                                    checkUsernameLength(user.username)
-                                }
+                                {checkUsernameLength(user.username)}
                             </Typography>
                         </Grid>
                     ))}

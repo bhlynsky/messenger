@@ -8,8 +8,6 @@ import {
     MenuItem,
     FormHelperText,
     Grid,
-    Chip,
-    Avatar,
     Button,
     IconButton,
 } from '@material-ui/core';
@@ -18,6 +16,7 @@ import { labels } from './services/members-constants';
 import { getUsers } from '../Sidebar/services/group-services';
 import { updateMembers } from './services/members-services';
 import { connect } from 'react-redux';
+import { UserChip } from '../UserChip';
 
 const AddUserModal = ({ handleClose, groupId, members, updateGroupMembers }) => {
     const classes = useStyles();
@@ -38,7 +37,7 @@ const AddUserModal = ({ handleClose, groupId, members, updateGroupMembers }) => 
         setError('');
     };
 
-    const onDeleteUser = (userToDelete) => () => {
+    const onDeleteUser = (userToDelete) => {
         // delete user from list of chips,
         const withoutUser = newMembers.filter((user) => user !== userToDelete);
 
@@ -118,14 +117,7 @@ const AddUserModal = ({ handleClose, groupId, members, updateGroupMembers }) => 
                         </Typography>
 
                         {newMembers.map((user) => (
-                            <Chip
-                                key={user.userId}
-                                color="secondary"
-                                label={user.username}
-                                avatar={<Avatar>{user.username.charAt(0).toUpperCase()}</Avatar>}
-                                className={classes.chip}
-                                onDelete={onDeleteUser(user)}
-                            />
+                            <UserChip key={user.id} user={user} onDelete={onDeleteUser} />
                         ))}
                     </Grid>
                 )}
