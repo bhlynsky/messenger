@@ -117,7 +117,7 @@ const AddUserModal = ({ handleClose, groupId, members, updateGroupMembers }) => 
                         </Typography>
 
                         {newMembers.map((user) => (
-                            <UserChip key={user.id} user={user} onDelete={onDeleteUser} />
+                            <UserChip key={user.userId} user={user} onDelete={onDeleteUser} />
                         ))}
                     </Grid>
                 )}
