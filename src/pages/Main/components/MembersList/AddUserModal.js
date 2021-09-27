@@ -5,7 +5,6 @@ import {
     FormControl,
     InputLabel,
     Select,
-    MenuItem,
     FormHelperText,
     Grid,
     Button,
@@ -17,6 +16,7 @@ import { getUsers } from '../Sidebar/services/group-services';
 import { updateMembers } from './services/members-services';
 import { connect } from 'react-redux';
 import { UserChip } from '../UserChip';
+import { ListItem } from '../ListItem';
 
 const AddUserModal = ({ handleClose, groupId, members, updateGroupMembers }) => {
     const classes = useStyles();
@@ -30,10 +30,11 @@ const AddUserModal = ({ handleClose, groupId, members, updateGroupMembers }) => 
         setSelectedUser(e.target.value);
     };
 
-    const addUserToGroup = (user) => () => {
+    const addUserToGroup = (user) => {
         if (user && !newMembers.includes(user)) {
             setMembers([...newMembers, user]);
         }
+
         setError('');
     };
 
@@ -93,13 +94,11 @@ const AddUserModal = ({ handleClose, groupId, members, updateGroupMembers }) => 
                         MenuProps={{ classes: { paper: classes.menuPaper } }}
                     >
                         {Object.keys(users).map((key) => (
-                            <MenuItem
-                                value={users[key].username}
+                            <ListItem
                                 key={users[key].userId}
-                                onClick={addUserToGroup(users[key])}
-                            >
-                                {users[key].username}
-                            </MenuItem>
+                                user={users[key]}
+                                addUser={addUserToGroup}
+                            />
                         ))}
                     </Select>
                     {error ? <FormHelperText>{error}</FormHelperText> : ''}
