@@ -13,12 +13,12 @@ import {
 import { Clear } from '@material-ui/icons';
 import { labels } from './services/members-constants';
 import { getUsers } from '../Sidebar/services/group-services';
-import { updateMembers } from './services/members-services';
+import { addMembers, removeMember } from './services/members-services';
 import { connect } from 'react-redux';
 import { UserChip } from '../UserChip';
 import { ListItem } from '../ListItem';
 
-const AddUserModal = ({ handleClose, groupId, members, updateGroupMembers }) => {
+const AddUserModal = ({ handleClose, groupId, members, addGroupMembers }) => {
     const classes = useStyles();
 
     const [error, setError] = useState('');
@@ -51,7 +51,7 @@ const AddUserModal = ({ handleClose, groupId, members, updateGroupMembers }) => 
             setError(labels.ERROR_NO_USERS);
         } else {
             // send request to server
-            updateGroupMembers(groupId, newMembers);
+            addGroupMembers(groupId, newMembers);
 
             handleClose();
         }
@@ -137,7 +137,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    updateGroupMembers: (groupId, newMembers) => dispatch(updateMembers(groupId, newMembers)),
+    addGroupMembers: (groupId, newMembers) => dispatch(addMembers(groupId, newMembers)),
+    removeGroupMember: (groupId, userId) => dispatch(removeMember(groupId, userId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddUserModal);

@@ -52,7 +52,7 @@ authService.login = (data) => (dispatch) => {
 
 //              Form validation & helper functions
 
-//it checks for email correctness. I found it on stackoverflow, seems like it works fine.
+//this function checks for email correctness. I found it on stackoverflow, seems like it works fine.
 const validateEmail = (email) => {
     const re =
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

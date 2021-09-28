@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 
 export const useStyles = makeStyles((theme) => ({
     container: {
-        width: '17.5%',
+        width: '25%',
         marginLeft: '10px',
     },
     avatar: {
@@ -22,6 +22,10 @@ export const useStyles = makeStyles((theme) => ({
     },
     modalLabels: {
         color: theme.palette.text.primary,
+    },
+    list: {
+        maxHeight: 'calc(100vh - 160px)',
+        overflow: 'auto',
     },
     input: {
         width: '100%',

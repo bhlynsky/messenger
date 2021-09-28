@@ -5,7 +5,8 @@ const initialState = {
     isMessagesLoading: false,
     isGroupsLoading: false,
     createGroupLoading: false,
-    sendMessageLoading: false, // not sure where to use it
+    sendMessageLoading: false,
+    isMembersListLoading: false,
 };
 
 const fileService = {};

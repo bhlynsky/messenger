@@ -13,9 +13,6 @@ import Register from './pages/Auth/Register/Register';
 import { connect } from 'react-redux';
 
 const PrivateRouter = () => {
-    //FIXME: you can do that in more short way <Route path="/main/:groupId" component={props => <MainPage {...props}/>}>
-    //FIXME:<Redirect from="/" to="/main/1" />
-
     return (
         <Switch>
             <Route exact path="/">

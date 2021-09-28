@@ -10,7 +10,7 @@ import { SearchBar } from './components/SearchBar';
 import { messageService } from './components/Messenger/services/message-services';
 import { getGroups } from './components/Sidebar/services/group-services';
 import { messageActions } from './components/Messenger/services/message-actions';
-import MemberList from './components/MembersList/MemberList';
+import MembersSection from './components/MembersSection/MembersSection';
 
 const conn = new WebSocket('ws://localhost:9000/');
 
@@ -98,7 +98,7 @@ function MainPage(props) {
 
                 <MessageInput sendMessage={sendMessage} />
             </div>
-            <MemberList />
+            <MembersSection />
         </Paper>
     );
 }

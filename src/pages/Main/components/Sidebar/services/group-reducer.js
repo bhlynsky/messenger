@@ -1,6 +1,7 @@
 import { initialState } from '../../../services/main-services';
 import { groupActions } from '../services/group-actions';
 import { messageActions } from '../../Messenger/services/message-actions';
+import { membersActions } from '../../MembersSection/services/members-actions';
 
 function groupReducer(state = initialState, action) {
     switch (action.type) {
@@ -90,7 +91,11 @@ function groupReducer(state = initialState, action) {
             return { ...state, groups: newGroups };
         }
 
-        case groupActions.actionType.UPDATE_MEMBERS: {
+        case membersActions.actionType.MEMBERS_LOADING: {
+            return { ...state, isMembersListLoading: true };
+        }
+
+        case membersActions.actionType.UPDATE_MEMBERS: {
             const { newMembers } = action;
 
             //update current group members
@@ -109,7 +114,16 @@ function groupReducer(state = initialState, action) {
                 return gr;
             });
 
-            return { ...state, currentGroup: newCurrentGroup, groups: newGroups };
+            return {
+                ...state,
+                currentGroup: newCurrentGroup,
+                groups: newGroups,
+                isMembersListLoading: false,
+            };
+        }
+
+        case membersActions.actionType.MEMBERS_LOADING_ERROR: {
+            return { ...state, error: action.error, isMembersListLoading: false };
         }
 
         default:
