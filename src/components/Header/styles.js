@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles((theme) => ({
     header: {
         fontSize: '20px',
         display: 'flex',
@@ -26,4 +26,47 @@ export const useStyles = makeStyles({
         fontWeight: 'bold',
         lineHeight: '45px',
     },
-});
+    darkModeToggle: {
+        margin: '5px 40px auto auto',
+        display: 'flex',
+        justifyItems: 'center',
+    },
+    darkModeIcon: {
+        width: '36px',
+        height: '36px',
+    },
+    logoutButton: {
+        marginTop: '5px',
+        marginRight: '10px',
+        color: 'white',
+        border: '1px solid white',
+    },
+    loginButton: {
+        margin: '5px 10px',
+        border: '1px solid white',
+    },
+    loginLink: {
+        color: 'white',
+        textDecoration: 'none',
+    },
+
+    menuButton: {
+        marginLeft: '15px',
+    },
+    menuLink: {
+        padding: '5px',
+        margin: '5px',
+        textDecoration: 'none',
+        color: theme.palette.type === 'dark' ? '#fff' : '#000',
+        fontWeight: 'lighter',
+        lineHeight: '45px',
+    },
+    menuLinkActive: {
+        padding: '5px',
+        margin: '5px',
+        textDecoration: 'underline',
+        color: theme.palette.type === 'dark' ? '#fff' : '#000',
+        fontWeight: 'bold',
+        lineHeight: '45px',
+    },
+}));

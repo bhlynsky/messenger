@@ -1,25 +1,24 @@
 import { makeStyles } from '@material-ui/core';
 
-const drawerWidth = '25%';
-
 export const useStyles = makeStyles((theme) => ({
     divider: {
         margin: '5px 60px 20px 60px',
         background: 'black',
     },
     containerHeader: {
-        background: 'lightgray',
+        background: theme.palette.type === 'dark' ? '#121212' : 'lightgray',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        paddingLeft: '20px',
     },
     modalForm: {
         position: 'absolute',
         top: '20%',
         left: '50%',
-        marginLeft: -250,
+        marginLeft: '-150px',
         width: 400,
-        backgroundColor: 'white',
+        backgroundColor: theme.palette.background.default,
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
@@ -27,6 +26,7 @@ export const useStyles = makeStyles((theme) => ({
     groupList: {
         maxHeight: '500px',
         overflow: 'auto',
+        marginLeft: '5px',
     },
     buttonClose: {
         width: '47.5%',
@@ -72,19 +72,35 @@ export const useStyles = makeStyles((theme) => ({
 
         '&:focus, &:hover, &:visited, &:link, &:active': {
             textDecoration: 'none',
-            color: 'black',
+            color: theme.palette.text.primary,
         },
     },
     openModalIcon: {
         width: '16px',
         height: '16px',
-        marginTop: 'auto',
-        marginBottom: 'auto',
+        margin: 'auto 5px auto auto',
+        color: 'gray',
     },
-    drawer: {
-        width: drawerWidth,
-        minWidth: '200px',
+    menuIcon: {
+        width: '16px',
+        height: '16px',
+        margin: 'auto 0px auto 5px',
+    },
+    menuIconMinimized: {
+        width: '16px',
+        height: '16px',
+        marginRight: '0px',
+        marginLeft: 'auto',
+    },
+
+    sidebar: {
+        width: '25%',
         flexShrink: 0,
+    },
+
+    sidebarMinimized: {
+        height: 'calc(100vh - 65px)',
+        width: '10vw',
     },
 
     groupPreview: {
@@ -100,9 +116,42 @@ export const useStyles = makeStyles((theme) => ({
         marginTop: '10px',
         border: `2px ${theme.palette.primary.main} solid`,
         borderRadius: '5px',
+        background: theme.palette.secondary.main,
         padding: '5px 2px 5px 2px',
         '&:hover': {
             background: 'lightgray',
         },
+    },
+    groupPreviewMinimized: {
+        border: '1px solid black',
+        borderRadius: '10px',
+        marginTop: '5px',
+        '&:hover': {
+            background: 'lightgray',
+        },
+    },
+    groupPreviewMinimizedActive: {
+        border: `1px ${theme.palette.primary.main} solid`,
+        borderRadius: '10px',
+        marginTop: '5px',
+        background: theme.palette.secondary.main,
+        '&:hover': {
+            background: 'lightgray',
+        },
+    },
+    groupSearchBar: {
+        margin: '20px 0px 0px 20px',
+        width: '90%',
+    },
+    modalLabels: {
+        color: theme.palette.text.primary,
+    },
+    spinner: {
+        height: '100px',
+        width: '100px',
+        margin: 'auto',
+    },
+    menuPaper: {
+        maxHeight: '200px',
     },
 }));

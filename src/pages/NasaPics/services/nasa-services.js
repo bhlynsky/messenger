@@ -1,7 +1,8 @@
-import { loadData, loadError, setData } from './nasa-actions';
+import nasaActions from './nasa-actions';
 
 const getData = () => (dispatch) => {
     const fetchUrl = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&count=5';
+    const { loadData, setData, loadError } = nasaActions;
 
     dispatch(loadData());
 

@@ -1,28 +1,56 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Divider, Grid, Typography } from '@material-ui/core';
 import { useStyles } from './styles';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { changeCurrentGroup } from '../../../services/main-actions';
-import { labels } from '../../../services/main-constants';
+import { groupActions } from '../services/group-actions';
+import { labels } from '../services/group-constants';
+
 const GroupPreview = (props) => {
-    const { userName, message } = { ...props.messageData }; // handling error when undefined data
+    const { messageId } = props;
     const { group, changeCurrentGroup } = props;
     const classes = useStyles();
 
+    const [lastMessage, setLastMessage] = useState();
+
     const onChangeGroup = () => {
-        changeCurrentGroup(group.id, group.groupName);
+        changeCurrentGroup(group);
     };
 
+    const maxMessageLength = 20;
+    let displayMessage = '';
+
+    const getLastMessage = () => {
+        fetch(`http://localhost:8080/api/message/${messageId}`)
+            .then((res) => res.json())
+            .then((res) => setLastMessage(res))
+            .catch((err) => console.error(err));
+    };
+
+    useEffect(() => {
+        if (messageId) {
+            getLastMessage();
+        }
+    }, [messageId]);
+
+    if (lastMessage) {
+        const { content } = lastMessage;
+
+        displayMessage =
+            content && content.length > maxMessageLength
+                ? content.slice(maxMessageLength) + '...'
+                : content;
+    }
+
     return (
-        <Link to={`/main/${group.id}`} className={classes.linkWithoutStyles}>
+        <Link to={`/main/${group._id}`} className={classes.linkWithoutStyles}>
             <div className={classes.messagePreview} onClick={onChangeGroup}>
                 <Typography variant="subtitle1">{group.groupName}</Typography>
 
-                {props.messageData ? (
+                {lastMessage ? (
                     <Grid container direction="row" alignItems="baseline">
                         <Typography variant="body1" className={classes.labelUsername}>
-                            <i>{userName}</i>
+                            <i>{lastMessage.senderName}</i>
                         </Typography>
                         <Divider
                             orientation="vertical"
@@ -30,7 +58,7 @@ const GroupPreview = (props) => {
                             className={classes.verticalDivider}
                         ></Divider>
 
-                        <Typography variant="body2">{message}</Typography>
+                        <Typography variant="body2">{displayMessage}</Typography>
                     </Grid>
                 ) : (
                     <Typography variant="body2">{labels.NO_MESSAGES}</Typography>
@@ -41,7 +69,7 @@ const GroupPreview = (props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    changeCurrentGroup: (groupId, groupName) => dispatch(changeCurrentGroup(groupId, groupName)),
+    changeCurrentGroup: (group) => dispatch(groupActions.changeCurrentGroup(group)),
 });
 
 export default connect(null, mapDispatchToProps)(GroupPreview);

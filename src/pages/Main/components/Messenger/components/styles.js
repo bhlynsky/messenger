@@ -6,9 +6,9 @@ export const useStyles = makeStyles(() => ({
     },
     messageContainer: {
         width: '100%',
-        minHeight: '300px',
-        height: '71vh',
-        maxHeight: '1440px',
+        minHeight: '500px',
+        minWidth: '400px',
+        height: 'calc(100vh - 180px)',
         overflow: 'auto',
     },
     messageInput: {
@@ -16,13 +16,21 @@ export const useStyles = makeStyles(() => ({
         paddingTop: '5px',
     },
     input: {
-        height: '30px',
+        height: '50px',
     },
+
     textHighlight: {
         fontWeight: 'bold',
         background: 'pink',
     },
     avatar: {
         margin: '-5px 10px 10px',
+    },
+    spinner: {
+        height: '100px',
+        width: '100px',
+        position: 'absolute',
+        left: '50%',
+        top: '50%',
     },
 }));

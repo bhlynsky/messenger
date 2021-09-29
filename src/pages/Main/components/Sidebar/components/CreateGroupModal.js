@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {
     Input,
@@ -10,32 +10,44 @@ import {
     FormHelperText,
     Divider,
     IconButton,
-    Select,
     MenuItem,
+    Select,
+    CircularProgress,
 } from '@material-ui/core';
 import { useStyles } from './styles';
-import { createNewGroup } from '../../../services/main-actions';
 import Avatar from '@material-ui/core/Avatar';
+import { createGroup, getUsers } from '../services/group-services';
 import Chip from '@material-ui/core/Chip';
-import { createGroupLabels, actionButtons } from '../../../services/main-constants';
+import { createGroupLabels, actionButtons } from '../services/group-constants';
 import Clear from '@material-ui/icons/Clear';
-import { users } from '../../../services/mockApi';
+
 const CreateGroupModal = (props) => {
-    const [newGroup, setNewGroup] = useState({ groupName: '', users: [] });
-    const [errors, setErrors] = useState({ groupName: '', users: '' });
+    const { handleClose, createNewGroup, currentUserId, currentUserName, isLoading } = props;
+
+    const [newGroup, setNewGroup] = useState({ groupName: '', members: [] }); // members : [ {username:'',userId:''},{},{}]
+    const [errors, setErrors] = useState({ groupName: '', members: '' });
     const [selectedUser, setSelectedUser] = useState('');
 
-    const { handleClose, createNewGroup } = props;
+    const [users, setUsers] = useState({});
 
     const classes = useStyles();
 
-    const onSave = () => {
+    const onSave = async () => {
         if (newGroup.groupName) {
-            if (newGroup.users.length === 0) {
-                setErrors({ ...errors, users: createGroupLabels.ERROR_NO_USERS });
+            if (newGroup.members.length === 0) {
+                setErrors({ ...errors, members: createGroupLabels.ERROR_NO_USERS });
             } else {
-                createNewGroup(newGroup);
-                handleClose();
+                const body = {
+                    ...newGroup,
+                    members: [
+                        ...newGroup.members,
+                        { userId: currentUserId, username: currentUserName },
+                    ],
+                };
+                // making copy here so there wont be user id in chip list
+
+                await createNewGroup(body);
+                !isLoading && handleClose();
             }
         } else {
             setErrors({ ...errors, groupName: createGroupLabels.ERROR_NO_GROUPNAME });
@@ -57,22 +69,99 @@ const CreateGroupModal = (props) => {
 
     const onDeleteUser = (userToDelete) => () => {
         // delete user from list of chips,
-        const withoutUser = newGroup.users.filter((user) => user !== userToDelete);
+        const withoutUser = newGroup.members.filter((user) => user !== userToDelete);
 
         // update state with values without deleted user
-        setNewGroup({ ...newGroup, users: [...withoutUser] });
+        setNewGroup({ ...newGroup, members: [...withoutUser] });
     };
 
     const addUserToGroup = (user) => () => {
-        if (user && !newGroup.users.includes(user)) {
-            newGroup.users.push(user);
+        if (user && !newGroup.members.includes(user)) {
+            newGroup.members.push(user);
         }
+    };
+
+    useEffect(async () => {
+        const users = await getUsers();
+        const withoutUser = users.filter((us) => {
+            if (us.userId !== currentUserId) {
+                return us;
+            }
+        });
+        setUsers(withoutUser);
+    }, []);
+
+    const InputTitle = (props) => {
+        return (
+            <Typography variant="body1" align="center" className={classes.modalLabels}>
+                <i>{props.text}</i>
+            </Typography>
+        );
+    };
+
+    const UserSelect = () => {
+        return (
+            <div className={classes.userSelect}>
+                <InputTitle text={createGroupLabels.SUBTITLE_ADD_USERS} />
+
+                <FormControl error={!!errors.members} className={classes.input}>
+                    <InputLabel>{createGroupLabels.SELECT_PLACEHOLDER}</InputLabel>
+                    <Select
+                        labelId="user-select"
+                        id="user-select"
+                        value={selectedUser}
+                        onChange={handleSelect}
+                        MenuProps={{ classes: { paper: classes.menuPaper } }}
+                    >
+                        {Object.keys(users).map((key) => (
+                            <MenuItem
+                                value={users[key].username}
+                                key={users[key].userId}
+                                onClick={addUserToGroup(users[key])}
+                            >
+                                {users[key].username}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                    {errors.members ? <FormHelperText>{errors.members}</FormHelperText> : ''}
+                </FormControl>
+
+                <Grid
+                    container
+                    direction="row"
+                    alignItems="center"
+                    className={classes.participants}
+                >
+                    <Typography className={classes.modalLabels}>
+                        {createGroupLabels.PATRICIPANTS} :
+                    </Typography>
+                    <Chip
+                        key={currentUserId}
+                        color="primary"
+                        label={createGroupLabels.CURRENT_USERNAME}
+                        avatar={<Avatar>Y</Avatar>}
+                        className={classes.chip}
+                    />
+
+                    {newGroup.members.map((user) => (
+                        <Chip
+                            key={user.userId}
+                            color="secondary"
+                            label={user.username}
+                            avatar={<Avatar>{user.username.charAt(0).toUpperCase()}</Avatar>}
+                            className={classes.chip}
+                            onDelete={onDeleteUser(user)}
+                        />
+                    ))}
+                </Grid>
+            </div>
+        );
     };
 
     return (
         <div className={classes.modalForm}>
             <div>
-                <Typography variant="h2" align="center">
+                <Typography variant="h2" align="center" className={classes.modalLabels}>
                     <b>{createGroupLabels.HEADER}</b>
                 </Typography>
                 <IconButton onClick={handleClose} className={classes.closeModalIcon}>
@@ -83,83 +172,21 @@ const CreateGroupModal = (props) => {
                 <Divider variant="middle" className={classes.divider} />
 
                 <Grid item>
-                    <Typography variant="body1" align="center">
-                        <i>{createGroupLabels.SUBTITLE_NAME}</i>
-                    </Typography>
+                    <InputTitle text={createGroupLabels.SUBTITLE_NAME} />
                     <FormControl className={classes.input} error={!!errors.groupName}>
                         <InputLabel>{createGroupLabels.NAME_INPUT}</InputLabel>
                         <Input
                             id="new-group-name"
                             type="text"
-                            value={newGroup.name}
+                            value={newGroup.groupName}
                             onChange={handleChange}
                             name="groupName"
                             required
                         />
-                        {errors.groupName ? (
-                            <FormHelperText>{errors.groupName}</FormHelperText>
-                        ) : (
-                            ''
-                        )}
+                        {errors.groupName && <FormHelperText>{errors.groupName}</FormHelperText>}
                     </FormControl>
 
-                    <div className={classes.userSelect}>
-                        <Typography variant="body1" align="center">
-                            <i>{createGroupLabels.SUBTITLE_ADD_USERS}</i>
-                        </Typography>
-                        <div>
-                            <FormControl error={!!errors.users} className={classes.input}>
-                                <InputLabel>{createGroupLabels.SELECT_PLACEHOLDER}</InputLabel>
-                                <Select
-                                    labelId="user-select"
-                                    id="user-select"
-                                    value={selectedUser}
-                                    onChange={handleSelect}
-                                >
-                                    {users.map((user) => (
-                                        <MenuItem
-                                            value={user}
-                                            key={user}
-                                            onClick={addUserToGroup(user)}
-                                        >
-                                            {user}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                                {errors.users ? (
-                                    <FormHelperText>{errors.users}</FormHelperText>
-                                ) : (
-                                    ''
-                                )}
-                            </FormControl>
-                        </div>
-                        <Grid
-                            container
-                            direction="row"
-                            alignItems="center"
-                            className={classes.participants}
-                        >
-                            <Typography>{createGroupLabels.PATRICIPANTS} :</Typography>
-                            <Chip
-                                key={Math.random() * 100}
-                                color="primary"
-                                label={createGroupLabels.CURRENT_USERNAME}
-                                avatar={<Avatar>Y</Avatar>}
-                                className={classes.chip}
-                            />
-
-                            {newGroup.users.map((user) => (
-                                <Chip
-                                    key={Math.random() * 100}
-                                    color="secondary"
-                                    label={user}
-                                    avatar={<Avatar>{user.charAt(0).toUpperCase()}</Avatar>}
-                                    className={classes.chip}
-                                    onDelete={onDeleteUser(user)}
-                                />
-                            ))}
-                        </Grid>
-                    </div>
+                    <UserSelect />
 
                     <Grid
                         container
@@ -170,9 +197,10 @@ const CreateGroupModal = (props) => {
                             variant="contained"
                             color="primary"
                             onClick={onSave}
+                            disabled={isLoading}
                             className={classes.buttonSave}
                         >
-                            {actionButtons.SAVE}
+                            {isLoading ? <CircularProgress size="25px" /> : actionButtons.SAVE}
                         </Button>
 
                         <Button
@@ -191,7 +219,13 @@ const CreateGroupModal = (props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    createNewGroup: (name) => dispatch(createNewGroup(name)),
+    createNewGroup: (group) => dispatch(createGroup(group)),
 });
 
-export default connect(null, mapDispatchToProps)(CreateGroupModal);
+const mapStateToProps = (state) => ({
+    currentUserId: state.authReducer.user._id,
+    currentUserName: state.authReducer.user.username,
+    isLoading: state.groupReducer.createGroupLoading,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateGroupModal);

@@ -1,20 +1,22 @@
-export const updateValuesOnSendMessage = (messages, groups, newMessage, groupId) => {
-    const newMessages = JSON.parse(JSON.stringify(messages));
-    const newGroups = JSON.parse(JSON.stringify(groups));
+import { messageActions } from './message-actions';
+import { handleFetchResponse, fetchWithTimeout } from '../../../../../services/root-service';
+const messageService = {};
 
-    const indexMsg = newMessages.findIndex((msg) => msg.groupId === groupId);
-    const indexGroup = newGroups.findIndex((gr) => gr.id === groupId);
+messageService.getMessages = (userId) => async (dispatch) => {
+    dispatch(messageActions.loadMessages());
 
-    if (indexMsg === -1) {
-        newMessages.push({ groupId, messages: [newMessage] });
-    } else {
-        newMessages[indexMsg].messages.push(newMessage);
-    }
+    const url = `http://localhost:8080/api/message/user/${userId}`;
+    const options = {
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    };
 
-    newGroups[indexGroup].lastMessage = newMessage; // update last message
-
-    localStorage.setItem('messageData', JSON.stringify(newMessages)); // update messages
-    localStorage.setItem('groupData', JSON.stringify(newGroups)); //update group
-
-    return { newMessages, newGroups };
+    fetchWithTimeout(url, options)
+        .then((res) => handleFetchResponse(res))
+        .then((messages) => dispatch(messageActions.loadMessagesSuccess(messages)))
+        .catch((err) => dispatch(messageActions.loadMessagesError(err)));
 };
+
+export { messageService };

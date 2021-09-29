@@ -1,19 +1,22 @@
-import { Typography, Button } from '@material-ui/core';
+import { Typography, Button, Paper } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadData } from './services/nasa-actions';
-import { getData } from './services/nasa-services';
+import nasaActions from './services/nasa-actions';
 import { withLoading } from '../../services/root-service';
+import { getData } from './services/nasa-services';
+import { useStyles } from './styles';
 
 const NasaPicsPage = (props) => {
     const { fetchEndpointAdop, data, error } = props;
+
+    const classes = useStyles();
 
     const onNext = () => {
         fetchEndpointAdop();
     };
 
     return (
-        <div>
+        <Paper square className={classes.pageWrapper}>
             {error ? (
                 <Typography variant="h2" color="error" data-testid="error-message">
                     {error.message}
@@ -39,7 +42,7 @@ const NasaPicsPage = (props) => {
                     )}
                 </div>
             )}
-        </div>
+        </Paper>
     );
 };
 
@@ -51,7 +54,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     fetchEndpointAdop: () => dispatch(getData()),
-    onLoad: () => dispatch(loadData()),
+    onLoad: () => dispatch(nasaActions.loadData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withLoading(NasaPicsPage));

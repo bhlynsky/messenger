@@ -50,7 +50,7 @@ describe('render test', () => {
 });
 
 describe('functionality test', () => {
-    it('send message', () => {
+    it('send message', async () => {
         window.HTMLElement.prototype.scrollIntoView = function () {}; // jest doesnt implement scrollIntoView
         const { getByTestId } = renderWithRedux(<MainPage />);
         const sendButton = getByTestId('send-message');

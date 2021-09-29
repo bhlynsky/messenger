@@ -1,12 +1,17 @@
-import { mockGroupData, mockMessageData } from './mockApi';
-
 const initialState = {
     currentGroup: {},
     groups: [],
     messages: [],
+    isMessagesLoading: false,
+    isGroupsLoading: false,
+    createGroupLoading: false,
+    sendMessageLoading: false,
+    isMembersListLoading: false,
 };
 
-const getMessagesFromFile = async () => {
+const fileService = {};
+
+fileService.getMessagesFromFile = async () => {
     const filePath = 'messageData.txt';
     const response = await fetch(filePath);
     const result = await response.text();
@@ -14,7 +19,7 @@ const getMessagesFromFile = async () => {
     return result;
 };
 
-const getGroupsFromFile = async () => {
+fileService.getGroupsFromFile = async () => {
     const filePath = 'groupData.txt';
     const response = await fetch(filePath);
     const result = await response.text();
@@ -22,11 +27,4 @@ const getGroupsFromFile = async () => {
     return result;
 };
 
-const checkLocalStorage = () => {
-    if (!localStorage.getItem('groupData') && !localStorage.getItem('messageData')) {
-        localStorage.setItem('groupData', JSON.stringify(mockGroupData));
-        localStorage.setItem('messageData', JSON.stringify(mockMessageData));
-    }
-};
-
-export { initialState, getGroupsFromFile, getMessagesFromFile, checkLocalStorage };
+export { initialState, fileService };

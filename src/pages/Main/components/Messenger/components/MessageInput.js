@@ -1,32 +1,28 @@
 import React, { useState } from 'react';
-import { TextField, InputAdornment, IconButton } from '@material-ui/core';
+import { TextField, InputAdornment, IconButton, CircularProgress } from '@material-ui/core';
 import { useStyles } from './styles';
 import SendIcon from '@material-ui/icons/Send';
 import AttachmentIcon from '@material-ui/icons/Attachment';
-import { sendMessage } from '../../../services/main-actions';
 import { connect } from 'react-redux';
-import { labels } from '../../../services/main-constants';
-import { updateValuesOnSendMessage } from '../services/message-services';
+import { labels } from '../services/message-constants';
 
 const MessageInput = (props) => {
     const [newMessage, setNewMessage] = useState('');
     const classes = useStyles();
 
-    const { sendMessage, messages, groups, id } = props;
+    const { groupId, userId, username, isLoading, sendMessage } = props;
 
     const onSendMessage = () => {
         if (!newMessage) return; // empty message validation
 
-        const userName = 'Boris';
-        const date = new Date();
         const message = {
-            userName,
-            date: date.toDateString(),
-            message: newMessage,
+            groupId,
+            senderId: userId,
+            senderName: username,
+            content: newMessage,
         };
-        const { newMessages, newGroups } = updateValuesOnSendMessage(messages, groups, message, id);
 
-        sendMessage(newMessages, newGroups, message);
+        sendMessage(message); // send to web socket server,then retrieve to all clients
         setNewMessage('');
     };
 
@@ -36,7 +32,7 @@ const MessageInput = (props) => {
         }
     };
 
-    const onChange = (e) => {
+    const handleChange = (e) => {
         setNewMessage(e.target.value);
     };
 
@@ -46,35 +42,38 @@ const MessageInput = (props) => {
                 label={labels.MESSAGE_INPUT_PLACEHOLDER}
                 variant="outlined"
                 fullWidth
-                className={classes.input}
-                onChange={onChange}
+                onChange={handleChange}
                 value={newMessage}
                 onKeyDown={handleKeyDown}
                 InputProps={{
                     endAdornment: (
                         <InputAdornment position="end">
-                            <IconButton onClick={onSendMessage} data-testid="send-message">
-                                <SendIcon color="primary" />
-                            </IconButton>
+                            {isLoading ? (
+                                <CircularProgress />
+                            ) : (
+                                <IconButton onClick={onSendMessage} data-testid="send-message">
+                                    <SendIcon color="primary" />
+                                </IconButton>
+                            )}
+
                             <IconButton>
                                 <AttachmentIcon color="secondary" />
                             </IconButton>
                         </InputAdornment>
                     ),
                     'data-testid': 'message-input',
+                    className: classes.input,
                 }}
             />
         </div>
     );
 };
+
 const mapStateToProps = (state) => ({
-    id: state.messageReducer.currentGroup.id,
-    messages: state.messageReducer.messages,
-    groups: state.sidebarReducer.groups,
-});
-const mapDispatchToProps = (dispatch) => ({
-    sendMessage: (newMessages, newGroups, message) =>
-        dispatch(sendMessage(newMessages, newGroups, message)),
+    groupId: state.groupReducer.currentGroup._id,
+    userId: state.authReducer.user._id,
+    username: state.authReducer.user.username,
+    isLoading: state.messageReducer.sendMessageLoading,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MessageInput);
+export default connect(mapStateToProps)(MessageInput);

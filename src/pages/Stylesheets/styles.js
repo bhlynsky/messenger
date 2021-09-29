@@ -19,6 +19,10 @@ const useStyles = makeStyles({
         borderRadius: '5px',
         marginBottom: '-10px',
     },
+    pageWrapper: {
+        height: 'calc(100vh - 52px)',
+        overflow: 'auto',
+    },
 });
 
 export default useStyles;

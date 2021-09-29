@@ -1,69 +1,140 @@
-import React, { useState } from 'react';
-import { Divider, Typography, Modal, IconButton, Tooltip, List } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import {
+    Typography,
+    Modal,
+    IconButton,
+    Tooltip,
+    List,
+    Divider,
+    Grid,
+    CircularProgress,
+} from '@material-ui/core';
 import { useStyles } from './styles';
 import { connect } from 'react-redux';
 import GroupPreview from './GroupPreview';
-import { createGroupLabels, labels } from '../../../services/main-constants';
+import { createGroupLabels, labels } from '../services/group-constants';
 import CreateGroupModal from './CreateGroupModal';
 import AddIcon from '@material-ui/icons/Add';
+import { GroupSearch } from './GroupSearch';
+import { searchGroup } from '../services/group-services';
+import GroupPreviewMinimized from './GroupPreviewMinimized';
+import { SidebarToggleButton } from './SidebarToggleButton';
 
 const Sidebar = (props) => {
     const classes = useStyles();
-    const { groups, currentGroupId } = props;
+    const { groups, currentGroupId, isLoading } = props;
     const [modalIsOpen, setModalOpen] = useState(false);
+    const [sidebarIsOpen, setSidebarOpen] = useState(true);
+    const [groupSearchValue, setGroupSearchValue] = useState('');
+    const [groupList, setGroupList] = useState([]);
 
-    const handleOpen = () => {
+    const handleOpenModal = () => {
         setModalOpen(true);
     };
 
-    const handleClose = () => {
+    const handleCloseModal = () => {
         setModalOpen(false);
     };
 
-    return (
-        <div className={classes.drawer}>
-            <div className={classes.containerHeader}>
-                <Typography variant="h2" align="left">
-                    {labels.SIDEBAR_HEADER}
-                </Typography>
-                <Tooltip title={createGroupLabels.ICON_TOOLTIP}>
-                    <IconButton onClick={handleOpen} className={classes.openModalIcon}>
-                        <AddIcon />
-                    </IconButton>
-                </Tooltip>
-            </div>
+    const onGroupSearch = (e) => {
+        const target = e.target.value;
+        const searchResult = searchGroup(target, groups);
 
-            <Divider />
+        setGroupList(searchResult);
+        setGroupSearchValue(target);
+    };
 
-            <Modal open={modalIsOpen} onClose={handleClose}>
-                <CreateGroupModal handleClose={handleClose} />
-            </Modal>
+    useEffect(() => {
+        setGroupList(groups);
+    }, [groups]);
 
-            <List className={classes.groupList}>
-                {groups.length ? (
-                    groups.map((item) => (
-                        <div
-                            className={
-                                currentGroupId === item.id
-                                    ? classes.groupPreviewActive
-                                    : classes.groupPreview
-                            }
-                            key={item.id}
-                        >
-                            <GroupPreview group={item} messageData={item.lastMessage} />
-                        </div>
-                    ))
+    if (sidebarIsOpen) {
+        return (
+            <div className={classes.sidebar}>
+                <div className={classes.containerHeader}>
+                    <Typography variant="h6" align="left">
+                        {labels.SIDEBAR_HEADER}
+                    </Typography>
+
+                    <Tooltip title={createGroupLabels.NEW_GROUP_TOOLTIP}>
+                        <IconButton onClick={handleOpenModal} className={classes.openModalIcon}>
+                            <AddIcon />
+                        </IconButton>
+                    </Tooltip>
+
+                    <SidebarToggleButton isOpen={sidebarIsOpen} setState={setSidebarOpen} />
+                </div>
+
+                <GroupSearch onSearch={onGroupSearch} searchValue={groupSearchValue} />
+
+                <Modal open={modalIsOpen} onClose={handleCloseModal}>
+                    <CreateGroupModal handleClose={handleCloseModal} />
+                </Modal>
+
+                {isLoading ? (
+                    <CircularProgress className={classes.spinner} />
                 ) : (
-                    <Typography variant="subtitle1">{labels.SIDEBAR_NO_GROUPS}</Typography>
+                    <List className={classes.groupList}>
+                        {groupList.length ? (
+                            groupList.map((item) => (
+                                <div
+                                    className={
+                                        currentGroupId === item._id
+                                            ? classes.groupPreviewActive
+                                            : classes.groupPreview
+                                    }
+                                    key={item._id}
+                                >
+                                    <GroupPreview group={item} messageId={item.lastMessage} />
+                                </div>
+                            ))
+                        ) : (
+                            <Typography variant="subtitle1" align="center">
+                                {labels.SIDEBAR_NO_GROUPS}
+                            </Typography>
+                        )}
+                    </List>
                 )}
-            </List>
-        </div>
-    );
+            </div>
+        );
+    } else {
+        return (
+            <div className={classes.sidebarMinimized}>
+                <div className={classes.containerHeader}>
+                    <Grid container direction="row">
+                        <Typography align="left">
+                            <i>{labels.SIDEBAR_HEADER}</i>
+                        </Typography>
+
+                        <SidebarToggleButton isOpen={sidebarIsOpen} setState={setSidebarOpen} />
+                    </Grid>
+                </div>
+                <Divider />
+                <div>
+                    {groups.length
+                        ? groups.map((item) => (
+                              <div
+                                  className={
+                                      currentGroupId === item._id
+                                          ? classes.groupPreviewMinimizedActive
+                                          : classes.groupPreviewMinimized
+                                  }
+                                  key={item._id}
+                              >
+                                  <GroupPreviewMinimized group={item} key={item.id} />
+                              </div>
+                          ))
+                        : ''}
+                </div>
+            </div>
+        );
+    }
 };
 
 const mapStateToProps = (state) => ({
-    groups: state.sidebarReducer.groups,
-    currentGroupId: state.sidebarReducer.currentGroup.id,
+    groups: state.groupReducer.groups,
+    currentGroupId: state.groupReducer.currentGroup._id,
+    isLoading: state.groupReducer.isGroupsLoading,
 });
 
 export default connect(mapStateToProps)(Sidebar);
